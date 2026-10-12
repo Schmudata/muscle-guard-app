@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEO-Check</title>
+</head>
+<body>
+
+<!-- ======================= SEO-CHECK WIDGET – ab hier in deine Seite kopieren ======================= -->
+<div id="seo-check">
+  <style>
+    #seo-check { --c-ok:#16a34a; --c-warn:#d97706; --c-fail:#dc2626; --c-accent:#2563eb;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; max-width: 680px; margin: 0 auto; color:#1f2937; }
+    #seo-check form { display:flex; gap:8px; flex-wrap:wrap; }
+    #seo-check input { flex:1 1 260px; padding:12px 14px; font-size:16px; border:1px solid #d1d5db; border-radius:8px; }
+    #seo-check button { padding:12px 20px; font-size:16px; border:0; border-radius:8px; background:var(--c-accent); color:#fff; cursor:pointer; }
+    #seo-check button:disabled { opacity:.6; cursor:wait; }
+    #seo-check .sc-msg { margin-top:16px; }
+    #seo-check .sc-error { color:var(--c-fail); }
+    #seo-check .sc-score { display:flex; align-items:center; gap:16px; margin:24px 0 12px; }
+    #seo-check .sc-ring { width:84px; height:84px; border-radius:50%; display:grid; place-items:center; font-size:26px; font-weight:700; }
+    #seo-check .sc-ring span { width:68px; height:68px; border-radius:50%; background:#fff; display:grid; place-items:center; }
+    #seo-check ul { list-style:none; padding:0; margin:0; }
+    #seo-check li { display:flex; gap:12px; padding:12px 0; border-bottom:1px solid #e5e7eb; }
+    #seo-check .sc-dot { flex:0 0 22px; height:22px; border-radius:50%; color:#fff; font-size:13px; display:grid; place-items:center; margin-top:1px; }
+    #seo-check .sc-name { font-weight:600; }
+    #seo-check .sc-detail { font-size:14px; color:#4b5563; word-break:break-word; }
+  </style>
+
+  <form>
+    <input type="text" name="url" placeholder="www.deine-website.de" required aria-label="Website-URL">
+    <button type="submit">Jetzt prüfen</button>
+  </form>
+  <div class="sc-msg" aria-live="polite"></div>
+
+  <script>
+  (function () {
+    // URL deiner API – anpassen, wenn das Backend auf einer anderen Domain läuft:
+    var API_URL = "/api/seo-check";
+
+    var root = document.getElementById("seo-check");
+    var form = root.querySelector("form");
+    var btn = root.querySelector("button");
+    var out = root.querySelector(".sc-msg");
+    var COLORS = { ok: "var(--c-ok)", warn: "var(--c-warn)", fail: "var(--c-fail)" };
+    var ICONS = { ok: "✓", warn: "!", fail: "✕" };
+    var ORDER = { fail: 0, warn: 1, ok: 2 };
+
+    function esc(s) {
+      var d = document.createElement("div"); d.textContent = s; return d.innerHTML;
+    }
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      btn.disabled = true;
+      out.innerHTML = "Seite wird analysiert …";
+
+      fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: form.url.value })
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (data.error) { out.innerHTML = '<p class="sc-error">' + esc(data.error) + "</p>"; return; }
+          var color = data.score >= 80 ? COLORS.ok : data.score >= 50 ? COLORS.warn : COLORS.fail;
+          var items = data.checks.slice().sort(function (a, b) { return ORDER[a.status] - ORDER[b.status]; })
+            .map(function (c) {
+              return '<li><span class="sc-dot" style="background:' + COLORS[c.status] + '">' + ICONS[c.status] +
+                '</span><div><div class="sc-name">' + esc(c.name) + '</div><div class="sc-detail">' +
+                esc(c.message) + "</div></div></li>";
+            }).join("");
+          out.innerHTML =
+            '<div class="sc-score"><div class="sc-ring" style="background:conic-gradient(' + color + " " +
+            data.score * 3.6 + 'deg,#e5e7eb 0)"><span>' + data.score + "</span></div><div><strong>SEO-Score</strong><br>" +
+            '<span class="sc-detail">' + esc(data.url) + "</span></div></div><ul>" + items + "</ul>";
+        })
+        .catch(function () { out.innerHTML = '<p class="sc-error">Verbindung zum Server fehlgeschlagen.</p>'; })
+        .finally(function () { btn.disabled = false; });
+    });
+  })();
+  </script>
+</div>
+<!-- ======================= SEO-CHECK WIDGET – Ende ======================= -->
+
+</body>
+</html>

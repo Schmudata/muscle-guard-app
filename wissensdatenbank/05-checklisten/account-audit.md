@@ -3,6 +3,7 @@ titel: Checkliste Google-Ads-Account-Audit
 kategorie: checkliste
 tags: [google-ads, checkliste]
 zielgruppe: Fortgeschrittene
+tiefe: basis
 zuletzt_geprueft: 2026-10
 ---
 

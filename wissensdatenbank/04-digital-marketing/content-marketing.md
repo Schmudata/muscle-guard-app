@@ -3,6 +3,7 @@ titel: Content-Marketing & Social Media für lokale KMU
 kategorie: digital-marketing
 tags: [social, kmu, local]
 zielgruppe: Einsteiger
+tiefe: basis
 zuletzt_geprueft: 2026-10
 ---
 

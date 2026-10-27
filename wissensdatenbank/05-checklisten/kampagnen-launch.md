@@ -3,6 +3,7 @@ titel: Checkliste Kampagnen-Launch
 kategorie: checkliste
 tags: [google-ads, checkliste, local]
 zielgruppe: Einsteiger
+tiefe: basis
 zuletzt_geprueft: 2026-10
 ---
 

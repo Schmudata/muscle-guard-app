@@ -3,6 +3,7 @@ titel: Trendradar – Digital Marketing für lokale KMU
 kategorie: trends
 tags: [trends, google-ads, local, kmu]
 zielgruppe: Fortgeschrittene
+tiefe: basis
 zuletzt_geprueft: 2026-10
 ---
 
@@ -34,7 +35,7 @@ und Begründung in der Historie vermerkt.
 | Kurzvideo (Reels, Shorts) mit echten Menschen | 🟢 Einsetzen | Günstigstes Format für Reichweite und Vertrauen | [Content](../04-digital-marketing/content-marketing.md) |
 | KI-Antworten in der Suche (AI Overviews, AI Mode) | 🟡 Testen | Weniger Klicks auf Websites; klare Fakten, FAQ, Bewertungen und Erwähnungen werden wichtiger – eigene Sichtbarkeit regelmäßig prüfen | [Local SEO](../02-lokales-marketing/local-seo.md) |
 | Anzeigen in KI-Antworten | 🔵 Beobachten | Verfügbarkeit nach Markt/Sprache prüfen; Ausspielung meist über Broad/PMax/AI Max | [Kampagnentypen](../01-google-ads/kampagnentypen.md) |
-| AI Max für Suchkampagnen | 🟡 Testen | Mehr Reichweite aus Search – nur mit gutem Tracking und Blick auf Suchbegriffe | [Kampagnentypen](../01-google-ads/kampagnentypen.md) |
+| AI Max für Suchkampagnen | 🟡 Testen | Unabhängige Daten (smec, 250+ Kampagnen): Median +13 % Umsatz, aber +16 % CPA – Volumen- statt Effizienzhebel; nur mit gutem Tracking und Ausschlüssen | [Kampagnentypen](../01-google-ads/kampagnentypen.md) |
 | Performance Max für Leads | 🟡 Testen | Erst ab stabiler Datenbasis; Lead-Qualität messen | [Kampagnentypen](../01-google-ads/kampagnentypen.md) |
 | Demand Gen | 🟡 Testen | Für visuelle Branchen (Gastro, Beauty, Events) | [Kampagnentypen](../01-google-ads/kampagnentypen.md) |
 | Sichtbarkeit in KI-Assistenten (ChatGPT, Gemini, Perplexity …) – „GEO“ | 🔵 Beobachten | Ob und wie man lokal empfohlen wird, stichprobenartig prüfen; Grundlagen (Profil, Bewertungen, Verzeichnisse, klare Website) zahlen darauf ein | [Local SEO](../02-lokales-marketing/local-seo.md) |
@@ -43,6 +44,9 @@ und Begründung in der Historie vermerkt.
 | Serverseitiges Tracking | 🔵 Beobachten | Erst ab spürbarem Budget lohnend; Einwilligung bleibt nötig | [Tracking](../01-google-ads/conversion-tracking.md) |
 | Apple Business Connect | 🟢 Einsetzen | Kostenlos; Sichtbarkeit in Apple Karten/Siri | [Local SEO](../02-lokales-marketing/local-seo.md) |
 | WhatsApp/Messaging als Kontaktkanal | 🟡 Testen | Niedrige Hürde für Anfragen; Datenschutz und Erreichbarkeit klären | [E-Mail](../04-digital-marketing/email-marketing.md) |
+| Local Services Ads → Performance Max mit Pay-per-Lead | 🔵 Beobachten | Migration startet in den USA (Aug. 2026), Konten außerhalb der USA bis 2027; in DE bisher nur ausgewählte Branchen/Städte | [Lokale Google Ads](../02-lokales-marketing/lokale-google-ads.md) |
+| Ende von GBP-Q&A → KI-Antworten in Maps („Ask Maps“) | 🟢 Einsetzen | Kundenfragen über Profilfelder, Attribute und Website-FAQ (Schema) beantworten – sonst antwortet die KI ungenau | [Unternehmensprofil](../02-lokales-marketing/google-unternehmensprofil.md) |
+| Erweiterte Conversions für Leads + Data Manager | 🟢 Einsetzen | GCLID-only-Import gilt als „Legacy“; Upload-Wege wechseln (Google Ads API ab 15.06.2026 gesperrt) | [Tracking](../01-google-ads/conversion-tracking.md) |
 | Massenhaft KI-generierte Blogartikel | ⚪ Zurückhalten | Austauschbar, wenig Vertrauen, Risiko bei Qualitätsbewertungen | [Content](../04-digital-marketing/content-marketing.md) |
 | Smart-Kampagnen (Express-Modus) dauerhaft | ⚪ Zurückhalten | Zu wenig Kontrolle; besser Expertenmodus | [Kampagnentypen](../01-google-ads/kampagnentypen.md) |
 
@@ -73,3 +77,6 @@ und Begründung in der Historie vermerkt.
 | Datum | Trend | Von → Nach | Begründung / Quelle |
 |---|---|---|---|
 | 2026-10-27 | – | – | Erstanlage |
+| 2026-10-27 | LSA → PMax Pay-per-Lead | neu → 🔵 | Google-Ankündigung Juli 2026 (support.google.com/google-ads/answer/17213585) |
+| 2026-10-27 | Ende GBP-Q&A / Ask Maps | neu → 🟢 | Q&A-API eingestellt 03.11.2025 (Fachberichte) |
+| 2026-10-27 | Erweiterte Conversions für Leads | neu → 🟢 | Google Ads Hilfe zu Offline-Importen / Data Manager |

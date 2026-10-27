@@ -3,6 +3,7 @@ titel: Negative Keywords
 kategorie: keywords-anzeigen-landingpages
 tags: [google-ads, keywords, budget]
 zielgruppe: Einsteiger
+tiefe: basis
 zuletzt_geprueft: 2026-10
 ---
 

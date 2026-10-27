@@ -3,6 +3,7 @@ titel: Local SEO
 kategorie: lokales-marketing
 tags: [local, kmu, landingpage]
 zielgruppe: Einsteiger
+tiefe: basis
 zuletzt_geprueft: 2026-10
 ---
 

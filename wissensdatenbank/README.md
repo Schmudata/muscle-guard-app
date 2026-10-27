@@ -22,7 +22,20 @@ GitHub oder als Kontext für KI-Assistenten gut durchsuchbar ist.
 | [07-trends](07-trends/) | Trendradar: einsetzen · testen · beobachten · zurückhalten |
 | [blog](blog/) | Themenliste mit Status, Blogformate & Gliederungen |
 | [praxis-log](praxis-log/) | Eigene Beobachtungen, Tests und Zahlen (anonymisiert) |
-| [_vorlagen](_vorlagen/) | Vorlage für neue Artikel |
+| [_vorlagen](_vorlagen/) | Vorlage für neue Artikel, [Qualitätsstandard](_vorlagen/qualitaetsstandard.md) |
+| [VERTIEFUNG.md](VERTIEFUNG.md) | Fortschritt: welche Artikel schon auf Expertenniveau recherchiert sind |
+
+## Anspruch
+
+Die Datenbank zielt auf **Expertenniveau mit Fokus auf den deutschen Markt**:
+- Mechanik erklären, deutsches Recht und Marktbesonderheiten,
+- mehrere Ansätze und Denkschulen mit Pro und Contra,
+- Blick in andere Märkte (USA, UK, NL, FR, AT/CH),
+- Zahlen nur mit Quelle und Einordnung,
+- Unsicherheiten offen markiert: ✅ belegt · 🧪 Praxiserfahrung · ⚖️ strittig · ❓ ungeklärt.
+
+Details: [Qualitätsstandard](_vorlagen/qualitaetsstandard.md). Jeder Artikel trägt im Frontmatter
+`tiefe: basis` oder `tiefe: vertieft`.
 
 ## So nutzt du die Datenbank
 
@@ -105,12 +118,14 @@ Eine geplante Claude-Aufgabe läuft **alle 7 Tage (montags früh)** und
    Das steht im CHANGELOG und, wo sinnvoll, als Streitfrage im Artikel.
 4. **pflegt das [Trendradar](07-trends/trendradar.md)**: neue Trends aufnehmen, Stufen
    verschieben, Historie mit Quelle führen,
-5. **liefert 3 neue Blogideen** auf Basis der Wochen-Neuigkeiten in die
+5. **vertieft 2–3 Artikel pro Woche** nach dem Qualitätsstandard (Reihenfolge in
+   [VERTIEFUNG.md](VERTIEFUNG.md)),
+6. **liefert 3 neue Blogideen** auf Basis der Wochen-Neuigkeiten in die
    [Themenliste](blog/ideen.md),
-6. legt bei Bedarf neue Artikel an (mit allen Abschnitten) und pflegt dieses README,
-7. aktualisiert `zuletzt_geprueft` und dokumentiert alles mit Quellen in
+7. legt bei Bedarf neue Artikel an (mit allen Abschnitten) und pflegt dieses README,
+8. aktualisiert `zuletzt_geprueft` und dokumentiert alles mit Quellen in
    [CHANGELOG.md](CHANGELOG.md),
-8. committet und pusht die Änderungen.
+9. committet und pusht die Änderungen.
 
 Das [Praxis-Log](praxis-log/) wird **nicht** automatisch verändert, es gehört allein euch.
 

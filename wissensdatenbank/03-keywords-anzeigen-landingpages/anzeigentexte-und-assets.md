@@ -3,6 +3,7 @@ titel: Anzeigentexte & Assets
 kategorie: keywords-anzeigen-landingpages
 tags: [google-ads, anzeigen]
 zielgruppe: Einsteiger
+tiefe: basis
 zuletzt_geprueft: 2026-10
 ---
 

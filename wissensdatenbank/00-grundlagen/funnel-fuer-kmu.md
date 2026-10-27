@@ -3,6 +3,7 @@ titel: Marketing-Funnel für lokale KMU
 kategorie: grundlagen
 tags: [kmu, local, budget]
 zielgruppe: Einsteiger
+tiefe: basis
 zuletzt_geprueft: 2026-10
 ---
 

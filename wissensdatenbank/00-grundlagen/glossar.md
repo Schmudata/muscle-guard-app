@@ -3,6 +3,7 @@ titel: Glossar Google Ads & Digital Marketing
 kategorie: grundlagen
 tags: [kmu, google-ads, analytics]
 zielgruppe: Einsteiger
+tiefe: basis
 zuletzt_geprueft: 2026-10
 ---
 

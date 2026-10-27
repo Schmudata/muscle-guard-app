@@ -3,6 +3,7 @@ titel: Analytics mit Google Analytics 4
 kategorie: digital-marketing
 tags: [analytics, tracking]
 zielgruppe: Fortgeschrittene
+tiefe: basis
 zuletzt_geprueft: 2026-10
 ---
 

@@ -3,6 +3,7 @@ titel: Budgetplanung & KPIs
 kategorie: digital-marketing
 tags: [budget, kmu, analytics]
 zielgruppe: Einsteiger
+tiefe: basis
 zuletzt_geprueft: 2026-10
 ---
 

@@ -3,6 +3,7 @@ titel: Playbook Praxen, Kanzleien & beratende Dienstleister
 kategorie: branche
 tags: [branche, local, google-ads]
 zielgruppe: Fortgeschrittene
+tiefe: basis
 zuletzt_geprueft: 2026-10
 ---
 

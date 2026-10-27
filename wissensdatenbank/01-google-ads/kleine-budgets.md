@@ -3,6 +3,7 @@ titel: Google Ads mit kleinem Budget
 kategorie: google-ads
 tags: [google-ads, kmu, budget, local]
 zielgruppe: Einsteiger
+tiefe: basis
 zuletzt_geprueft: 2026-10
 ---
 

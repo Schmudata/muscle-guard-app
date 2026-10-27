@@ -2,9 +2,14 @@
 titel: Titel des Artikels
 kategorie: google-ads | lokales-marketing | keywords-anzeigen-landingpages | digital-marketing | checkliste | branche | grundlagen
 tags: [kmu]
-zielgruppe: Einsteiger | Fortgeschrittene
+zielgruppe: Einsteiger | Fortgeschrittene | Experten
+tiefe: basis | vertieft
 zuletzt_geprueft: JJJJ-MM
 ---
+
+<!-- Qualitätskriterien: siehe _vorlagen/qualitaetsstandard.md
+     Kennzeichnung: ✅ belegt · 🧪 Praxiserfahrung · ⚖️ strittig · ❓ ungeklärt -->
+
 
 # Titel des Artikels
 
@@ -12,7 +17,21 @@ zuletzt_geprueft: JJJJ-MM
 3–5 Sätze: Worum geht es, warum ist es für kleine/lokale Unternehmen wichtig?
 
 ## Details
-Kernwissen, ggf. mit Tabellen.
+Kernwissen, ggf. mit Tabellen. Mechanik erklären: Wie funktioniert es, welche Annahmen stecken dahinter?
+
+## Deutschland-Spezifika
+Recht (mit Aktenzeichen/Paragraf), Marktbesonderheiten, Verfügbarkeit, Nutzerverhalten in DE.
+
+## Ansätze & Denkschulen
+| Ansatz | Kernidee | Voraussetzungen | Stärken | Schwächen | Vertreten von |
+|---|---|---|---|---|---|
+
+## Blick in andere Märkte
+Wie machen es USA, UK, NL, Skandinavien, FR, AT/CH? Was ist übertragbar, was nicht?
+
+## Zahlen & Studien
+| Aussage | Wert | Quelle, Jahr, Methodik | Einordnung |
+|---|---|---|---|
 
 ## Praxis-Tipps
 - Konkrete, umsetzbare Punkte.
@@ -62,4 +81,6 @@ Kurze Antworten zu den Fragen und zur Übung.
 - [Link](../pfad/datei.md)
 
 ## Quellen
-- Offizielle Doku / Studien mit Datum.
+- [Offiziell] Titel – URL (abgerufen JJJJ-MM)
+- [Recht] Gericht, Datum, Aktenzeichen – URL
+- [Studie] / [Fachmedium] / [Anbieter] / [Praktiker] Titel – URL (Jahr)

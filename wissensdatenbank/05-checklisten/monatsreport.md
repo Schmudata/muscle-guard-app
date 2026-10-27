@@ -3,6 +3,7 @@ titel: Vorlage Monatsreport
 kategorie: checkliste
 tags: [checkliste, analytics, google-ads]
 zielgruppe: Einsteiger
+tiefe: basis
 zuletzt_geprueft: 2026-10
 ---
 

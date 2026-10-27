@@ -3,6 +3,7 @@ titel: Kontostruktur in Google Ads
 kategorie: google-ads
 tags: [google-ads, kmu]
 zielgruppe: Einsteiger
+tiefe: basis
 zuletzt_geprueft: 2026-10
 ---
 

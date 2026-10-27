@@ -3,6 +3,7 @@ titel: E-Mail-Marketing für KMU
 kategorie: digital-marketing
 tags: [email, kmu]
 zielgruppe: Einsteiger
+tiefe: basis
 zuletzt_geprueft: 2026-10
 ---
 

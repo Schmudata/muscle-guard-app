@@ -3,6 +3,7 @@ titel: Playbook Handwerk & Hausdienstleistungen
 kategorie: branche
 tags: [branche, local, google-ads]
 zielgruppe: Fortgeschrittene
+tiefe: basis
 zuletzt_geprueft: 2026-10
 ---
 

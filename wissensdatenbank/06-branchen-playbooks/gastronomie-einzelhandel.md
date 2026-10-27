@@ -3,6 +3,7 @@ titel: Playbook Gastronomie & Einzelhandel vor Ort
 kategorie: branche
 tags: [branche, local, social]
 zielgruppe: Fortgeschrittene
+tiefe: basis
 zuletzt_geprueft: 2026-10
 ---
 

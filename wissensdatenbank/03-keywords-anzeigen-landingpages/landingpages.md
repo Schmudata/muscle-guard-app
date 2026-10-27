@@ -3,6 +3,7 @@ titel: Landingpages für lokale Anzeigen
 kategorie: keywords-anzeigen-landingpages
 tags: [landingpage, google-ads, local]
 zielgruppe: Einsteiger
+tiefe: basis
 zuletzt_geprueft: 2026-10
 ---
 

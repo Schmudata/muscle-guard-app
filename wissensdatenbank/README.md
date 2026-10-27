@@ -74,6 +74,17 @@ GitHub oder als Kontext für KI-Assistenten gut durchsuchbar ist.
 - **Pflege:** Bei Änderungen `zuletzt_geprueft` aktualisieren. Veraltetes nicht löschen, sondern
   mit „**Veraltet seit …**“ kennzeichnen, wenn es für Altkonten noch relevant ist.
 
+## Automatische Aktualisierung
+
+Eine geplante Claude-Aufgabe läuft **alle 7 Tage (montags früh)** und
+1. recherchiert Neuerungen bei Google Ads, Google Unternehmensprofil, Local SEO, GA4,
+   Meta Ads und relevantem Recht (DSGVO/UWG) seit der letzten Aktualisierung,
+2. korrigiert veraltete Aussagen und ergänzt neue Features in den passenden Artikeln,
+3. legt bei Bedarf neue Artikel an und pflegt dieses README,
+4. aktualisiert `zuletzt_geprueft` und dokumentiert alles mit Quellen in
+   [CHANGELOG.md](CHANGELOG.md),
+5. committet und pusht die Änderungen.
+
 ## Offizielle Quellen
 
 - Google Ads Hilfe: https://support.google.com/google-ads

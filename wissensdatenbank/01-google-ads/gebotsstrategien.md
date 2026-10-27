@@ -46,6 +46,44 @@ CPC-Obergrenze** oft stabiler. Mit wachsender Datenbasis schrittweise auf
   (Mikro-Conversions als primär markiert).
 - Tägliches Nachjustieren während der Lernphase.
 
+## Lernfragen & Übung
+
+1. Warum funktioniert Smart Bidding bei wenigen Conversions schlecht?
+2. Wie setzt man einen ersten Ziel-CPA sinnvoll fest?
+3. Was passiert, wenn Mikro-Conversions als primär markiert sind?
+
+**Übung:** Eine Kampagne hat in 30 Tagen 18 Conversions bei 900 € Kosten. Welche Strategie empfiehlst du, und welcher Ziel-CPA wäre der Startwert?
+
+<details><summary>Lösungshinweise</summary>
+
+Zu wenige Signale → hohe Schwankungen. Startwert = tatsächlicher CPA der letzten 30 Tage (hier 50 €), dann schrittweise senken. Bei 18 Conversions: Conversions maximieren, Ziel-CPA erst bei stabilem Volumen. Mikro-Conversions verleiten den Algorithmus zu billigen, wertlosen Aktionen.
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: Ist manuelles Bieten 2026 noch zeitgemäß?**
+- *Pro:* Volle Kontrolle, stabil bei kleinen Datenmengen, kein Lernphasen-Risiko.
+- *Contra:* Ignoriert Signale wie Gerät, Uhrzeit und Nutzerkontext, die nur Google sieht.
+- *Einschätzung:* Als Startphase und für sehr kleine Konten legitim; mit Datenbasis auf Smart Bidding umstellen.
+
+**Perspektivwechsel**
+- *Google:* Smart Bidding nutzt Auktionssignale, die Werbetreibende nicht sehen – Vorteil, aber auch Abhängigkeit.
+- *Inhaber:* versteht „Ziel-CPA“ als Versprechen – es ist nur ein Durchschnittsziel.
+- *Agentur:* Ehrlich kommunizieren, dass Lernphasen schwankende Zahlen bringen.
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- Manuell oder automatisch bieten? Ein Stufenplan für kleine Google-Ads-Konten
+- Ziel-CPA richtig setzen: Der häufigste Fehler bei Smart Bidding
+- Warum Google Ads nach jeder Änderung „verrückt spielt“ – die Lernphase erklärt
+
+- **Hook:** Sie haben auf „Conversions maximieren“ umgestellt und plötzlich halbieren sich die Anfragen?
+- **Gegenthese:** Smart Bidding ist nur so schlau wie Ihre Conversion-Daten – mit schlechten Daten ist manuell besser.
+- **Keyword-Idee:** `google ads gebotsstrategie`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.
+
 ## Verwandte Artikel
 - [Conversion-Tracking](conversion-tracking.md)
 - [Kleine Budgets](kleine-budgets.md)

@@ -65,6 +65,44 @@ Kombinationen einschränkt.
   berufsrechtliche Vorgaben, Google-Richtlinien).
 - Keine fremden Markennamen ohne Berechtigung.
 
+## Lernfragen & Übung
+
+1. Welche Arten von Anzeigentiteln sollte eine RSA enthalten?
+2. Warum sollte Pinning sparsam eingesetzt werden?
+3. Welche Assets sind für lokale Betriebe besonders wichtig?
+
+**Übung:** Schreibe eine komplette RSA (15 Titel, 4 Beschreibungen) für einen Betrieb deiner Wahl – mit jedem Bausteintyp mindestens einmal. Prüfe Zeichenlimits.
+
+<details><summary>Lösungshinweise</summary>
+
+Mix aus Keyword, Ort, Vorteil, Tempo, Beweis, Angebot, Risikoreduktion, CTA. Pinning reduziert Kombinationen und Lernfähigkeit. Lokal: Anruf, Standort, Sitelinks, Callouts, Bilder.
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: Sollte man Google automatisch Anzeigentexte erstellen lassen?**
+- *Pro:* Spart Zeit, testet Varianten, die man selbst nicht schreiben würde.
+- *Contra:* Generische oder falsche Aussagen, Markenstimme geht verloren, rechtliche Risiken.
+- *Einschätzung:* KI-Vorschläge als Ideen nutzen, aber jede Aussage selbst freigeben.
+
+**Perspektivwechsel**
+- *Endkunde:* liest nur 2–3 Sekunden – Ort, Nutzen und Beweis müssen sofort sichtbar sein.
+- *Recht:* Superlative und Heilversprechen können abmahnfähig sein.
+- *Google:* „Anzeigeneffektivität“ misst Vollständigkeit, nicht Überzeugungskraft.
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- Google-Anzeigen schreiben, die Kunden anrufen lassen – mit Beispielen
+- 15 Anzeigentitel für Handwerker, die funktionieren
+- Warum „Qualität seit 1990“ keine gute Werbebotschaft ist
+
+- **Hook:** Ihre Anzeige hat 30 Zeichen, um besser zu sein als drei Mitbewerber direkt darüber und darunter.
+- **Gegenthese:** Eine „Sehr gute“ Anzeigeneffektivität sagt nichts darüber, ob die Anzeige verkauft.
+- **Keyword-Idee:** `google ads anzeigentexte beispiele`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.
+
 ## Verwandte Artikel
 - [Landingpages](landingpages.md)
 - [Lokale Google-Ads-Kampagnen](../02-lokales-marketing/lokale-google-ads.md)

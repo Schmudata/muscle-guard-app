@@ -45,6 +45,44 @@ Beispiel Flyer: `?utm_source=flyer&utm_medium=qr&utm_campaign=fruehjahr-2026`
 - **Wahrheit liegt im CRM:** Leads und Aufträge auch dort mit Quelle erfassen
   („Wie sind Sie auf uns aufmerksam geworden?“).
 
+## Lernfragen & Übung
+
+1. Was sind Schlüsselereignisse in GA4?
+2. Warum braucht es eine einheitliche UTM-Konvention?
+3. Warum liegt die „Wahrheit im CRM“?
+
+**Übung:** Erstelle UTM-Links für drei echte Kanäle (GBP, Newsletter, Flyer-QR) und prüfe nach zwei Wochen in der Traffic-Akquisition, ob sie korrekt erscheinen.
+
+<details><summary>Lösungshinweise</summary>
+
+Wichtige Ereignisse, die als Erfolg zählen (früher „Conversions“ in GA4). Uneinheitliche Schreibweisen zersplittern Berichte. Analytics sieht keine Abschlüsse, Anrufe ohne Tracking und abgelehnte Cookies – das CRM schon.
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: Braucht ein kleiner Betrieb überhaupt GA4?**
+- *Pro:* Kostenlos, verknüpft mit Google Ads, zeigt Kanäle und Seiten.
+- *Contra:* Komplex, Datenlücken durch Consent, Datenschutzfragen.
+- *Einschätzung:* Schlank einrichten oder datenschutzfreundliche Alternativen prüfen; entscheidend ist die Quellenabfrage bei Anfragen.
+
+**Perspektivwechsel**
+- *Datenschutz:* jede Datensammlung braucht einen Zweck.
+- *Inhaber:* will eine Seite mit 5 Zahlen, kein Dashboard mit 50.
+- *Google:* GA4 speist das Google-Werbeökosystem.
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- GA4 für kleine Unternehmen: Das Minimal-Setup in 30 Minuten
+- UTM-Parameter erklärt: Woher kommen Ihre Kunden wirklich?
+- Warum Ihre Analytics-Zahlen nicht mit der Realität übereinstimmen
+
+- **Hook:** Ihre Statistik sagt, Instagram bringt nichts. Ihre Kunden sagen etwas anderes.
+- **Gegenthese:** Eine einfache Frage im Kontaktformular liefert oft bessere Daten als jedes Analytics-Setup.
+- **Keyword-Idee:** `google analytics 4 einrichten`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.
+
 ## Verwandte Artikel
 - [Conversion-Tracking](../01-google-ads/conversion-tracking.md)
 - [Monatsreport](../05-checklisten/monatsreport.md)

@@ -53,6 +53,44 @@ Ist „Lost IS (Rang)“ hoch → Anzeigenqualität/Gebote verbessern, nicht nur
 - Bundesweite Ausrichtung für lokale Dienstleistung.
 - Startseite als Ziel-URL statt passender Leistungsseite.
 
+## Lernfragen & Übung
+
+1. Wie schätzt man ein realistisches Mindestbudget?
+2. Welche Fokus-Hebel gibt es, wenn das Budget nicht reicht?
+3. Was bedeutet hoher „Lost IS (Rang)“ im Vergleich zu „Lost IS (Budget)“?
+
+**Übung:** Ein Friseur hat 300 €/Monat, erwarteter CPC 1,50 €, CVR 10 %. Wie viele Buchungen sind realistisch, und wie würdest du das Konto fokussieren?
+
+<details><summary>Lösungshinweise</summary>
+
+Mindestbudget ≈ 10 Klicks/Tag × CPC. 300 € ÷ 1,50 € = 200 Klicks × 10 % = ca. 20 Buchungen. Fokus: Stadtteil-Radius, nur Kernleistungen, Zeiten mit freien Terminen. Lost IS (Rang) → Qualität/Gebot, Lost IS (Budget) → Budget.
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: Lohnt sich Google Ads unter 500 €/Monat überhaupt?**
+- *Pro:* Bei hohem Auftragswert und engem Fokus können wenige Leads sehr profitabel sein.
+- *Contra:* Zu wenig Daten für Optimierung; Agenturgebühren fressen das Budget.
+- *Einschätzung:* Ja, wenn selbst betreut, eng fokussiert und Auftragswert hoch; sonst zuerst Unternehmensprofil und Bewertungen.
+
+**Perspektivwechsel**
+- *Inhaber:* erwartet von 300 € oft volle Auftragsbücher – Erwartungsmanagement ist Teil der Arbeit.
+- *Google:* Empfehlungen zielen häufig auf höhere Budgets.
+- *Wettbewerb:* Große Anbieter und Portale bieten auf dieselben Keywords – Nischen suchen.
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- Google Ads mit 500 € im Monat: Geht das? Eine ehrliche Rechnung
+- 7 Wege, mit kleinem Werbebudget mehr Anfragen zu bekommen
+- Warum 5 € am Tag bei Google Ads fast immer scheitern
+
+- **Hook:** „Google Ads haben wir probiert – hat nicht funktioniert.“ Meist lag es am Budget-Design, nicht am Kanal.
+- **Gegenthese:** Für manche Betriebe ist Google Ads die falsche Wahl – und das zu sagen schafft Vertrauen.
+- **Keyword-Idee:** `google ads kleines budget`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.
+
 ## Verwandte Artikel
 - [Budgetplanung & KPIs](../04-digital-marketing/budgetplanung-kpis.md)
 - [Negative Keywords](../03-keywords-anzeigen-landingpages/negative-keywords.md)

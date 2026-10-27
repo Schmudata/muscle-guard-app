@@ -48,3 +48,41 @@ Kurz halten: Inhaber wollen wissen, **was es gebracht hat** und **was als Nächs
 - Zahlen immer mit Vormonat **und** Vorjahresmonat (Saison) vergleichen.
 - Technische KPIs (CTR, CPC, QS) nur im Anhang.
 - Automatisierung: Looker Studio mit Google Ads, GA4 und GBP-Daten.
+
+## Lernfragen & Übung
+
+1. Welche KPIs gehören in den Hauptteil eines Reports für Inhaber?
+2. Warum mit Vorjahresmonat vergleichen?
+3. Was sollte ein Report vom Kunden einfordern?
+
+**Übung:** Erstelle einen Report für einen echten Monat mit maximal einer Seite und lass ihn von jemandem ohne Marketingwissen lesen. Was wurde nicht verstanden?
+
+<details><summary>Lösungshinweise</summary>
+
+Kosten, Anfragen, CPL, Aufträge, Umsatz, Profil-Aktionen, Bewertungen. Saisonalität verzerrt Vormonatsvergleiche. Feedback zu Lead-Qualität, Kapazitäten, Fotos, Aktionen.
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: Automatisierte Dashboards statt persönlicher Reports?**
+- *Pro:* Spart Zeit, jederzeit aktuell.
+- *Contra:* Ohne Einordnung versteht der Inhaber die Zahlen nicht; keine Handlungsempfehlungen.
+- *Einschätzung:* Dashboard für Zahlen, kurze persönliche Einordnung mit 3 nächsten Schritten.
+
+**Perspektivwechsel**
+- *Inhaber:* liest die erste Zeile und die nächsten Schritte.
+- *Agentur:* Reports sind Vertrauensaufbau, nicht Pflichtübung.
+- *Vertrieb:* kennt die Lead-Qualität am besten – einbeziehen.
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- Was in einem guten Marketing-Report stehen sollte
+- Die 7 Zahlen, die ein Inhaber jeden Monat kennen sollte
+- Warum 20-seitige Agenturreports niemand liest
+
+- **Hook:** Wenn Sie nach dem Lesen Ihres Marketing-Reports nicht wissen, was nächsten Monat passiert, ist er schlecht.
+- **Gegenthese:** Mehr Transparenz kann auch verunsichern – Rohdaten ohne Kontext helfen niemandem.
+- **Keyword-Idee:** `marketing report vorlage`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.

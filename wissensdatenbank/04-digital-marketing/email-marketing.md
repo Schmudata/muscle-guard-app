@@ -46,5 +46,43 @@ Serverstandort und AV-Vertrag achten.
 - Nur Rabatt-Mails → Abmeldungen.
 - Keine Segmentierung (Neukunde vs. Stammkunde).
 
+## Lernfragen & Übung
+
+1. Was ist Double-Opt-in und warum ist er wichtig?
+2. Welche Automatisierungen bringen lokalen Betrieben am meisten?
+3. Warum ist die Öffnungsrate nur noch eingeschränkt aussagekräftig?
+
+**Übung:** Plane eine Willkommensserie mit 3 E-Mails für einen Betrieb: Betreff, Ziel, Inhalt, Versandzeitpunkt.
+
+<details><summary>Lösungshinweise</summary>
+
+Bestätigung der Anmeldung per Link – Nachweis der Einwilligung. Willkommensserie, Bewertungsbitte, Wartungserinnerung, Geburtstag, Reaktivierung. Apple Mail Privacy Protection lädt Bilder automatisch → künstlich hohe Öffnungen.
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: Ist der Newsletter für kleine Betriebe tot – lieber WhatsApp?**
+- *Pro:* WhatsApp hat hohe Lesequoten und ist persönlicher.
+- *Contra:* Rechtliche Hürden, Plattformabhängigkeit, schnell aufdringlich.
+- *Einschätzung:* E-Mail als eigene Basis, WhatsApp/Messenger ergänzend für Kurzinfos – beides nur mit Einwilligung.
+
+**Perspektivwechsel**
+- *Endkunde:* abonniert wegen eines Nutzens, nicht wegen „Neuigkeiten“.
+- *Inhaber:* die Liste gehört dem Betrieb – Social-Follower nicht.
+- *Recht:* Einwilligung nachweisen können ist Pflicht.
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- E-Mail-Marketing für kleine Betriebe: Die 5 Automatisierungen, die sich lohnen
+- Newsletter oder WhatsApp? Was für lokale Unternehmen besser funktioniert
+- Stammkunden halten: Die günstigste Marketingmaßnahme überhaupt
+
+- **Hook:** Neue Kunden zu gewinnen ist deutlich teurer, als bestehende zu halten – aber fast alle Budgets fließen in Neukunden.
+- **Gegenthese:** Ein schlechter Newsletter schadet mehr als gar keiner.
+- **Keyword-Idee:** `email marketing kleine unternehmen`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.
+
 ## Verwandte Artikel
 - [Bewertungen](../02-lokales-marketing/bewertungen.md)

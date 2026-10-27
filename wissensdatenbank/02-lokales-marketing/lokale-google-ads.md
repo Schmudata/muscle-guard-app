@@ -58,6 +58,44 @@ Geo-Targeting meist volumenstärker. Beides testen.
 - Anrufe außerhalb der Geschäftszeiten → verlorene Leads, schlechte Bewertungen.
 - GBP nicht verknüpft → keine Standort-Assets.
 
+## Lernfragen & Übung
+
+1. Was ist der Unterschied zwischen „Präsenz“ und „Präsenz oder Interesse“?
+2. Wann ist ein Radius, wann sind PLZ/Städte als Ausrichtung besser?
+3. Warum ist ein Anrufzeitplan wichtig?
+
+**Übung:** Öffne in einem Konto den Bericht „Tatsächliche Standorte“ der letzten 90 Tage. Wie viel Budget fiel außerhalb des Einzugsgebiets an?
+
+<details><summary>Lösungshinweise</summary>
+
+„Präsenz“ erreicht nur Personen im Gebiet; der Standard schließt auch Interessierte von außerhalb ein. Radius für gleichmäßige Einzugsgebiete, PLZ bei unregelmäßigen oder unterschiedlich profitablen Gebieten. Anrufe außerhalb der Erreichbarkeit = verlorene Leads.
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: Sollten Keywords den Ortsnamen enthalten?**
+- *Pro:* Klare Absicht, passende Anzeigen, oft höhere Conversion-Rate.
+- *Contra:* Geringes Volumen; Google erkennt den Ort über Geo-Targeting ohnehin.
+- *Einschätzung:* Beides testen – Leistung ohne Ort (mit Präsenz-Targeting) liefert meist das Volumen.
+
+**Perspektivwechsel**
+- *Endkunde:* auf dem Handy, in Eile, will anrufen – nicht lesen.
+- *Inhaber:* Kapazität begrenzt: Werbung muss zur Auslastung passen.
+- *Google:* Standardeinstellungen maximieren Reichweite, nicht Relevanz.
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- Die eine Einstellung, die lokale Google-Ads-Kampagnen ruiniert
+- Google Ads für lokale Betriebe: Der komplette Leitfaden
+- Anrufe statt Klicks: Google Ads für Dienstleister vor Ort
+
+- **Hook:** Ihre Anzeige für „Elektriker Bonn“ wird womöglich gerade in Hamburg geklickt.
+- **Gegenthese:** Für Betriebe mit Touristen- oder Umzugskundschaft ist „Interesse“-Targeting genau richtig.
+- **Keyword-Idee:** `google ads lokal`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.
+
 ## Verwandte Artikel
 - [Kampagnentypen](../01-google-ads/kampagnentypen.md)
 - [Anzeigentexte & Assets](../03-keywords-anzeigen-landingpages/anzeigentexte-und-assets.md)

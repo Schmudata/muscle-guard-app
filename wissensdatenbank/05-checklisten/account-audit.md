@@ -65,3 +65,41 @@ Für die Übernahme eines bestehenden Kontos oder den Quartals-Check. Bewertung 
 | Top-3-Probleme | Auswirkung | Maßnahme | Aufwand |
 |---|---|---|---|
 | | | | |
+
+## Lernfragen & Übung
+
+1. Welcher Audit-Bereich hat bei übernommenen Konten meist die größten Probleme?
+2. Woran erkennt man Doppelzählungen bei Conversions?
+3. Wie priorisiert man die Ergebnisse eines Audits?
+
+**Übung:** Auditiere ein Konto komplett und fülle die Ergebnis-Tabelle aus. Schätze für die Top-3-Probleme den monatlichen Euro-Effekt.
+
+<details><summary>Lösungshinweise</summary>
+
+Meist Tracking und Standorteinstellungen. Doppelzählungen: mehrere primäre Aktionen für dasselbe Ereignis, Conversions > Formulareingänge. Priorisierung nach Auswirkung × Aufwand.
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: Sollte man ein schlechtes Konto reparieren oder neu aufsetzen?**
+- *Pro:* Neu aufsetzen schafft saubere Struktur und klares Tracking.
+- *Contra:* Historische Daten, Qualitätsfaktoren und Lernerfolge gehen teilweise verloren.
+- *Einschätzung:* Im bestehenden Konto neue, saubere Kampagnen aufbauen und alte schrittweise pausieren.
+
+**Perspektivwechsel**
+- *Neue Agentur:* Audits werden gern als Verkaufsinstrument genutzt – fair bleiben.
+- *Inhaber:* will wissen, wie viel Geld verloren ging und was es kostet, es zu beheben.
+- *Alte Agentur:* nicht jede Entscheidung war falsch – Kontext erfragen.
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- Google-Ads-Check: 30 Punkte, die Sie selbst prüfen können
+- Was wir bei fast jedem übernommenen Google-Ads-Konto finden
+- Ist Ihre Agentur gut? So prüfen Sie Ihr Google-Ads-Konto
+
+- **Hook:** Die meisten Probleme in kleinen Google-Ads-Konten finden sich in unter einer Stunde.
+- **Gegenthese:** Ein Audit ohne Gespräch mit dem Inhaber übersieht die wichtigsten Fehler – die im Vertrieb.
+- **Keyword-Idee:** `google ads audit checkliste`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.

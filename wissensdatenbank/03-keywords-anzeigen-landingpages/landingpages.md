@@ -52,6 +52,44 @@ ganzen Konto.
 - Telefonnummer nur im Impressum.
 - Stockfotos und Floskeln („Qualität ist unser Anspruch“).
 
+## Lernfragen & Übung
+
+1. Was gehört „above the fold“ auf eine mobile Landingpage?
+2. Was bedeutet Message Match?
+3. Warum kann eine Qualifizierungsfrage im Formular sinnvoll sein?
+
+**Übung:** Öffne die Landingpage einer Anzeige auf dem Handy, stoppe 5 Sekunden und notiere: Was wird angeboten, wo, warum dieser Anbieter, was soll ich tun? Fehlt eine Antwort, ist das die erste Baustelle.
+
+<details><summary>Lösungshinweise</summary>
+
+Überschrift mit Suchintention + Ort, Nutzen, Anruf-Button/CTA, Vertrauenssignal. Message Match = Suchbegriff, Anzeige und Seite sprechen dieselbe Sprache. Qualifizierungsfragen senken Menge, erhöhen aber Qualität.
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: Separate Landingpages oder die normale Website?**
+- *Pro:* Separate Seiten konvertieren oft besser, sind fokussiert und testbar.
+- *Contra:* Mehr Pflegeaufwand, doppelte Inhalte, Bruch im Markenauftritt.
+- *Einschätzung:* Für Kernleistungen gute Leistungsseiten auf der Website; separate Seiten für Aktionen und Tests.
+
+**Perspektivwechsel**
+- *Endkunde:* will eine Antwort, keine Unternehmensgeschichte.
+- *Inhaber:* liebt die eigene Startseite – Daten helfen gegen Bauchgefühl.
+- *Webdesigner:* Optik ≠ Conversion; klare Struktur schlägt Animation.
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- Die perfekte Landingpage für lokale Dienstleister – Aufbau mit Vorlage
+- Warum Ihre Startseite keine gute Anzeigen-Zielseite ist
+- 5 Sekunden entscheiden: Der Handy-Test für Ihre Website
+
+- **Hook:** Wer die Conversion-Rate verdoppelt, halbiert seine Kosten pro Anfrage – ohne einen Cent mehr Werbebudget.
+- **Gegenthese:** Lange Seiten verkaufen bei beratungsintensiven Leistungen oft besser als kurze.
+- **Keyword-Idee:** `landingpage erstellen tipps`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.
+
 ## Verwandte Artikel
 - [Anzeigentexte & Assets](anzeigentexte-und-assets.md)
 - [Local SEO](../02-lokales-marketing/local-seo.md)

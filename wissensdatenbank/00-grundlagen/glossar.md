@@ -66,3 +66,41 @@ zuletzt_geprueft: 2026-10
 - **First-Party-Daten:** Eigene Kundendaten (E-Mail-Liste, CRM), DSGVO-konform erhoben.
 - **UTM-Parameter:** URL-Zusätze zur Kanalzuordnung in Analytics
   (`utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`).
+
+## Lernfragen & Übung
+
+1. Warum kann eine Kampagne mit sinkender CTR trotzdem profitabler werden?
+2. Was ist der Unterschied zwischen Keyword und Suchbegriff – und warum ist er für die Kosten entscheidend?
+3. Wann ist der ROAS die falsche Kennzahl für ein lokales Dienstleistungsunternehmen?
+
+**Übung:** Nimm einen echten oder erfundenen Monat: 1.200 € Kosten, 400 Klicks, 32 Leads, 8 Aufträge à 1.500 €. Berechne CPC, CVR, CPL, Kosten pro Auftrag und ROAS.
+
+<details><summary>Lösungshinweise</summary>
+
+CPC 3 € · CVR 8 % · CPL 37,50 € · Kosten pro Auftrag 150 € · ROAS 10 (12.000 € ÷ 1.200 €). Wenn die CTR sinkt, weil weniger unpassende Leute klicken, steigt oft die Conversion-Rate. Bei Leads ohne Umsatzwert ist CPL bzw. Kosten pro Auftrag aussagekräftiger als der ROAS.
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: Sind „Vanity Metrics“ wie Impressionen und CTR für KMU nutzlos?**
+- *Pro:* Sie zeigen früh, ob Anzeigen relevant sind, lange bevor genug Conversions da sind.
+- *Contra:* Wer sie berichtet, lenkt vom Geschäftsergebnis ab; Inhaber verwechseln Reichweite mit Erfolg.
+- *Einschätzung:* Als Diagnosewerte intern nutzen, im Kundenreport nur Business-KPIs nach vorne stellen.
+
+**Perspektivwechsel**
+- *Inhaber:* versteht „Anfragen“ und „Aufträge“, nicht „CVR“ – Fachbegriffe übersetzen.
+- *Google:* hat Interesse an Metriken, die mehr Ausgaben rechtfertigen (z. B. „Optimierungsfaktor“).
+- *Agentur:* Kennzahlen definieren, woran sie gemessen wird – deshalb früh gemeinsam festlegen.
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- Google Ads verstehen: Die 10 Kennzahlen, die ein Inhaber wirklich kennen muss
+- CTR, CPC, CPA – warum Ihr Werbereport Sie vielleicht in die Irre führt
+- Von Klicks zu Kunden: So rechnen Sie Ihren Werbeerfolg selbst nach
+
+- **Hook:** „Ihre Klickrate ist super!“ – und trotzdem klingelt das Telefon nicht. Woran liegt das?
+- **Gegenthese:** Die wichtigste Kennzahl steht in keinem Google-Ads-Bericht: die Abschlussquote im eigenen Betrieb.
+- **Keyword-Idee:** `google ads kennzahlen erklärt`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.

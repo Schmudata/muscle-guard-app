@@ -39,3 +39,41 @@ zuletzt_geprueft: 2026-10
 - [ ] Tag 3–7: Suchbegriffe säubern, erste Conversions geprüft
 - [ ] Woche 2–4: Gebote/Budgets nachjustieren, Lead-Qualität mit Kunde besprechen
 - [ ] Nach 4–6 Wochen: Gebotsstrategie-Stufe prüfen ([Gebotsstrategien](../01-google-ads/gebotsstrategien.md))
+
+## Lernfragen & Übung
+
+1. Welche Informationen müssen vor dem Start vom Kunden geklärt sein?
+2. Was sollte in den ersten 7 Tagen nach dem Start geprüft werden?
+3. Warum ist die Lead-Bearbeitung Teil des Kampagnenerfolgs?
+
+**Übung:** Führe ein Vorgespräch mit einem (echten oder gespielten) Inhaber anhand der Liste „Vorbereitung“ und leite daraus Budget und Ziel-CPL ab.
+
+<details><summary>Lösungshinweise</summary>
+
+Leistungen, Gebiet, Erreichbarkeit, Kapazität, Auftragswerte, Budget, USPs, Lead-Bearbeitung. Erste Woche: Freigabe, Ausspielung, Suchbegriffe, Conversions. Langsame Reaktion auf Leads senkt die Abschlussquote deutlich.
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: Sollte man mit wenig Budget breit testen oder eng starten?**
+- *Pro:* Breiter Test zeigt schnell, welche Leistungen funktionieren.
+- *Contra:* Zu wenig Daten pro Leistung – kein Test liefert Aussagen.
+- *Einschätzung:* Eng mit 1–2 Kernleistungen starten, erst nach stabilen Ergebnissen ausweiten.
+
+**Perspektivwechsel**
+- *Inhaber:* erwartet Ergebnisse ab Tag 1 – realistische Anlaufzeit kommunizieren.
+- *Mitarbeiter am Telefon:* müssen wissen, dass Werbung läuft und welche Angebote beworben werden.
+- *Google:* Lernphase braucht Zeit und Daten.
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- Google Ads starten: Die Checkliste für die ersten 30 Tage
+- Bevor Sie Werbung schalten: 8 Fragen, die Sie beantworten müssen
+- Warum Ihre ersten zwei Wochen Google Ads kaum aussagekräftig sind
+
+- **Hook:** Die wichtigste Arbeit an einer Kampagne passiert, bevor sie startet.
+- **Gegenthese:** Manchmal ist die richtige Entscheidung im Vorgespräch: noch nicht werben.
+- **Keyword-Idee:** `google ads kampagne erstellen`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.

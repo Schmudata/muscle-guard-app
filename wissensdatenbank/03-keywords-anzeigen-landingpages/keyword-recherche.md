@@ -49,6 +49,44 @@ Conversions sauber gemessen werden – und dann eng den Suchbegriffbericht beoba
 - Kein Abgleich mit der Landingpage (Keyword verspricht etwas, das die Seite nicht bietet).
 - Broad Match mit manuellem CPC und ohne negative Keywords.
 
+## Lernfragen & Übung
+
+1. Warum ist Kaufabsicht wichtiger als Suchvolumen?
+2. Wie unterscheiden sich die drei Keyword-Optionen?
+3. Wann ist Broad Match für ein kleines Konto vertretbar?
+
+**Übung:** Erstelle für eine Leistung deiner Wahl eine Seed-Liste mit 30 Keywords, sortiere sie nach Suchintention und markiere die 10 besten für den Start.
+
+<details><summary>Lösungshinweise</summary>
+
+Volumen ohne Absicht verbrennt Budget. Broad = Bedeutung + Kontext, Phrase = enthält Bedeutung, Exact = gleiche Bedeutung. Broad nur mit Smart Bidding, sauberem Tracking und engem Suchbegriff-Monitoring.
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: Ist Broad Match + Smart Bidding der neue Standard – auch für KMU?**
+- *Pro:* Findet Suchbegriffe, die man nie recherchiert hätte; Google investiert stark in diese Kombination.
+- *Contra:* Bei kleinem Budget und wenigen Conversions oft viele irrelevante Klicks.
+- *Einschätzung:* Phrase/Exact als Basis, Broad als kontrollierter Test, sobald 30+ Conversions/Monat vorliegen.
+
+**Perspektivwechsel**
+- *Endkunde:* sucht in Alltagssprache, nicht in Fachbegriffen.
+- *Inhaber:* kennt die echten Kundenfragen – wichtigste Recherchequelle.
+- *Google:* Keyword-Planer-Daten sind gerundet und regional ungenau.
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- Keyword-Recherche für lokale Betriebe in 5 Schritten
+- Warum die Keywords mit dem meisten Suchvolumen oft die schlechtesten sind
+- Broad, Phrase, Exact: Keyword-Optionen verständlich erklärt
+
+- **Hook:** Das beste Keyword-Tool steht in Ihrem Büro: das Telefon.
+- **Gegenthese:** Für informative Keywords mit Ads zu werben kann lokal funktionieren, wenn die Landingpage berät statt verkauft.
+- **Keyword-Idee:** `keyword recherche google ads`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.
+
 ## Verwandte Artikel
 - [Negative Keywords](negative-keywords.md)
 - [Kontostruktur](../01-google-ads/kontostruktur.md)

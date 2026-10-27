@@ -58,6 +58,44 @@ Vormonat/Vorjahresmonat**. Eigene Werte in dieser Datenbank dokumentieren
 - Erfolg nur an Klicks/CTR messen.
 - Abschlussquote im Vertrieb nie erfasst → kein Ziel-CPL berechenbar.
 
+## Lernfragen & Übung
+
+1. Wie berechnet man den maximal tragbaren Preis pro Lead?
+2. Wie plant man ein Budget rückwärts vom Umsatzziel?
+3. Warum sind Branchen-Benchmarks nur begrenzt hilfreich?
+
+**Übung:** Rechne für einen echten Betrieb: Ø Auftragswert, Marge, Abschlussquote → Max. CPL. Dann rückwärts das Budget für 10 zusätzliche Aufträge pro Monat.
+
+<details><summary>Lösungshinweise</summary>
+
+Max. CPL = Deckungsbeitrag × Abschlussquote. Aufträge → Leads → Klicks → Budget. Benchmarks schwanken stark je nach Land, Branche, Jahr und Methodik.
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: Sollte man den Customer Lifetime Value in den Ziel-CPL einrechnen?**
+- *Pro:* Realistisch: Stammkunden und Empfehlungen sind der eigentliche Gewinn.
+- *Contra:* Unsicher, schwer messbar, verleitet zu überhöhten Ausgaben.
+- *Einschätzung:* Konservativ: Erstauftrag sollte Werbekosten decken, CLV als Puffer für Skalierung nutzen.
+
+**Perspektivwechsel**
+- *Inhaber:* denkt in Liquidität – Werbung muss sich zeitnah bezahlt machen.
+- *Steuerberater:* Werbekosten sind Betriebsausgaben, aber Marge zählt.
+- *Agentur:* Gebühren gehören in die Rechnung der Kosten pro Auftrag.
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- Wie viel sollte ein kleines Unternehmen für Werbung ausgeben?
+- So viel darf eine Kundenanfrage kosten – die Formel
+- Werbebudget planen: Rückwärts vom Umsatzziel rechnen
+
+- **Hook:** „Wie viel sollte ich für Google Ads ausgeben?“ ist die falsche Frage. Die richtige: Wie viel darf ein Kunde kosten?
+- **Gegenthese:** Prozent-vom-Umsatz-Regeln sind für wachsende Betriebe oft zu niedrig angesetzt.
+- **Keyword-Idee:** `werbebudget kleine unternehmen`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.
+
 ## Verwandte Artikel
 - [Kleine Budgets](../01-google-ads/kleine-budgets.md)
 - [Monatsreport](../05-checklisten/monatsreport.md)

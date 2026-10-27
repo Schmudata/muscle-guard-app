@@ -55,6 +55,44 @@ Damit bleiben Berichte auch nach Monaten lesbar.
   Suchkampagnen standardmäßig aktiv – meist abwählen).
 - Marke und generische Keywords in derselben Kampagne → Markenklicks schönen die Zahlen.
 
+## Lernfragen & Übung
+
+1. Nach welchen Kriterien entscheidet man, ob eine neue Kampagne nötig ist?
+2. Warum schaden zu viele kleine Anzeigengruppen bei Smart Bidding?
+3. Welche Kontoeinstellungen lassen sich nachträglich nicht ändern?
+
+**Übung:** Entwirf die Kontostruktur für eine Zahnarztpraxis mit 2.000 €/Monat, Schwerpunkt Implantate, Prophylaxe und Notdienst am Wochenende.
+
+<details><summary>Lösungshinweise</summary>
+
+Kriterien: unterschiedliches Budget, Ziel, Standort oder Gebotsstrategie. Daten bündeln hilft dem Algorithmus. Zeitzone und Währung sind fix. Beispiel: Search – Implantate (eigenes Budget, hoher Wert), Search – Prophylaxe/Allgemein, Search – Notdienst (Wochenendzeitplan, Anrufziel), optional Marke.
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: Sind granulare Strukturen (SKAGs, viele Anzeigengruppen) tot?**
+- *Pro:* Volle Kontrolle über Anzeigentexte und Gebote, besonders bei manuellem CPC.
+- *Contra:* Smart Bidding braucht Daten; Keyword-Varianten werden ohnehin zusammengefasst.
+- *Einschätzung:* Für kleine Konten: thematisch gruppieren, eng genug für passende Anzeigen, breit genug für Daten.
+
+**Perspektivwechsel**
+- *Google:* propagiert stark vereinfachte Strukturen – weil Automatisierung sonst schlechter funktioniert, aber auch, weil Kontrolle abgegeben wird.
+- *Inhaber:* muss das Konto lesen können – verständliche Namen sind Teil der Transparenz.
+- *Agentur:* komplexe Strukturen wirken professionell, kosten aber Pflegezeit.
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- So strukturieren Sie Ihr Google-Ads-Konto, wenn Sie nur 1.000 € im Monat haben
+- Weniger ist mehr: Warum Ihr Google-Ads-Konto wahrscheinlich zu kompliziert ist
+- Die perfekte Kontostruktur für Handwerker – mit Beispiel
+
+- **Hook:** Ein Konto mit 40 Kampagnen und 30 € Tagesbudget ist kein Zeichen von Professionalität.
+- **Gegenthese:** Wer selbst bietet (manueller CPC), profitiert weiterhin von feiner Struktur.
+- **Keyword-Idee:** `google ads kontostruktur`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.
+
 ## Verwandte Artikel
 - [Kampagnentypen](kampagnentypen.md)
 - [Kleine Budgets](kleine-budgets.md)

@@ -49,6 +49,44 @@ eigene Stimme. Generische KI-Texte bringen lokal kaum Vertrauen.
 - Kein Bezug zum Ort.
 - Erfolg an Followern statt an Anfragen messen.
 
+## Lernfragen & Übung
+
+1. Warum ist ein Kanal konsequent besser als fünf halbherzig?
+2. Welche Content-Säulen eignen sich für lokale Betriebe?
+3. Wie macht man aus einer Kundenfrage mehrere Inhalte?
+
+**Übung:** Sammle 10 Fragen, die Kunden häufig stellen, und plane daraus einen Monat Content: 1 Artikel, 4 Reels, 4 GBP-Beiträge, 1 Newsletter-Abschnitt.
+
+<details><summary>Lösungshinweise</summary>
+
+Reichweite entsteht durch Regelmäßigkeit; Ressourcen sind knapp. Säulen: Ergebnisse, Wissen, Menschen, Lokal, Angebot. Eine Frage → Video → Reel → GBP-Post → Newsletter.
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: Kann KI-generierter Content für lokale Betriebe funktionieren?**
+- *Pro:* Spart viel Zeit bei Texten, Ideen und Untertiteln.
+- *Contra:* Austauschbar, ohne Erfahrung und lokalen Bezug; Vertrauen und Sichtbarkeit leiden.
+- *Einschätzung:* KI für Struktur und Entwürfe, echte Fotos, Erfahrungen und Meinung vom Betrieb selbst.
+
+**Perspektivwechsel**
+- *Endkunde:* folgt Menschen, nicht Logos.
+- *Inhaber:* Zeit ist der Engpass – Content muss ins Tagesgeschäft passen.
+- *Plattformen:* belohnen Formate, die Nutzer lange halten (Video).
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- Content-Marketing für Handwerker: Was posten, wenn man keine Zeit hat?
+- Aus einer Kundenfrage 10 Inhalte machen – so geht's
+- Warum austauschbarer KI-Content lokalen Betrieben schadet
+
+- **Hook:** Die beste Content-Idee hat Ihnen heute schon ein Kunde am Telefon gesagt.
+- **Gegenthese:** Nicht jeder Betrieb braucht Social Media – ein gepflegtes Profil und Bewertungen können reichen.
+- **Keyword-Idee:** `social media ideen kleine unternehmen`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.
+
 ## Verwandte Artikel
 - [Meta Ads](meta-ads.md)
 - [Local SEO](../02-lokales-marketing/local-seo.md)

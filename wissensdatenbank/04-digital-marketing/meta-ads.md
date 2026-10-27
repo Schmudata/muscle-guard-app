@@ -52,6 +52,44 @@ Targeting.
 - Zu enge Interessen-Zielgruppen bei kleinem Budget.
 - Leads nicht innerhalb von Minuten kontaktieren.
 
+## Lernfragen & Übung
+
+1. Was unterscheidet Meta Ads grundsätzlich von Google-Suchanzeigen?
+2. Warum wird breites Targeting oft empfohlen?
+3. Warum ist „Beitrag hervorheben“ meist schlechter als eine Kampagne?
+
+**Übung:** Entwirf drei Creative-Varianten (Hook in den ersten 3 Sekunden, Text, CTA) für eine lokale Aktion – je eine mit Gesicht, Ergebnis und Angebot.
+
+<details><summary>Lösungshinweise</summary>
+
+Meta erzeugt Nachfrage, Google fängt sie ab. Der Algorithmus findet Zielgruppen über das Creative besser als über enge Interessen. Hervorheben bietet weniger Ziele, Optimierung und Kontrolle.
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: Lohnt sich Meta für Handwerker und Dienstleister ohne „schöne“ Produkte?**
+- *Pro:* Vorher/Nachher, Team und Persönlichkeit funktionieren gut; Remarketing und Recruiting ebenfalls.
+- *Contra:* Keine akute Nachfrage im Feed; Leads oft weniger qualifiziert als aus der Suche.
+- *Einschätzung:* Als Ergänzung für Remarketing, Recruiting und Markenaufbau – nicht als Hauptkanal für Notfallleistungen.
+
+**Perspektivwechsel**
+- *Endkunde:* will unterhalten werden, nicht beworben.
+- *Meta:* automatisiert stark (Advantage+) – Creative wird zum wichtigsten Hebel.
+- *Inhaber:* Gesicht zeigen kostet Überwindung, wirkt aber am stärksten.
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- Facebook- und Instagram-Werbung für lokale Betriebe: So starten Sie richtig
+- Warum Ihr „hervorgehobener Beitrag“ Geld verschwendet
+- Das Creative ist das neue Targeting – was das für kleine Unternehmen bedeutet
+
+- **Hook:** Ihr Handyvideo aus der Werkstatt kann besser funktionieren als ein teurer Werbefilm.
+- **Gegenthese:** Für viele lokale Dienstleister ist Meta vor allem ein Recruiting-Kanal, kein Kundenkanal.
+- **Keyword-Idee:** `instagram werbung lokal`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.
+
 ## Verwandte Artikel
 - [Content-Marketing & Social Media](content-marketing.md)
 - [Marketing-Funnel](../00-grundlagen/funnel-fuer-kmu.md)

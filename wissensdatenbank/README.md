@@ -19,7 +19,19 @@ GitHub oder als Kontext für KI-Assistenten gut durchsuchbar ist.
 | [04-digital-marketing](04-digital-marketing/) | Meta Ads, E-Mail, Content, GA4, Budgetplanung & KPIs |
 | [05-checklisten](05-checklisten/) | Account-Audit, Kampagnen-Launch, Monatsreport |
 | [06-branchen-playbooks](06-branchen-playbooks/) | Handwerk, Gastronomie, Praxen & Dienstleister |
+| [07-trends](07-trends/) | Trendradar: einsetzen · testen · beobachten · zurückhalten |
+| [blog](blog/) | Themenliste mit Status, Blogformate & Gliederungen |
+| [praxis-log](praxis-log/) | Eigene Beobachtungen, Tests und Zahlen (anonymisiert) |
 | [_vorlagen](_vorlagen/) | Vorlage für neue Artikel |
+
+## So nutzt du die Datenbank
+
+| Ziel | Wo |
+|---|---|
+| **Lernen** | Jeder Artikel endet mit **Lernfragen & Übung** (Lösungshinweise zum Aufklappen) |
+| **Neue Perspektiven** | Abschnitt **Streitfragen & Perspektiven** in jedem Artikel + [Trendradar](07-trends/trendradar.md) |
+| **Blog-Material** | Abschnitt **Blog-Winkel** in jedem Artikel → gesammelt in der [Themenliste](blog/ideen.md), Gliederungen in [Blogformate](blog/formate.md) |
+| **Eigene Erfahrung** | [Praxis-Log](praxis-log/) – die Grundlage für einzigartige Blogartikel |
 
 ## Alle Artikel
 
@@ -64,11 +76,20 @@ GitHub oder als Kontext für KI-Assistenten gut durchsuchbar ist.
 - [Gastronomie & Einzelhandel vor Ort](06-branchen-playbooks/gastronomie-einzelhandel.md)
 - [Praxen, Kanzleien & beratende Dienstleister](06-branchen-playbooks/praxen-dienstleister.md)
 
+### 07 – Trends
+- [Trendradar](07-trends/trendradar.md)
+
+### Blog & Praxis
+- [Blog-Themenliste](blog/ideen.md)
+- [Blogformate & Gliederungsvorlagen](blog/formate.md)
+- [Praxis-Log](praxis-log/README.md) · [Vorlage](praxis-log/_vorlage.md)
+
 ## Konventionen
 
 - **Dateinamen:** kleingeschrieben, Bindestriche, keine Umlaute (`lokale-google-ads.md`).
 - **Frontmatter:** siehe [_vorlagen/artikel-vorlage.md](_vorlagen/artikel-vorlage.md).
-- **Aufbau eines Artikels:** Kurzfassung → Details → Praxis-Tipps → Häufige Fehler → Quellen.
+- **Aufbau eines Artikels:** Kurzfassung → Details → Praxis-Tipps → Häufige Fehler →
+  Lernfragen & Übung → Streitfragen & Perspektiven → Blog-Winkel → Verwandte Artikel → Quellen.
 - **Tags:** `google-ads`, `local`, `kmu`, `tracking`, `keywords`, `anzeigen`, `landingpage`,
   `social`, `email`, `analytics`, `budget`, `checkliste`, `branche`.
 - **Pflege:** Bei Änderungen `zuletzt_geprueft` aktualisieren. Veraltetes nicht löschen, sondern
@@ -80,10 +101,18 @@ Eine geplante Claude-Aufgabe läuft **alle 7 Tage (montags früh)** und
 1. recherchiert Neuerungen bei Google Ads, Google Unternehmensprofil, Local SEO, GA4,
    Meta Ads und relevantem Recht (DSGVO/UWG) seit der letzten Aktualisierung,
 2. korrigiert veraltete Aussagen und ergänzt neue Features in den passenden Artikeln,
-3. legt bei Bedarf neue Artikel an und pflegt dieses README,
-4. aktualisiert `zuletzt_geprueft` und dokumentiert alles mit Quellen in
+3. **ordnet jede Neuerung ein**: Was bedeutet das für einen Betrieb mit ca. 1.000 €/Monat?
+   Das steht im CHANGELOG und, wo sinnvoll, als Streitfrage im Artikel.
+4. **pflegt das [Trendradar](07-trends/trendradar.md)**: neue Trends aufnehmen, Stufen
+   verschieben, Historie mit Quelle führen,
+5. **liefert 3 neue Blogideen** auf Basis der Wochen-Neuigkeiten in die
+   [Themenliste](blog/ideen.md),
+6. legt bei Bedarf neue Artikel an (mit allen Abschnitten) und pflegt dieses README,
+7. aktualisiert `zuletzt_geprueft` und dokumentiert alles mit Quellen in
    [CHANGELOG.md](CHANGELOG.md),
-5. committet und pusht die Änderungen.
+8. committet und pusht die Änderungen.
+
+Das [Praxis-Log](praxis-log/) wird **nicht** automatisch verändert, es gehört allein euch.
 
 ## Offizielle Quellen
 

@@ -47,5 +47,43 @@ systematisch eingeholt werden – zufriedene Kunden schreiben selten von selbst.
 - Emotionale, rechtfertigende Antworten auf Kritik.
 - Nur Google – branchenrelevante Portale vernachlässigt.
 
+## Lernfragen & Übung
+
+1. Was ist Review Gating und warum ist es verboten?
+2. Wann ist der beste Moment, um nach einer Bewertung zu fragen?
+3. Wie sollte eine Antwort auf eine negative Bewertung aufgebaut sein?
+
+**Übung:** Schreibe Antworten auf drei fiktive Bewertungen: 5 Sterne mit Text, 3 Sterne mit Kritik am Preis, 1 Stern ohne Text von unbekannter Person.
+
+<details><summary>Lösungshinweise</summary>
+
+Review Gating = nur zufriedene Kunden zur Bewertung schicken; verstößt gegen Google-Richtlinien. Bester Moment: direkt nach erfolgreichem Abschluss. Negative Antwort: danken, Verständnis, sachlich, Lösung offline anbieten.
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: Sollte man auf jede negative Bewertung öffentlich reagieren?**
+- *Pro:* Zeigt künftigen Kunden Professionalität; Schweigen wirkt wie Eingeständnis.
+- *Contra:* Kann Konflikte anheizen und Aufmerksamkeit verstärken.
+- *Einschätzung:* Immer kurz, sachlich, ohne Rechtfertigung antworten; Diskussion offline führen.
+
+**Perspektivwechsel**
+- *Endkunde:* liest gerade die negativen Bewertungen – und die Antworten darauf.
+- *Mitarbeiter:* Bewertungen sind auch Feedback ans Team – teilen und feiern.
+- *Recht:* gekaufte Bewertungen und Anreize sind in der EU verbraucherrechtlich problematisch.
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- Mehr Google-Bewertungen bekommen – legal und ohne Betteln
+- Auf schlechte Bewertungen antworten: 5 Vorlagen
+- Warum 4,7 Sterne besser verkaufen als 5,0
+
+- **Hook:** Der wichtigste Verkäufer Ihres Betriebs arbeitet unbezahlt – Ihre zufriedenen Kunden.
+- **Gegenthese:** Eine perfekte 5,0 wirkt oft weniger glaubwürdig als ein ehrlicher Schnitt mit souveränen Antworten.
+- **Keyword-Idee:** `google bewertungen bekommen`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.
+
 ## Verwandte Artikel
 - [Google Unternehmensprofil](google-unternehmensprofil.md)

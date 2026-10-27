@@ -38,6 +38,44 @@ Conversions – sie müssen gemessen werden.
 - Erfolg an Likes oder Klicks statt an Anfragen/Aufträgen messen.
 - Kein Prozess für Bewertungen und Nachfass-E-Mails.
 
+## Lernfragen & Übung
+
+1. Warum sollten lokale KMU in der Regel „von unten nach oben“ im Funnel investieren?
+2. Welche Conversions sind in der lokalen Customer Journey oft unsichtbar?
+3. Wann ist es sinnvoll, trotzdem früh in Reichweite (Top-Funnel) zu investieren?
+
+**Übung:** Zeichne den Funnel für einen Betrieb deiner Wahl: Welche Maßnahme gibt es heute auf jeder Ebene, wo ist die größte Lücke, und was kostet es, sie zu schließen?
+
+<details><summary>Lösungshinweise</summary>
+
+Bestehende Nachfrage (Suche) hat die höchste Kaufabsicht und den schnellsten Rückfluss. Anrufe, Routen und Laufkundschaft werden oft nicht gemessen. Top-Funnel lohnt früh bei neuen Konzepten ohne Suchnachfrage (z. B. neues Restaurantkonzept, Neueröffnung, Event).
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: Ist Markenaufbau für kleine Unternehmen Geldverschwendung?**
+- *Pro:* Bekannte lokale Marken werden direkt gesucht – Markensuchen sind die günstigsten Klicks, und Empfehlungen steigen.
+- *Contra:* Mit kleinem Budget ist die Wirkung kaum messbar und dauert lange; Liquidität geht vor.
+- *Einschätzung:* Erst Nachfrage abschöpfen, dann einen festen Anteil (z. B. 10–20 %) in Sichtbarkeit investieren und an Markensuchen und Direktanfragen messen.
+
+**Perspektivwechsel**
+- *Endkunde:* denkt nicht in Funnels, sondern springt zwischen Maps, Bewertungen, Instagram und Freunden.
+- *Inhaber:* will schnellen Rückfluss – Top-Funnel braucht Geduld und klare Erwartungen.
+- *Plattformen:* verkaufen gern Reichweite; Suchnachfrage ist begrenzt, Feed-Inventar nicht.
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- Erst das Fundament, dann die Werbung: Die richtige Reihenfolge im lokalen Marketing
+- Warum Instagram-Werbung für viele kleine Betriebe der falsche erste Schritt ist
+- Der lokale Kundenweg 2026: Von der Google-Suche bis zur Bewertung
+
+- **Hook:** Die meisten kleinen Betriebe geben ihr erstes Werbebudget an der falschen Stelle aus.
+- **Gegenthese:** Für Neueröffnungen ist Reichweite zuerst richtig – ohne Bekanntheit gibt es nichts abzuschöpfen.
+- **Keyword-Idee:** `marketing strategie kleine unternehmen`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.
+
 ## Verwandte Artikel
 - [Budgetplanung & KPIs](../04-digital-marketing/budgetplanung-kpis.md)
 - [Google Unternehmensprofil](../02-lokales-marketing/google-unternehmensprofil.md)

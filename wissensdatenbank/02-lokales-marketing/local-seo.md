@@ -52,6 +52,44 @@ Lokale Backlinks von echten Partnern zählen mehr als viele Verzeichnis-Links.
 - Hunderte nahezu identische Stadtseiten.
 - Website ohne Leistungsseiten – alles auf der Startseite.
 
+## Lernfragen & Übung
+
+1. Was sind die drei Säulen von Local SEO?
+2. Warum sind kopierte Stadtseiten problematisch?
+3. Welche strukturierten Daten sind für lokale Betriebe relevant?
+
+**Übung:** Suche „[Leistung] [Ort]“ für einen Betrieb und analysiere die Top 3 im Local Pack: Kategorie, Bewertungen, Fotos, Website. Was machen sie besser?
+
+<details><summary>Lösungshinweise</summary>
+
+Unternehmensprofil, Website (On-Page), externe Signale. Doorway-Pages verstoßen gegen Richtlinien und liefern keinen Mehrwert. Schema `LocalBusiness` bzw. passende Unterart.
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: Brauchen lokale Betriebe 2026 noch klassisches SEO, wenn KI-Antworten die Suche verändern?**
+- *Pro:* KI-Antworten greifen auf Websites, Bewertungen und Verzeichnisse zurück – gute Inhalte bleiben die Quelle.
+- *Contra:* Weniger Klicks auf Websites; Sichtbarkeit verlagert sich ins Profil und in KI-Zusammenfassungen.
+- *Einschätzung:* Ja – aber mit Fokus auf klare Fakten (Leistungen, Preise, Einzugsgebiet, FAQ) und Erwähnungen außerhalb der eigenen Website.
+
+**Perspektivwechsel**
+- *Google/KI-Suche:* beantwortet Fragen direkt – die Website wird zur Faktenquelle.
+- *Endkunde:* will schnell die Antwort „Wer kann mir hier helfen?“.
+- *Inhaber:* SEO wirkt langsam, aber langfristig ohne Klickkosten.
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- Local SEO für Einsteiger: So werden Sie in Ihrer Stadt gefunden
+- Lokale Sichtbarkeit in Zeiten von KI-Suche: Was sich ändert
+- Stadtseiten richtig machen – ohne Google-Strafe
+
+- **Hook:** „In der Nähe“-Suchen sind für viele Betriebe die wertvollsten Suchen überhaupt.
+- **Gegenthese:** Für viele Betriebe bringt das Profil mehr als die Website – SEO-Budget falsch verteilt.
+- **Keyword-Idee:** `local seo`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.
+
 ## Verwandte Artikel
 - [Google Unternehmensprofil](google-unternehmensprofil.md)
 - [Landingpages](../03-keywords-anzeigen-landingpages/landingpages.md)

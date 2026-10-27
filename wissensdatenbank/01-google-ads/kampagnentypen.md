@@ -51,6 +51,44 @@ dazu, wenn Tracking sauber läuft und genügend Conversions vorliegen.
 - PMax als erste und einzige Kampagne ohne Tracking.
 - Suchpartner/Displaynetzwerk ungeprüft aktiv lassen.
 
+## Lernfragen & Übung
+
+1. Warum ist die Suchkampagne für die meisten lokalen KMU der beste Einstieg?
+2. Welche Voraussetzungen sollte ein Konto erfüllen, bevor Performance Max getestet wird?
+3. Woran erkennt man, dass PMax auf schlechte Leads optimiert?
+
+**Übung:** Öffne (falls verfügbar) eine PMax-Kampagne und notiere aus Kanal- und Suchbegriffbericht: Wie viel Budget geht in Suche, Display, YouTube? Welche Suchbegriffe sind Marke?
+
+<details><summary>Lösungshinweise</summary>
+
+Search hat höchste Kaufabsicht und transparente Suchbegriffe. PMax braucht Tracking, genug Conversions (Richtwert 30+/Monat) und gute Assets. Warnsignale: viele Formular-Leads ohne Abschluss, hoher Displayanteil, viele Markensuchen.
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: Sollten KMU Performance Max überhaupt nutzen?**
+- *Pro:* Erreicht Maps, YouTube und Discover mit einer Kampagne; bei guten Daten oft günstigere Conversions.
+- *Contra:* Weniger Kontrolle, Gefahr von Markenkannibalisierung und Spam-Leads, Transparenz eingeschränkt.
+- *Einschätzung:* Erst Search stabil, dann PMax als separat budgetierter Test mit Markenausschluss und Messung der Lead-Qualität.
+
+**Perspektivwechsel**
+- *Google:* schiebt Automatisierung, weil sie Inventar wie YouTube und Display mit vermarktet.
+- *Inhaber:* will verstehen, wofür Geld ausgegeben wird – Blackbox schafft Misstrauen.
+- *Endkunde:* sieht die Anzeige je nach Kanal in völlig unterschiedlichen Situationen.
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- Performance Max für kleine Unternehmen: Chance oder Geldgrab?
+- Welcher Google-Ads-Kampagnentyp passt zu meinem Betrieb? Ein Entscheidungsbaum
+- Suchkampagne vs. PMax: Was wir im direkten Vergleich gelernt haben
+
+- **Hook:** Google empfiehlt Performance Max. Sollten Sie dem folgen?
+- **Gegenthese:** Für Ladengeschäfte mit Laufkundschaft kann PMax mit Standortzielen besser sein als jede Suchkampagne.
+- **Keyword-Idee:** `performance max kleine unternehmen`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.
+
 ## Verwandte Artikel
 - [Gebotsstrategien](gebotsstrategien.md)
 - [Lokale Google-Ads-Kampagnen](../02-lokales-marketing/lokale-google-ads.md)

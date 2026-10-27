@@ -57,6 +57,44 @@ auftauchen.
 3. **Cross-Negatives** zwischen Anzeigengruppen, damit Suchbegriffe in der richtigen Gruppe landen.
 4. In Performance Max: negative Keywords auf Kampagnenebene/über Listen ausschließen.
 
+## Lernfragen & Übung
+
+1. Warum greifen negative Keywords nicht auf Synonyme?
+2. Was sind Cross-Negatives?
+3. Wann sollte man „günstig“ nicht ausschließen?
+
+**Übung:** Exportiere den Suchbegriffbericht der letzten 30 Tage, sortiere nach Kosten und kategorisiere die Top 50: relevant / irrelevant / unklar. Lege daraus eine Liste an.
+
+<details><summary>Lösungshinweise</summary>
+
+Negative Keywords arbeiten wörtlicher als positive. Cross-Negatives lenken Suchbegriffe in die passende Anzeigengruppe. „Günstig“ ist Zielgruppe bei Preisführern oder Budget-Angeboten.
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: Viele negative Keywords oder Vertrauen in die KI?**
+- *Pro:* Direkter, sofort wirksamer Schutz vor Streuverlust.
+- *Contra:* Zu viele Ausschlüsse beschneiden Reichweite und Lernmöglichkeiten von Smart Bidding.
+- *Einschätzung:* Klar irrelevante Themen (Jobs, DIY) immer ausschließen; Grauzonen beobachten statt sofort sperren.
+
+**Perspektivwechsel**
+- *Inhaber:* jeder Klick „Ausbildung Elektriker“ ist bezahlter Ärger.
+- *Google:* weniger Ausschlüsse = mehr Auktionen.
+- *Agentur:* Suchbegriffspflege ist unsichtbare, aber wertvolle Arbeit – im Report zeigen.
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- Diese 50 negativen Keywords sparen kleinen Betrieben Geld
+- Der Suchbegriffbericht: Ihr wichtigster Google-Ads-Bericht
+- Was Kunden wirklich googeln, bevor sie auf Ihre Anzeige klicken
+
+- **Hook:** Ein erheblicher Teil vieler kleiner Werbebudgets geht an Suchanfragen, die niemals zu Kunden werden.
+- **Gegenthese:** Zu aggressive Ausschlüsse sind ein ebenso großer Fehler wie gar keine.
+- **Keyword-Idee:** `negative keywords liste`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.
+
 ## Verwandte Artikel
 - [Keyword-Recherche](keyword-recherche.md)
 - [Optimierungsroutine](../01-google-ads/optimierungsroutine.md)

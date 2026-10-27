@@ -44,3 +44,41 @@ schaltplan, norm, vde, din`
 
 ## Saisonalität
 Heizung (Herbst/Winter), Klima/Garten/Dach (Frühjahr/Sommer), Förderprogramme beachten.
+
+## Lernfragen & Übung
+
+1. Worin unterscheiden sich Notfall- und Projektnachfrage?
+2. Wie geht man mit Kapazitätsengpässen in Kampagnen um?
+3. Welche Offline-Conversions sind für Handwerker sinnvoll?
+
+**Übung:** Plane für einen Handwerksbetrieb einen Saisonkalender: Welche Leistungen werden wann beworben, wann wird das Budget erhöht oder gesenkt?
+
+<details><summary>Lösungshinweise</summary>
+
+Notfall: sofort, mobil, Anruf, hoher CPC. Projekt: Recherche, Formular, höherer Wert. Kapazität: Zeitpläne, Budgets, Pausieren je Leistung. Offline: „Termin vereinbart“, „Angebot erstellt“, „Auftrag erteilt“.
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: Sollten Handwerker bei Portalen (MyHammer, Check24 …) präsent sein?**
+- *Pro:* Zusätzliche Aufträge ohne eigene Werbung, Bewertungen auf Portalen.
+- *Contra:* Preisdruck, Provisionen, Kunde gehört dem Portal.
+- *Einschätzung:* Als Ergänzung in Auslastungslücken – Ziel bleibt die eigene Kundenbasis.
+
+**Perspektivwechsel**
+- *Endkunde:* Angst vor Abzocke (Schlüsseldienst, Notdienst) – Transparenz schlägt Preis.
+- *Inhaber:* oft ausgelastet – Marketing für Wunschaufträge und Fachkräfte.
+- *Fachkräfte:* Bewerber googeln den Betrieb auch – Marketing ist Recruiting.
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- Google Ads für Handwerker: Notdienst und Projekte richtig trennen
+- Mehr Wunschaufträge statt mehr Aufträge – Marketing für ausgelastete Betriebe
+- Warum Handwerker ihre Bewertungen auf der Baustelle sammeln sollten
+
+- **Hook:** Viele Handwerker brauchen nicht mehr Anfragen – sondern bessere.
+- **Gegenthese:** Für viele Handwerksbetriebe ist Recruiting-Marketing gerade wichtiger als Kundenwerbung.
+- **Keyword-Idee:** `marketing für handwerker`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.

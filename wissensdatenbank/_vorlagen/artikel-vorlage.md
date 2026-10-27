@@ -20,6 +20,44 @@ Kernwissen, ggf. mit Tabellen.
 ## Häufige Fehler
 - Was in der Praxis oft schiefläuft.
 
+## Lernfragen & Übung
+
+1. Verständnisfrage
+2. Verständnisfrage
+3. Transferfrage
+
+**Übung:** Konkrete Aufgabe an einem echten oder erfundenen Fall.
+
+<details><summary>Lösungshinweise</summary>
+
+Kurze Antworten zu den Fragen und zur Übung.
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: …?**
+- *Pro:* …
+- *Contra:* …
+- *Einschätzung:* …
+
+**Perspektivwechsel**
+- *Inhaber:* …
+- *Endkunde:* …
+- *Google/Plattform:* …
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- …
+- …
+- …
+
+- **Hook:** Einstiegssatz, der neugierig macht.
+- **Gegenthese:** Wo die gängige Meinung nicht stimmt.
+- **Keyword-Idee:** `suchbegriff`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.
+
 ## Verwandte Artikel
 - [Link](../pfad/datei.md)
 

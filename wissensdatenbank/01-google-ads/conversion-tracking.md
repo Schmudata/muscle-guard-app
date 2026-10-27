@@ -57,6 +57,44 @@ ist **Consent Mode v2** Voraussetzung für Remarketing und personalisierte Messu
 - Spam-Formulare werden als Conversion gezählt → Honeypot/Captcha, Pflichtfelder prüfen.
 - Anrufe gar nicht gemessen, obwohl 70 % der Anfragen telefonisch kommen.
 
+## Lernfragen & Übung
+
+1. Warum sollte ein Klick auf die Telefonnummer eher sekundär sein?
+2. Was regelt Consent Mode v2 und was passiert ohne ihn im EWR?
+3. Wie entstehen doppelte Conversions?
+
+**Übung:** Erstelle für einen Betrieb eine Tracking-Tabelle: alle Kontaktwege, wie sie gemessen werden, primär/sekundär, Wert. Prüfe dann die Website mit Tag Assistant.
+
+<details><summary>Lösungshinweise</summary>
+
+Ein Klick ist kein Gespräch – Anrufe mit Mindestdauer sind aussagekräftiger. Consent Mode übermittelt Einwilligungsstatus; ohne ihn fehlen Remarketing- und Messfunktionen. Doppelzählung: Ads-Tag und GA4-Import gleichzeitig primär.
+
+</details>
+
+## Streitfragen & Perspektiven
+
+**Streitfrage: Lohnt sich serverseitiges Tracking für KMU?**
+- *Pro:* Robustere Daten, weniger Verluste durch Browser-Einschränkungen, mehr Kontrolle über Datenflüsse.
+- *Contra:* Zusätzliche Kosten und Komplexität; Einwilligungspflicht bleibt trotzdem.
+- *Einschätzung:* Erst Basis-Tracking, Consent und Offline-Import sauber; Server-Side erst ab spürbarem Budget.
+
+**Perspektivwechsel**
+- *Datenschutz:* Tracking ist rechtlich heikel – Einwilligung ist keine Formalie.
+- *Google:* braucht Daten für Smart Bidding und modelliert fehlende Daten – Modelle sind Schätzungen.
+- *Inhaber:* „Wie sind Sie auf uns aufmerksam geworden?“ ist oft das ehrlichste Tracking.
+
+## Blog-Winkel
+
+**Mögliche Überschriften**
+- Ohne Tracking keine Optimierung: Conversion-Tracking für kleine Unternehmen erklärt
+- Anrufe messen: So sehen Sie, welche Anzeige das Telefon klingeln lässt
+- Consent Mode v2 – was Sie als kleines Unternehmen wirklich tun müssen
+
+- **Hook:** Ein Großteil der Anfragen lokaler Betriebe kommt per Telefon – und taucht in keinem Bericht auf.
+- **Gegenthese:** Perfektes Tracking gibt es nicht mehr; wer auf 100 % Daten wartet, entscheidet nie.
+- **Keyword-Idee:** `google ads conversion tracking einrichten`
+- **Eigene Erfahrung:** passende Einträge aus dem [Praxis-Log](../praxis-log/) einbauen.
+
 ## Verwandte Artikel
 - [Analytics mit GA4](../04-digital-marketing/analytics-ga4.md)
 - [Gebotsstrategien](gebotsstrategien.md)

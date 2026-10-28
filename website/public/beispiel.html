@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kontakt – Marcel Maximiert</title>
+
+  <!-- 1) Konfiguration – einmal pro Seite, VOR den Widget-Scripts -->
+  <script>
+    window.MM_CONFIG = {
+      apiBase: 'https://api.marcel-maximiert.net',             // URL des Backends (ohne / am Ende)
+      calendlyUrl: 'https://calendly.com/DEIN-NAME/erstgespraech',
+      privacyUrl: '/datenschutz',
+      thankYouUrl: '',               // z. B. '/danke' – leer = Danke-Text direkt im Formular
+      leadValue: 50,                 // optionaler Conversion-Wert pro Anfrage in EUR
+      bookingValue: 100,             // optionaler Conversion-Wert pro gebuchtem Termin in EUR
+
+      // Nur true, wenn GA4/Google Ads per gtag.js direkt eingebunden sind
+      // und NICHT zusätzlich über GTM laufen (sonst doppelte Conversions).
+      useGtag: false,
+      adsConversions: {
+        generate_lead: 'AW-XXXXXXXXX/xxxxxxxxxxxx',
+        book_appointment: 'AW-XXXXXXXXX/yyyyyyyyyyyy'
+      },
+
+      chat: {
+        title: 'Fragen? Schreib mir!',
+        subtitle: 'Antwortet sofort – rund um die Uhr',
+        greeting: 'Hi! 👋 Ich bin Marcels Assistent. Frag mich alles zu Angeboten und Ablauf – oder buch dir direkt ein kostenloses Erstgespräch.',
+        quickReplies: ['Was bietest du an?', 'Was kostet das?', 'Wie läuft ein Erstgespräch ab?']
+      }
+    };
+  </script>
+
+  <!-- 2) Styles + Scripts (auf allen Seiten, auf denen Chat/Formular erscheinen sollen) -->
+  <link rel="stylesheet" href="/widgets/mm-widgets.css">
+  <script src="/widgets/mm-tracking.js" defer></script>
+  <script src="/widgets/mm-contact.js" defer></script>
+  <script src="/widgets/mm-chat.js" defer></script>
+
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 720px; margin: 40px auto; padding: 0 16px; }
+  </style>
+</head>
+<body>
+  <h1>Kontakt</h1>
+  <p>Schreib mir kurz, worum es geht – ich melde mich innerhalb von 24 Stunden.</p>
+
+  <!-- 3) Das Formular – data-mm-contact="…" wird als form_id ans Tracking übergeben -->
+  <form class="mm-form" data-mm-contact="kontakt" novalidate>
+    <div class="mm-field">
+      <label for="mm-name">Name</label>
+      <input id="mm-name" name="name" type="text" autocomplete="name" required maxlength="100">
+    </div>
+    <div class="mm-field">
+      <label for="mm-email">E-Mail</label>
+      <input id="mm-email" name="email" type="email" autocomplete="email" required maxlength="200">
+    </div>
+    <div class="mm-field">
+      <label for="mm-phone">Telefon <span class="mm-optional">(optional)</span></label>
+      <input id="mm-phone" name="phone" type="tel" autocomplete="tel" maxlength="40">
+    </div>
+    <div class="mm-field">
+      <label for="mm-message">Deine Nachricht</label>
+      <textarea id="mm-message" name="message" required maxlength="5000"></textarea>
+    </div>
+
+    <!-- Honeypot gegen Spam-Bots: bleibt für Menschen unsichtbar -->
+    <div class="mm-hp" aria-hidden="true">
+      <label>Website <input name="website" type="text" tabindex="-1" autocomplete="off"></label>
+    </div>
+
+    <label class="mm-check">
+      <input type="checkbox" name="consent" required>
+      <span>Ich habe die <a href="/datenschutz">Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung meiner Angaben zur Beantwortung der Anfrage einverstanden.</span>
+    </label>
+
+    <button type="submit">Anfrage senden</button>
+    <p class="mm-status" role="status" aria-live="polite"></p>
+  </form>
+</body>
+</html>

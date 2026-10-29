@@ -1,13 +1,13 @@
-"""Backend für Chatbot & Kontaktformular von marcel-maximiert.net.
+"""Backend für das Terminanfrage-Formular von marcel-maximiert.net.
 
 Endpunkte:
-  POST /api/chat     – KI-Antwort (Gemini) auf Basis von knowledge.md
-  POST /api/contact  – Kontaktanfrage per E-Mail weiterleiten
+  POST /api/contact  – Anfrage per E-Mail an dich + Bestätigung an den Interessenten
   GET  /health       – Health-Check fürs Hosting
 
 Start lokal:  uvicorn app:app --reload --port 8000
 """
 
+import datetime as dt
 import logging
 import os
 import smtplib
@@ -15,8 +15,6 @@ import time
 import uuid
 from collections import defaultdict, deque
 from email.message import EmailMessage
-from pathlib import Path
-from typing import Literal
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -25,30 +23,11 @@ from pydantic import BaseModel, EmailStr, Field
 log = logging.getLogger("mm")
 logging.basicConfig(level=logging.INFO)
 
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
 ALLOWED_ORIGINS = [o.strip() for o in os.getenv(
     "ALLOWED_ORIGINS", "https://marcel-maximiert.net,https://www.marcel-maximiert.net"
 ).split(",") if o.strip()]
-BOOKING_TOKEN = "[TERMIN]"
-
-KNOWLEDGE = (Path(__file__).parent / "knowledge.md").read_text(encoding="utf-8")
-SYSTEM_PROMPT = f"""Du bist der freundliche Website-Assistent von Marcel (marcel-maximiert.net).
-
-Regeln:
-- Antworte auf Deutsch, per Du, kurz (max. 3–4 Sätze), ohne Markdown-Formatierung.
-- Nutze ausschließlich die Informationen aus dem WISSEN unten. Erfinde keine Preise,
-  Termine, Leistungen oder Versprechen. Wenn du etwas nicht weißt, sag das ehrlich und
-  biete ein kostenloses Erstgespräch oder das Kontaktformular an.
-- Ziel: Fragen klären und Interessenten zu einem Termin führen – ohne aufdringlich zu sein.
-- Wenn der Besucher einen Termin möchte, nach Verfügbarkeit fragt oder ein Gespräch
-  sinnvoll ist, beende deine Antwort mit {BOOKING_TOKEN} – dann wird ein Buchungsbutton
-  angezeigt. Nenne keine konkreten freien Zeiten, die sieht der Besucher im Kalender.
-- Frage nicht nach Gesundheits-, Zahlungs- oder anderen sensiblen Daten.
-- Bleib beim Thema der Website; lehne fachfremde Aufgaben höflich ab.
-
-WISSEN:
-{KNOWLEDGE}
-"""
+MAX_DAYS = int(os.getenv("MAX_DAYS", "90"))
+SEND_CONFIRMATION = os.getenv("SEND_CONFIRMATION", "true").lower() == "true"
 
 app = FastAPI(title="marcel-maximiert API", docs_url=None, redoc_url=None)
 app.add_middleware(
@@ -70,7 +49,7 @@ def rate_limit(request: Request, bucket: str, limit: int, window: int) -> None:
     while q and now - q[0] > window:
         q.popleft()
     if len(q) >= limit:
-        raise HTTPException(429, "Zu viele Anfragen. Bitte versuche es gleich noch einmal.")
+        raise HTTPException(429, "Zu viele Anfragen. Bitte versuche es später noch einmal.")
     q.append(now)
 
 
@@ -79,101 +58,73 @@ def health():
     return {"ok": True}
 
 
-# --- Chat -------------------------------------------------------------------------
-class ChatMessage(BaseModel):
-    role: Literal["user", "model"]
-    text: str = Field(min_length=1, max_length=2000)
-
-
-class ChatRequest(BaseModel):
-    messages: list[ChatMessage] = Field(min_length=1, max_length=20)
-    page: str = Field("", max_length=300)
-
-
-_client = None
-
-
-def gemini():
-    global _client
-    if _client is None:
-        from google import genai
-        _client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
-    return _client
-
-
-@app.post("/api/chat")
-def chat(req: ChatRequest, request: Request):
-    rate_limit(request, "chat", limit=15, window=60)
-    if req.messages[-1].role != "user":
-        raise HTTPException(400, "Letzte Nachricht muss vom Nutzer sein.")
-
-    from google.genai import types
-
-    contents = [types.Content(role=m.role, parts=[types.Part(text=m.text)]) for m in req.messages]
-    system = SYSTEM_PROMPT + (f"\nDer Besucher ist gerade auf der Seite: {req.page}" if req.page else "")
-    try:
-        resp = gemini().models.generate_content(
-            model=GEMINI_MODEL,
-            contents=contents,
-            config=types.GenerateContentConfig(
-                system_instruction=system,
-                temperature=0.3,
-                max_output_tokens=2048,
-            ),
-        )
-        text = (resp.text or "").strip()
-    except Exception:
-        log.exception("Gemini-Aufruf fehlgeschlagen")
-        raise HTTPException(502, "KI gerade nicht erreichbar.")
-
-    show_booking = BOOKING_TOKEN in text
-    text = text.replace(BOOKING_TOKEN, "").strip()
-    if not text:
-        text = "Das kann ich dir am besten in einem kurzen Gespräch beantworten."
-        show_booking = True
-    return {"reply": text, "show_booking": show_booking}
-
-
-# --- Kontaktformular --------------------------------------------------------------
 class ContactRequest(BaseModel):
     name: str = Field(min_length=1, max_length=100)
     email: EmailStr
-    phone: str = Field("", max_length=40)
-    message: str = Field(min_length=1, max_length=5000)
+    phone: str = Field(min_length=5, max_length=40, pattern=r"^[+\d\s()/.-]+$")
+    date: dt.date
+    slot: str = Field(min_length=1, max_length=50)
+    message: str = Field("", max_length=3000)
     consent: bool
     website: str = ""  # Honeypot – muss leer bleiben
     page: str = Field("", max_length=500)
     attribution: dict[str, str | int | None] = Field(default_factory=dict)
 
 
-def send_mail(lead_id: str, c: ContactRequest) -> None:
+def owner_mail(lead_id: str, c: ContactRequest, termin: str) -> EmailMessage:
     attribution = "\n".join(
         f"  {k}: {str(v)[:300]}" for k, v in list(c.attribution.items())[:15] if k != "ts" and v
     ) or "  (direkt / unbekannt)"
     msg = EmailMessage()
-    msg["Subject"] = f"Neue Anfrage von {c.name} (marcel-maximiert.net)"
+    msg["Subject"] = f"Terminanfrage: {c.name} – {termin}"
     msg["From"] = os.environ["MAIL_FROM"]
     msg["To"] = os.environ["CONTACT_TO"]
     msg["Reply-To"] = c.email
     msg.set_content(
+        f"Wunschtermin: {termin}\n\n"
         f"Name:    {c.name}\n"
         f"E-Mail:  {c.email}\n"
-        f"Telefon: {c.phone or '-'}\n\n"
-        f"Nachricht:\n{c.message}\n\n"
+        f"Telefon: {c.phone}\n\n"
+        f"Nachricht:\n{c.message or '-'}\n\n"
         f"---\nSeite: {c.page or '-'}\nLead-ID: {lead_id}\nQuelle:\n{attribution}\n"
     )
+    return msg
+
+
+def confirmation_mail(c: ContactRequest, termin: str) -> EmailMessage:
+    msg = EmailMessage()
+    msg["Subject"] = "Deine Terminanfrage bei Marcel Maximiert"
+    msg["From"] = os.environ["MAIL_FROM"]
+    msg["To"] = c.email
+    msg["Reply-To"] = os.environ["CONTACT_TO"]
+    msg.set_content(
+        f"Hallo {c.name},\n\n"
+        f"danke für deine Anfrage! Dein Wunschtermin: {termin}.\n\n"
+        "Ich bestätige dir den Termin innerhalb von 24 Stunden – oder schlage dir eine "
+        "Alternative vor, falls es nicht passt. Du kannst einfach auf diese E-Mail antworten.\n\n"
+        "Viele Grüße\nMarcel\n\nmarcel-maximiert.net\n"
+    )
+    return msg
+
+
+def send(messages: list[EmailMessage]) -> None:
     host = os.environ["SMTP_HOST"]
     port = int(os.getenv("SMTP_PORT", "465"))
     user, password = os.environ["SMTP_USER"], os.environ["SMTP_PASSWORD"]
     if port == 465:
-        with smtplib.SMTP_SSL(host, port, timeout=15) as s:
-            s.login(user, password)
-            s.send_message(msg)
+        server = smtplib.SMTP_SSL(host, port, timeout=15)
     else:
-        with smtplib.SMTP(host, port, timeout=15) as s:
-            s.starttls()
-            s.login(user, password)
-            s.send_message(msg)
+        server = smtplib.SMTP(host, port, timeout=15)
+        server.starttls()
+    with server:
+        server.login(user, password)
+        for i, msg in enumerate(messages):
+            try:
+                server.send_message(msg)
+            except Exception:
+                if i == 0:
+                    raise  # Mail an dich ist Pflicht
+                log.exception("Bestätigungsmail fehlgeschlagen")
 
 
 @app.post("/api/contact")
@@ -186,8 +137,17 @@ def contact(c: ContactRequest, request: Request):
         return {"ok": True, "lead_id": lead_id}
     if not c.consent:
         raise HTTPException(400, "Bitte stimme der Datenschutzerklärung zu.")
+    today = dt.date.today()
+    if not today <= c.date <= today + dt.timedelta(days=MAX_DAYS):
+        raise HTTPException(400, "Bitte wähle einen Termin in der Zukunft.")
+
+    weekdays = ["Mo", "Di", "Mi", "Do", "Fr", "Sa", "So"]
+    termin = f"{weekdays[c.date.weekday()]}, {c.date:%d.%m.%Y}, {c.slot}"
+    messages = [owner_mail(lead_id, c, termin)]
+    if SEND_CONFIRMATION:
+        messages.append(confirmation_mail(c, termin))
     try:
-        send_mail(lead_id, c)
+        send(messages)
     except Exception:
         log.exception("Mailversand fehlgeschlagen")
         raise HTTPException(502, "Senden hat nicht geklappt. Bitte schreib mir direkt per E-Mail.")

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kostenloses Erstgespräch – Marcel Maximiert</title>
+
+  <!-- Konfiguration – VOR den Scripts. Derselbe Block gehört auch auf danke.html. -->
+  <script>
+    window.MM_CONFIG = {
+      apiBase: 'https://api.marcel-maximiert.net', // URL des Backends (ohne / am Ende)
+      thankYouUrl: '/danke.html',
+      leadValue: 50,                 // optionaler Conversion-Wert pro Anfrage in EUR
+      bookingDays: [1, 2, 3, 4, 5],  // wählbare Wochentage: 0 = So, 1 = Mo … 6 = Sa
+      maxDays: 60,                   // wie weit im Voraus gebucht werden kann
+
+      // Nur true, wenn GA4/Google Ads per gtag.js direkt eingebunden sind
+      // und NICHT zusätzlich über GTM laufen (sonst doppelte Conversions).
+      useGtag: false,
+      adsConversions: { generate_lead: 'AW-XXXXXXXXX/xxxxxxxxxxxx' }
+    };
+  </script>
+  <link rel="stylesheet" href="/widgets/mm-widgets.css">
+  <script src="/widgets/mm-tracking.js" defer></script>
+  <script src="/widgets/mm-contact.js" defer></script>
+
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 720px; margin: 40px auto; padding: 0 16px; }
+  </style>
+</head>
+<body>
+  <h1>Kostenloses Erstgespräch</h1>
+  <p>Such dir einen Wunschtermin aus – ich bestätige ihn dir innerhalb von 24 Stunden.</p>
+
+  <form class="mm-form" data-mm-contact="erstgespraech" novalidate>
+    <div class="mm-field">
+      <label for="mm-name">Name</label>
+      <input id="mm-name" name="name" type="text" autocomplete="name" required maxlength="100">
+    </div>
+    <div class="mm-field">
+      <label for="mm-email">E-Mail</label>
+      <input id="mm-email" name="email" type="email" autocomplete="email" required maxlength="200">
+    </div>
+    <div class="mm-field">
+      <label for="mm-phone">Telefon</label>
+      <input id="mm-phone" name="phone" type="tel" autocomplete="tel" required minlength="5" maxlength="40">
+    </div>
+    <div class="mm-row">
+      <div class="mm-field">
+        <label for="mm-date">Wunschtermin</label>
+        <input id="mm-date" name="date" type="date" required>
+      </div>
+      <div class="mm-field">
+        <label for="mm-slot">Uhrzeit</label>
+        <!-- Zeitfenster frei anpassen -->
+        <select id="mm-slot" name="slot" required>
+          <option value="">Bitte wählen</option>
+          <option>09:00–12:00 Uhr</option>
+          <option>12:00–15:00 Uhr</option>
+          <option>15:00–18:00 Uhr</option>
+        </select>
+      </div>
+    </div>
+    <div class="mm-field">
+      <label for="mm-message">Worum geht's? <span class="mm-optional">(optional)</span></label>
+      <textarea id="mm-message" name="message" maxlength="3000"></textarea>
+    </div>
+
+    <!-- Honeypot gegen Spam-Bots: für Menschen unsichtbar -->
+    <div class="mm-hp" aria-hidden="true">
+      <label>Website <input name="website" type="text" tabindex="-1" autocomplete="off"></label>
+    </div>
+
+    <label class="mm-check">
+      <input type="checkbox" name="consent" required>
+      <span>Ich habe die <a href="/datenschutz">Datenschutzerklärung</a> gelesen und bin mit der Verarbeitung meiner Angaben zur Terminvereinbarung einverstanden.</span>
+    </label>
+
+    <button type="submit">Termin anfragen</button>
+    <p class="mm-status" role="status" aria-live="polite"></p>
+  </form>
+</body>
+</html>

@@ -1,12 +1,11 @@
 /*
- * mm-contact.js – schlankes Kontaktformular mit Conversion Tracking.
+ * mm-contact.js – Terminanfrage-Formular (ersetzt Calendly).
  *
- * Events (dataLayer / gtag):
- *   form_start     – erste Interaktion mit dem Formular (einmal pro Seitenaufruf)
- *   generate_lead  – Anfrage wurde vom Server angenommen (NICHT schon beim Klick)
- *   form_error     – Senden fehlgeschlagen
+ * Ablauf: Formular absenden → Server bestätigt → Weiterleitung auf die Danke-Seite,
+ * dort feuert mm-tracking.js "generate_lead" (genau einmal).
  *
- * Erwartet ein <form data-mm-contact> (siehe beispiel.html).
+ * Events: form_start (erste Eingabe), form_error (Senden fehlgeschlagen).
+ * Erwartet ein <form data-mm-contact> (siehe kontakt.html).
  */
 (function (w, d) {
   'use strict';
@@ -14,12 +13,36 @@
   var T = w.MMTrack;
   if (!T) { console.error('mm-contact.js: mm-tracking.js muss vorher geladen werden.'); return; }
 
+  function isoDate(dt) {
+    return dt.getFullYear() + '-' + String(dt.getMonth() + 1).padStart(2, '0') + '-' +
+      String(dt.getDate()).padStart(2, '0');
+  }
+
+  // Wunschtermin: frühestens morgen, höchstens maxDays im Voraus, nur an erlaubten Wochentagen.
+  function setupDate(input, c) {
+    if (!input) return;
+    var days = c.bookingDays || [1, 2, 3, 4, 5]; // 0 = Sonntag … 6 = Samstag
+    var min = new Date();
+    min.setDate(min.getDate() + 1);
+    var max = new Date();
+    max.setDate(max.getDate() + (c.maxDays || 60));
+    input.min = isoDate(min);
+    input.max = isoDate(max);
+    input.addEventListener('input', function () {
+      var v = input.value ? new Date(input.value + 'T12:00:00') : null;
+      input.setCustomValidity(v && days.indexOf(v.getDay()) === -1
+        ? 'An diesem Wochentag sind leider keine Termine möglich.' : '');
+    });
+  }
+
   function init(form) {
     var c = w.MM_CONFIG || {};
     var formId = form.getAttribute('data-mm-contact') || 'kontakt';
     var status = form.querySelector('.mm-status');
     var button = form.querySelector('button[type="submit"]');
     var started = false;
+
+    setupDate(form.querySelector('input[name="date"]'), c);
 
     form.addEventListener('focusin', function () {
       if (started) return;
@@ -36,6 +59,8 @@
         name: (fd.get('name') || '').trim(),
         email: (fd.get('email') || '').trim(),
         phone: (fd.get('phone') || '').trim(),
+        date: fd.get('date') || '',
+        slot: fd.get('slot') || '',
         message: (fd.get('message') || '').trim(),
         consent: !!fd.get('consent'),
         website: fd.get('website') || '', // Honeypot
@@ -58,18 +83,22 @@
           });
         })
         .then(function (j) {
-          return T.track('generate_lead', {
+          var params = {
             form_id: formId,
-            lead_source: 'kontaktformular',
+            lead_type: 'erstgespraech',
             transaction_id: j.lead_id,
             value: c.leadValue,
             currency: 'EUR'
-          }, T.userData(data.email, data.phone));
-        })
-        .then(function () {
-          if (c.thankYouUrl) { w.location.href = c.thankYouUrl; return; }
-          form.innerHTML = '<p class="mm-success" role="status">Danke für deine Nachricht! ' +
-            'Ich melde mich in der Regel innerhalb von 24 Stunden bei dir.</p>';
+          };
+          var user = T.userData(data.email, data.phone);
+          var next = c.thankYouUrl || '/danke.html';
+          if (T.queueLead(params, user)) {
+            w.location.href = next;
+          } else {
+            // Ohne sessionStorage direkt hier tracken und den Tags kurz Zeit geben.
+            T.track('generate_lead', params, user);
+            setTimeout(function () { w.location.href = next; }, 800);
+          }
         })
         .catch(function (err) {
           button.disabled = false;

@@ -1,45 +1,50 @@
-# Chatbot & Kontaktformular für marcel-maximiert.net
+# Terminanfrage-Formular für marcel-maximiert.net
 
-Zwei Bausteine für die eigene HTML-Seite, beide mit sauberem Conversion Tracking
-(Google Tag Manager, GA4, Google Ads inkl. Enhanced Conversions):
+Ein einfaches Formular für das kostenlose Erstgespräch, das **Calendly ersetzt**:
+Besucher wählen Wunschtag + Zeitfenster, du bekommst eine Mail und bestätigst den Termin.
+Danach landet der Besucher auf einer **Danke-Seite**, und genau dort wird die
+Conversion gezählt.
 
-| Baustein | Was er macht | Conversion-Event |
-|---|---|---|
-| **Kontaktformular** | Name, E-Mail, Telefon (optional), Nachricht → Mail an dich | `generate_lead` |
-| **Chatbot** | Beantwortet Fragen mit KI (Gemini) aus `knowledge.md`, bietet Calendly-Termin an | `book_appointment` |
+```
+Formular absenden → Server prüft & schickt 2 Mails → Weiterleitung /danke.html → generate_lead
+                     ├─ an dich: alle Angaben + Quelle (UTM / gclid)
+                     └─ an Interessenten: „Anfrage erhalten, Bestätigung folgt in 24 h“
+```
 
 ```
 website/
-├── public/                 → auf deinen Webspace kopieren
-│   ├── widgets/
-│   │   ├── mm-tracking.js  UTM/gclid speichern, Events an dataLayer/gtag, Calendly-Buchungen erkennen
-│   │   ├── mm-contact.js   Kontaktformular
-│   │   ├── mm-chat.js      Chat-Widget
-│   │   └── mm-widgets.css  Design (Farben oben in :root anpassen)
-│   └── beispiel.html       Vorlage zum Kopieren
-└── backend/                → kleiner Python-Server (Chat + Mailversand)
+├── public/                  → auf deinen Webspace kopieren
+│   ├── kontakt.html         Vorlage Kontaktseite (Formular + Konfiguration)
+│   ├── danke.html           Danke-Seite (hier feuert die Conversion)
+│   └── widgets/
+│       ├── mm-tracking.js   AUF ALLEN SEITEN: merkt UTM/gclid, feuert Lead auf der Danke-Seite
+│       ├── mm-contact.js    nur auf der Kontaktseite
+│       └── mm-widgets.css   Design (Farben oben in :root anpassen)
+└── backend/                 → kleiner Python-Server für den Mailversand
     ├── app.py
-    ├── knowledge.md        ← HIER deine Angebote, Preise, FAQ eintragen
     ├── .env.example
     └── Dockerfile
 ```
 
-## 1. Wissen für den Bot pflegen
+## Formular
 
-`backend/knowledge.md` öffnen und alle `[Platzhalter]` ersetzen. Der Bot antwortet
-**nur** mit diesen Infos und verweist sonst auf ein Erstgespräch.
+Felder: **Name, E-Mail, Telefon, Wunschtermin (Datum), Uhrzeit (Zeitfenster)**, Nachricht (optional),
+Datenschutz-Häkchen. Dazu ein unsichtbares Honeypot-Feld gegen Spam.
 
-## 2. Backend starten
+- Zeitfenster: die `<option>`s in `kontakt.html` anpassen.
+- Wählbare Wochentage und Vorlauf: `bookingDays` und `maxDays` in `MM_CONFIG`.
+  Termine sind frühestens ab morgen wählbar.
 
-Die Website selbst ist statisch – für die KI (API-Key muss geheim bleiben) und den
-Mailversand braucht es einen kleinen Server. Am einfachsten z. B. auf **Google Cloud Run**,
+## 1. Backend starten
+
+Die Website ist statisch. Für den Mailversand braucht es einen kleinen Server,
+weil die SMTP-Zugangsdaten nicht in den Browser dürfen. Am einfachsten auf **Google Cloud Run**,
 **Render** oder **Railway** mit dem mitgelieferten `Dockerfile`.
 
-1. Gemini-API-Key holen: https://aistudio.google.com/apikey
-2. Umgebungsvariablen aus `.env.example` beim Hoster eintragen (SMTP-Daten bekommst du
-   von deinem Mail-Anbieter; Port 465 = SSL, 587 = STARTTLS).
-3. Deployen und idealerweise eine Subdomain wie `api.marcel-maximiert.net` darauf zeigen lassen.
-4. Test: `https://api.marcel-maximiert.net/health` muss `{"ok":true}` liefern.
+1. Umgebungsvariablen aus `.env.example` beim Hoster eintragen. Die SMTP-Daten bekommst du
+   von deinem Mail-Anbieter (Port 465 = SSL, 587 = STARTTLS).
+2. Deployen und eine Subdomain wie `api.marcel-maximiert.net` darauf zeigen lassen.
+3. Test: `https://api.marcel-maximiert.net/health` muss `{"ok":true}` liefern.
 
 Lokal:
 
@@ -51,34 +56,30 @@ export ALLOWED_ORIGINS=http://localhost:8080
 uvicorn app:app --reload --port 8000
 ```
 
-## 3. In die Website einbauen
+## 2. In die Website einbauen
 
-1. Den Ordner `public/widgets/` auf den Webspace kopieren (→ `/widgets/…`).
-2. Aus `public/beispiel.html` übernehmen:
-   - den `<script>window.MM_CONFIG = …</script>`-Block und die 4 Zeilen mit
-     `mm-widgets.css` / `mm-*.js` in den `<head>` **jeder Seite**, auf der der Chat erscheinen soll,
-   - das `<form class="mm-form" …>` auf der Kontaktseite.
-3. In `MM_CONFIG` mindestens `apiBase` und `calendlyUrl` anpassen.
+1. `public/widgets/` auf den Webspace kopieren (→ `/widgets/…`).
+2. **Alle Seiten:** `<script src="/widgets/mm-tracking.js" defer></script>` in den `<head>`.
+   Nur so wird ein Anzeigenklick auf der Startseite auch einer späteren Anfrage zugeordnet.
+3. **Kontaktseite:** `MM_CONFIG`-Block, CSS, beide Scripts und das `<form>` aus `kontakt.html` übernehmen
+   und `apiBase` anpassen.
+4. **Danke-Seite:** `danke.html` übernehmen. Wichtig ist `<body data-mm-danke>`.
+5. Calendly-Links und Embeds auf der Website durch Links zur Kontaktseite ersetzen.
 
-Nur das Formular ohne Chat? Einfach `mm-chat.js` weglassen (und umgekehrt).
-`mm-tracking.js` wird immer gebraucht und muss zuerst geladen werden.
-
-## 4. Conversion Tracking einrichten
-
-Alle Events landen im `dataLayer`:
+## 3. Conversion Tracking
 
 | Event | Wann | Parameter |
 |---|---|---|
 | `form_start` | erste Eingabe im Formular | `form_id` |
-| `generate_lead` | **erst wenn der Server die Anfrage angenommen hat** | `form_id`, `transaction_id`, `value`, `currency`, `user_data` |
 | `form_error` | Senden fehlgeschlagen | `form_id` |
-| `chat_open` | Chat geöffnet (1× pro Sitzung) | `chat_location` |
-| `chat_engaged` | erste Nachricht an den Bot (1× pro Sitzung) | `chat_location` |
-| `booking_click` | Calendly geöffnet | `booking_source` |
-| `book_appointment` | **Termin tatsächlich in Calendly gebucht** | `transaction_id`, `value`, `currency` |
+| `generate_lead` | **auf der Danke-Seite, nur nach echter Anfrage** | `form_id`, `lead_type`, `transaction_id`, `value`, `currency`, `user_data` |
 
-`transaction_id` ist pro Lead/Buchung eindeutig → Google Ads zählt keine Doppelungen,
-auch wenn jemand die Danke-Ansicht neu lädt.
+`generate_lead` feuert **genau einmal**: nicht bei direktem Aufruf von /danke.html, nicht beim
+Neuladen und nicht bei Spam (Honeypot). `transaction_id` ist pro Anfrage eindeutig, damit Google Ads
+nichts doppelt zählt.
+
+> Nimm **nicht** den Seitenaufruf von /danke.html als Conversion-Trigger, sondern das Event
+> `generate_lead`. Nur das ist gegen Neuladen und Direktaufrufe abgesichert.
 
 ### Variante A – Google Tag Manager (empfohlen)
 
@@ -86,39 +87,33 @@ auch wenn jemand die Danke-Ansicht neu lädt.
 
 1. **Variablen** (Typ *Datenschichtvariable*): `transaction_id`, `value`, `currency`, `form_id`,
    `user_data.email`, `user_data.phone_number`.
-2. **Trigger** (Typ *Benutzerdefiniertes Ereignis*): `generate_lead`, `book_appointment`
-   (optional auch `chat_engaged`, `booking_click`, `form_start`).
-3. **GA4**: je Trigger ein Tag *GA4-Ereignis* mit gleichem Ereignisnamen + Parametern.
-   In GA4 `generate_lead` und `book_appointment` als *Schlüsselereignis* markieren.
-4. **Google Ads**: je Conversion-Aktion ein Tag *Google Ads-Conversion-Tracking* mit
-   Conversion-ID/-Label, Wert `{{value}}`, Transaktions-ID `{{transaction_id}}`.
-   *Vom Nutzer bereitgestellte Daten einbeziehen* aktivieren → neue Variable
-   *Vom Nutzer bereitgestellte Daten* → Manuell → E-Mail `{{user_data.email}}`,
-   Telefon `{{user_data.phone_number}}` (Enhanced Conversions).
-5. Zusätzlich einen **Conversion-Linker**-Tag auf *All Pages* (falls noch nicht vorhanden).
+2. **Trigger** (Typ *Benutzerdefiniertes Ereignis*): Ereignisname `generate_lead`.
+3. **GA4:** Tag *GA4-Ereignis* `generate_lead` mit den Parametern oben. In GA4 als
+   *Schlüsselereignis* markieren.
+4. **Google Ads:** Tag *Google Ads-Conversion-Tracking* mit Conversion-ID/-Label, Wert `{{value}}`,
+   Transaktions-ID `{{transaction_id}}`. *Vom Nutzer bereitgestellte Daten einbeziehen* aktivieren
+   → Manuell → E-Mail `{{user_data.email}}`, Telefon `{{user_data.phone_number}}`
+   (Enhanced Conversions).
+5. Einen **Conversion-Linker**-Tag auf *All Pages*, falls noch nicht vorhanden.
 
 ### Variante B – gtag.js direkt (ohne GTM)
 
-`useGtag: true` setzen und in `adsConversions` die `send_to`-Werte (`AW-…/…`) deiner
-Conversion-Aktionen eintragen. In Google Ads unter der Conversion-Aktion Enhanced
-Conversions für „Google-Tag“ aktivieren. GA4-Events laufen über dein bestehendes `gtag('config', 'G-…')`.
+Auf `kontakt.html` **und** `danke.html` `useGtag: true` setzen und in `adsConversions.generate_lead`
+den `send_to`-Wert (`AW-…/…`) deiner Conversion-Aktion eintragen. In Google Ads Enhanced Conversions
+für „Google-Tag“ aktivieren.
 
-> ⚠️ Nicht beides gleichzeitig: Wenn GA4/Ads im GTM konfiguriert sind, muss `useGtag: false`
-> bleiben, sonst wird jede Conversion doppelt gezählt.
+> ⚠️ Nicht beides gleichzeitig: Wenn GA4/Ads im GTM laufen, muss `useGtag: false` bleiben,
+> sonst wird jede Conversion doppelt gezählt.
 
 ### Testen
 
-GTM-Vorschau öffnen → Formular abschicken → im Tag Assistant muss `generate_lead` mit
-`transaction_id` und `user_data` erscheinen. Für Calendly eine Testbuchung machen →
-`book_appointment`.
+GTM-Vorschau öffnen → Formular abschicken → auf der Danke-Seite muss `generate_lead` mit
+`transaction_id` und `user_data` erscheinen. Danke-Seite neu laden → kein zweites `generate_lead`.
 
 ## Sonstiges
 
-- **Datenschutz**: In der Datenschutzerklärung ergänzen: Kontaktformular (Mailversand über
-  deinen Server/SMTP-Anbieter), Chatbot (Nachrichten werden zur Beantwortung an Google
-  Gemini übermittelt), Calendly, Speicherung der Kampagnen-Parameter im `localStorage`
-  (90 Tage). Tracking-Tags wie gewohnt nur nach Consent (Consent Mode) feuern lassen.
-- **Spam-Schutz**: Honeypot-Feld + Rate-Limit (5 Anfragen / 10 Min. pro IP, Chat 15 / Min.).
-- **Gemini-Modell** über `GEMINI_MODEL` änderbar.
-- Statt Danke-Text im Formular lieber eine eigene Danke-Seite? `thankYouUrl: '/danke'` setzen –
-  das Tracking wird vor der Weiterleitung abgeschlossen.
+- **Datenschutz:** In der Datenschutzerklärung ergänzen: Terminanfrage-Formular (Mailversand über
+  deinen Server/SMTP-Anbieter) und die Speicherung der Kampagnen-Parameter im `localStorage` (90 Tage).
+  Calendly kann raus. Tracking-Tags wie gewohnt nur nach Consent (Consent Mode) feuern lassen.
+- **Spam-Schutz:** Honeypot-Feld + Rate-Limit (5 Anfragen / 10 Min. pro IP).
+- Die Bestätigungsmail an Interessenten lässt sich mit `SEND_CONFIRMATION=false` abschalten.

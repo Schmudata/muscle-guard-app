@@ -20,12 +20,16 @@ from typing import AsyncIterator
 
 import anthropic
 import httpx
+from dotenv import load_dotenv
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
 BASE_DIR = Path(__file__).parent
 STATIC_DIR = BASE_DIR / "static"
+
+# Schlüssel aus fala-ja/.env laden (bereits gesetzte Umgebungsvariablen haben Vorrang)
+load_dotenv(BASE_DIR / ".env")
 
 MODEL = os.getenv("FALA_MODEL", "claude-opus-5-5")
 EFFORT = os.getenv("FALA_EFFORT", "low")  # low = schnellste Antworten
@@ -412,6 +416,8 @@ class Session:
 # ---------------------------------------------------------------------------
 
 app = FastAPI(title="Fala Já")
+print(f"[Fala Já] Modell: {'Testmodus' if FAKE_LLM else MODEL} · "
+      f"Stimme: {'ElevenLabs' if ELEVEN_KEY else 'Browser (kein ELEVENLABS_API_KEY)'}")
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 

@@ -27,11 +27,11 @@ Voraussetzung: Python 3.10+, **Chrome oder Edge** (für die Spracherkennung).
 ```bash
 cd fala-ja
 pip install -r requirements.txt
-export ANTHROPIC_API_KEY=...          # Pflicht
-export ELEVENLABS_API_KEY=...         # optional – sonst Browser-Stimme
-export ELEVENLABS_VOICE_ID_CARIOCA=...  # brasilianische Stimme aus der Voice Library
+cp .env.example .env      # dann .env öffnen und Schlüssel eintragen
 uvicorn server:app --port 8000
 ```
+
+Beim Start zeigt das Terminal, ob die ElevenLabs-Stimme aktiv ist.
 
 Dann <http://localhost:8000> öffnen und aufs Mikrofon tippen.
 

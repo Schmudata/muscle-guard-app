@@ -8,7 +8,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 def load_server(fake: bool):
     os.environ["FALA_FAKE_LLM"] = "1" if fake else "0"
-    os.environ.pop("ELEVENLABS_API_KEY", None)
+    os.environ["ELEVENLABS_API_KEY"] = ""  # .env darf Tests nicht beeinflussen
     import server
     return importlib.reload(server)
 

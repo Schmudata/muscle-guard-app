@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fala Já</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">💬</span>
+      <div>
+        <h1>Fala Já</h1>
+        <p class="sub">Brasilianisches Portugiesisch – einfach drauflos sprechen</p>
+      </div>
+    </div>
+    <div class="status" id="status"><span class="dot"></span><span id="status-text">Verbinde…</span></div>
+  </header>
+
+  <section class="settings" aria-label="Einstellungen">
+    <label>Modus
+      <select id="mode">
+        <option value="conversa">Gespräch (PT)</option>
+        <option value="pergunta">Frag mich (DE)</option>
+      </select>
+    </label>
+    <label>Niveau
+      <select id="level">
+        <option>A1</option><option selected>A2</option><option>B1</option><option>B2</option>
+      </select>
+    </label>
+    <label>Akzent
+      <select id="accent">
+        <option value="carioca">Carioca (Rio) · Ana</option>
+        <option value="paulista">Paulista (SP) · Bruno</option>
+      </select>
+    </label>
+    <label class="check"><input type="checkbox" id="slow"> Langsam</label>
+    <label class="check"><input type="checkbox" id="subtitles" checked> Untertitel</label>
+    <label class="check" title="Mit Kopfhörern kannst du die Tutorin per Stimme unterbrechen. Ohne Kopfhörer kann das Echo stören.">
+      <input type="checkbox" id="bargein" checked> Unterbrechen per Stimme
+    </label>
+  </section>
+
+  <main id="chat" class="chat" aria-live="polite">
+    <div class="empty" id="empty">
+      <p><strong>Tippe auf das Mikrofon</strong> und sag einfach „Oi!“.</p>
+      <p>Im Modus <em>Frag mich</em> kannst du auf Deutsch fragen, z. B. „Wie sage ich: Ich hätte gern einen Kaffee?“</p>
+    </div>
+  </main>
+
+  <div class="interim" id="interim" aria-live="polite"></div>
+
+  <footer class="controls">
+    <button id="mic" class="mic" aria-pressed="false" aria-label="Mikrofon starten">
+      <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path fill="currentColor" d="M12 15a3 3 0 0 0 3-3V6a3 3 0 1 0-6 0v6a3 3 0 0 0 3 3Zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-2.08A7 7 0 0 0 19 12h-2Z"/></svg>
+    </button>
+    <button id="stop" class="ghost" title="Tutorin unterbrechen (Esc)">Stopp</button>
+    <form id="text-form" class="text-form">
+      <input id="text" type="text" autocomplete="off" placeholder="…oder hier tippen" aria-label="Nachricht tippen">
+      <button type="submit" class="ghost">Senden</button>
+    </form>
+    <span class="latency" id="latency" title="Zeit vom Ende deines Satzes bis zum ersten Ton"></span>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

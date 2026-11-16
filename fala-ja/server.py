@@ -40,9 +40,10 @@ ELEVEN_MODEL = os.getenv("ELEVENLABS_MODEL", "eleven_flash_v2_5")
 # Standard ist eine vorgefertigte ElevenLabs-Stimme. Für echten brasilianischen
 # Akzent eine pt-BR-Stimme aus der Voice Library wählen und ihre ID eintragen.
 ELEVEN_VOICE_DEFAULT = os.getenv("ELEVENLABS_VOICE_ID", "EXAVITQu4vr4xnSDxMaL")
+# Ausgewählte brasilianische Stimmen (per .env überschreibbar)
 ELEVEN_VOICES = {
-    "carioca": os.getenv("ELEVENLABS_VOICE_ID_CARIOCA", ELEVEN_VOICE_DEFAULT),
-    "paulista": os.getenv("ELEVENLABS_VOICE_ID_PAULISTA", ELEVEN_VOICE_DEFAULT),
+    "carioca": os.getenv("ELEVENLABS_VOICE_ID_CARIOCA") or "GM2UA3fbsIaLHcswCDX9",
+    "paulista": os.getenv("ELEVENLABS_VOICE_ID_PAULISTA") or "wTABSOIKENuRDeLiHYDF",
 }
 
 MAX_HISTORY = 40  # Nachrichten, die an Claude gehen

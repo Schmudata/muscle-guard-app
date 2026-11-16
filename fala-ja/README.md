@@ -20,7 +20,14 @@ Chrome-Spracherkennung ─► WebSocket ─► Claude (Streaming) ─► Satz-Ze
 - **Modi:** *Gespräch* (alles auf Portugiesisch) und *Frag mich* (du fragst auf Deutsch).
 - Niveau A1–B2, Langsam-Modus, Untertitel ausblenden (Antippen zeigt sie).
 
-## Starten
+## Starten unter Windows (ein Klick)
+
+1. Ordner entpacken (nicht aus der ZIP heraus starten).
+2. Im Ordner `fala-ja` doppelt auf **`start-windows.bat`** klicken.
+3. Beim ersten Start öffnet sich Notepad: Schlüssel eintragen, speichern, schließen.
+4. Der Browser öffnet http://localhost:8000. Das schwarze Fenster offen lassen.
+
+## Starten (Mac/Linux)
 
 Voraussetzung: Python 3.10+, **Chrome oder Edge** (für die Spracherkennung).
 

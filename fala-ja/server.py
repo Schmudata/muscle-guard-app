@@ -12,17 +12,21 @@ from __future__ import annotations
 
 import asyncio
 import base64
+import hashlib
+import hmac
+import html
 import os
 import re
 from dataclasses import dataclass
 from pathlib import Path
 from typing import AsyncIterator
+from urllib.parse import parse_qs
 
 import anthropic
 import httpx
 from dotenv import load_dotenv
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
-from fastapi.responses import FileResponse
+from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect
+from fastapi.responses import FileResponse, HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 BASE_DIR = Path(__file__).parent
@@ -47,6 +51,10 @@ ELEVEN_VOICES = {
 }
 
 MAX_HISTORY = 40  # Nachrichten, die an Claude gehen
+
+# Passwortschutz für die Online-Version (leer = kein Schutz, z. B. lokal)
+APP_PASSWORD = os.getenv("APP_PASSWORD", "")
+AUTH_COOKIE = "fala_auth"
 
 START_PROMPT = (
     "(Der Lernende hat die App gerade geöffnet. Begrüße ihn kurz und herzlich "
@@ -422,9 +430,50 @@ print(f"[Fala Já] Modell: {'Testmodus' if FAKE_LLM else MODEL} · "
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 
+def _auth_token() -> str:
+    return hashlib.sha256(f"fala-ja:{APP_PASSWORD}".encode()).hexdigest()
+
+
+def _is_authed(cookies: dict) -> bool:
+    if not APP_PASSWORD:
+        return True
+    return hmac.compare_digest(cookies.get(AUTH_COOKIE, ""), _auth_token())
+
+
+def _login_page(error: str = "") -> HTMLResponse:
+    err = f'<p class="login-error">{html.escape(error)}</p>' if error else ""
+    return HTMLResponse(f"""<!doctype html>
+<html lang="de"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fala Já</title><link rel="stylesheet" href="/static/style.css"></head>
+<body><main class="login">
+  <h1>💬 Fala Já</h1>
+  <form method="post" action="/login">
+    <label for="pw">Passwort</label>
+    <input id="pw" name="password" type="password" autocomplete="current-password" autofocus required>
+    <button type="submit" class="ghost">Los geht's</button>
+  </form>{err}
+</main></body></html>""")
+
+
 @app.get("/")
-async def index() -> FileResponse:
+async def index(request: Request):
+    if not _is_authed(request.cookies):
+        return _login_page()
     return FileResponse(STATIC_DIR / "index.html")
+
+
+@app.post("/login")
+async def login(request: Request):
+    form = parse_qs((await request.body()).decode("utf-8", "replace"))
+    given = form.get("password", [""])[0]
+    if not APP_PASSWORD or not hmac.compare_digest(given.encode(), APP_PASSWORD.encode()):
+        return _login_page("Falsches Passwort.")
+    resp = RedirectResponse("/", status_code=303)
+    resp.set_cookie(AUTH_COOKIE, _auth_token(), max_age=90 * 24 * 3600, httponly=True,
+                    samesite="lax", secure=request.url.scheme == "https"
+                    or request.headers.get("x-forwarded-proto") == "https")
+    return resp
 
 
 @app.get("/api/config")
@@ -438,6 +487,10 @@ async def config() -> dict:
 @app.websocket("/ws")
 async def ws_endpoint(ws: WebSocket) -> None:
     await ws.accept()
+    if not _is_authed(ws.cookies):
+        # erst annehmen, dann schließen: so sieht der Browser den Code 1008
+        await ws.close(code=1008)
+        return
     session = Session(ws)
     try:
         while True:

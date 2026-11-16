@@ -129,3 +129,12 @@ body.no-subs .msg.bot.reveal .text { filter: none; }
   .sub { display: none; }
   .msg, .note { max-width: 92%; }
 }
+
+.login { margin: 18vh auto 0; width: min(340px, calc(100% - 32px)); display: flex; flex-direction: column; gap: 14px; }
+.login h1 { font-size: 1.6rem; }
+.login form { display: flex; flex-direction: column; gap: 8px; }
+.login input {
+  font: inherit; color: var(--text); background: var(--surface);
+  border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px;
+}
+.login-error { color: var(--danger); margin: 0; }

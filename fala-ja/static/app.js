@@ -65,7 +65,11 @@
       state.turn = 0; state.activeTurn = 0;
       setStatus(state.ttsMode === "elevenlabs" ? "Bereit · Stimme: ElevenLabs" : "Bereit · Stimme: Browser", "ok");
     };
-    ws.onclose = () => { setStatus("Getrennt – verbinde neu…", "err"); setTimeout(connect, 1000); };
+    ws.onclose = (ev) => {
+      if (ev.code === 1008) { location.reload(); return; } // nicht angemeldet
+      setStatus("Getrennt – verbinde neu…", "err");
+      setTimeout(connect, 1000);
+    };
     ws.onmessage = (ev) => handle(JSON.parse(ev.data));
   }
 

@@ -101,3 +101,28 @@ def test_interrupt_stops_turn():
         ws.send_json({"type": "interrupt"})
         while (msg := ws.receive_json())["type"] != "stopped":
             assert msg["type"] != "done"
+
+
+def test_password_protection():
+    from fastapi.testclient import TestClient
+    from starlette.websockets import WebSocketDisconnect
+
+    os.environ["APP_PASSWORD"] = "geheim"
+    try:
+        server = load_server(fake=True)
+        with TestClient(server.app) as client:
+            assert 'name="password"' in client.get("/").text
+            try:
+                with client.websocket_connect("/ws"):
+                    raise AssertionError("WebSocket ohne Login offen")
+            except WebSocketDisconnect as e:
+                assert e.code == 1008
+            assert "Falsches Passwort" in client.post("/login", data={"password": "nein"}).text
+            r = client.post("/login", data={"password": "geheim"}, follow_redirects=False)
+            assert r.status_code == 303
+            assert "Fala Já" in client.get("/").text and 'id="mic"' in client.get("/").text
+            with client.websocket_connect("/ws") as ws:
+                ws.send_json({"type": "user_text", "text": "oi"})
+                assert ws.receive_json()["type"] == "correction"
+    finally:
+        del os.environ["APP_PASSWORD"]

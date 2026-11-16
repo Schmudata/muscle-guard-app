@@ -5,7 +5,12 @@ import kotlin.math.roundToInt
 
 data class Tip(val emoji: String, val title: String, val text: String, val priority: Int)
 
-fun euro(v: Double): String = String.format(Locale.GERMANY, "%.2f €", v)
+private val moneyLocale = Locale("pt", "PT")
+
+/** Formats an amount the way Portuguese receipts show it: "1,29 €". */
+fun euro(v: Double): String = String.format(moneyLocale, "%.2f €", v)
+
+private fun pct(v: Double) = "${(v * 100).roundToInt()}%"
 
 object TipEngine {
 
@@ -13,59 +18,58 @@ object TipEngine {
         val tips = mutableListOf<Tip>()
         if (stats.receiptCount == 0) {
             return listOf(
-                Tip("📸", "Scanne deinen ersten Bon", "Je mehr Bons du scannst, desto schlauer werden deine Spar-Tipps. Dein erster Scan bringt Bonus-XP!", 100),
-                Tip("📝", "Mit Einkaufszettel losziehen", "Wer mit Liste einkauft, gibt im Schnitt deutlich weniger für Spontankäufe aus.", 10),
+                Tip("📸", "Scan your first receipt", "The more receipts you scan, the smarter your saving tips get. Your first scan earns bonus XP!", 100),
+                Tip("📝", "Shop with a list", "People who shop with a list spend noticeably less on impulse buys.", 10),
             )
         }
         val share = stats.categories.associate { it.category to it.share }
         val snacks = (share[Category.SNACKS] ?: 0.0) + (share[Category.ALKOHOL] ?: 0.0)
         if (snacks > 0.18) {
             val amount = stats.categories.filter { it.category == Category.SNACKS || it.category == Category.ALKOHOL }.sumOf { it.amount }
-            tips += Tip("🍫", "Snack-Monster gesichtet!", "${(snacks * 100).roundToInt()} % deiner Ausgaben (${euro(amount)}) gehen in Süßes, Snacks & Alkohol. Halbiere das und du sparst ca. ${euro(amount / 2)}.", 90)
+            tips += Tip("🍫", "Snack monster spotted!", "${pct(snacks)} of your spending (${euro(amount)}) goes on sweets, snacks & alcohol. Halve it and you save about ${euro(amount / 2)}.", 90)
         }
         val drinks = share[Category.GETRAENKE] ?: 0.0
         if (drinks > 0.12) {
-            tips += Tip("🚰", "Getränke-Falle", "${(drinks * 100).roundToInt()} % gehen für Getränke drauf. Leitungswasser (mit Sprudler) ist bis zu 100× günstiger als Flaschenwasser.", 70)
+            tips += Tip("🚰", "Drinks trap", "${pct(drinks)} goes on drinks. Tap water (filtered or sparkling at home) is up to 100× cheaper than bottled water.", 70)
         }
         val meat = share[Category.FLEISCH_FISCH] ?: 0.0
         if (meat > 0.25) {
-            tips += Tip("🥕", "Veggie-Tage einlegen", "Fleisch & Fisch machen ${(meat * 100).roundToInt()} % aus. Zwei fleischfreie Tage pro Woche sparen spürbar – Linsen & Bohnen sind günstige Proteinquellen.", 60)
+            tips += Tip("🥕", "Add veggie days", "Meat & fish make up ${pct(meat)}. Two meat-free days a week save real money – lentils, chickpeas and beans are cheap protein.", 60)
         }
         if (stats.tripsPerWeek > 3.0) {
-            tips += Tip("🧭", "Weniger Einkaufstouren", "Du gehst ca. ${String.format(Locale.GERMANY, "%.1f", stats.tripsPerWeek)}× pro Woche einkaufen. Jeder Ladenbesuch verführt zu Spontankäufen – plane 1–2 Großeinkäufe.", 75)
+            tips += Tip("🧭", "Fewer shopping trips", "You shop about ${String.format(Locale.US, "%.1f", stats.tripsPerWeek)}× a week. Every visit tempts you into impulse buys – plan 1–2 bigger shops.", 75)
         }
         stats.storeDiffs.firstOrNull()?.let { d ->
-            tips += Tip("🏪", "${d.product}: Laden wechseln", "${d.product} kostet bei ${d.cheapStore} im Schnitt ${euro(d.cheapPrice)}, bei ${d.expensiveStore} ${euro(d.expensivePrice)}.", 80)
+            tips += Tip("🏪", "${d.product}: switch store", "${d.product} costs on average ${euro(d.cheapPrice)} at ${d.cheapStore}, but ${euro(d.expensivePrice)} at ${d.expensiveStore}.", 80)
         }
         stats.priceIncreases.firstOrNull()?.let { p ->
-            tips += Tip("📈", "Preisalarm: ${p.name}", "Der Preis ist von ${euro(p.oldPrice)} auf ${euro(p.newPrice)} gestiegen (+${p.percent} %). Achte auf Angebote oder Eigenmarken.", 78)
+            tips += Tip("📈", "Price alert: ${p.name}", "The price went up from ${euro(p.oldPrice)} to ${euro(p.newPrice)} (+${p.percent}%). Look for promotions or the store's own brand.", 78)
         }
         if (stats.itemCount >= 10) {
             val promoShare = stats.promoItemCount.toDouble() / stats.itemCount
             if (promoShare < 0.1) {
-                tips += Tip("🏷️", "Aktionen nutzen", "Nur ${(promoShare * 100).roundToInt()} % deiner Produkte waren im Angebot. Ein Blick in Prospekte oder die Händler-App vor dem Einkauf lohnt sich.", 65)
+                tips += Tip("🏷️", "Use promotions", "Only ${pct(promoShare)} of your products were on promotion. Check the weekly leaflet or the store app (e.g. Cartão Continente, Poupa Mais, Lidl Plus) before you shop.", 65)
             } else {
-                tips += Tip("🏆", "Angebots-Jäger", "Stark! ${(promoShare * 100).roundToInt()} % deiner Produkte waren Aktionen – du hast bereits ${euro(stats.totalSaved)} gespart.", 30)
+                tips += Tip("🏆", "Deal hunter", "Great! ${pct(promoShare)} of your products were on promotion – you've already saved ${euro(stats.totalSaved)}.", 30)
             }
         }
         if (stats.doublePurchases.isNotEmpty()) {
             val names = stats.doublePurchases.map { it.label }.distinct().take(3).joinToString(", ")
-            tips += Tip("🔁", "Doppelt gekauft?", "Du hast ${stats.doublePurchases.size}× Produkte gekauft, die vermutlich noch zu Hause waren (z. B. $names). Nutze den Einkaufs-Check vor dem Einkauf!", 85)
+            tips += Tip("🔁", "Bought twice?", "${stats.doublePurchases.size}× you bought something you probably still had at home (e.g. $names). Run the Shopping Check before you go!", 85)
         }
         if (stats.wasted > 0) {
-            tips += Tip("🗑️", "Weniger wegwerfen", "${stats.wasted} Produkte sind im Müll gelandet. Schau öfter in den Vorrat und koche Rezepte mit bald ablaufenden Zutaten.", 82)
+            tips += Tip("🗑️", "Waste less", "${stats.wasted} products ended up in the bin. Check your pantry more often and cook recipes with items that expire soon.", 82)
         }
         if (stats.pfandPaid - stats.pfandReturned > 3.0) {
-            tips += Tip("♻️", "Pfand liegt rum", "Du hast ${euro(stats.pfandPaid - stats.pfandReturned)} mehr Pfand bezahlt als zurückgegeben. Bring die Flaschen zurück – das ist geschenktes Geld!", 72)
+            tips += Tip("♻️", "Deposit lying around", "You paid ${euro(stats.pfandPaid - stats.pfandReturned)} more deposit than you got back. Return those bottles – it's free money!", 72)
         }
         if (stats.thisWeekSpent > budget) {
-            tips += Tip("💔", "Budget überschritten", "Diese Woche hast du ${euro(stats.thisWeekSpent)} ausgegeben – ${euro(stats.thisWeekSpent - budget)} über deinem Budget. Koch aus dem Vorrat, um den Rest der Woche zu überstehen.", 95)
+            tips += Tip("💔", "Budget exceeded", "This week you spent ${euro(stats.thisWeekSpent)} – ${euro(stats.thisWeekSpent - budget)} over budget. Cook from your pantry to survive the rest of the week.", 95)
         }
-        val smallTrips = stats.receiptCount > 3 && stats.avgReceipt < 12
-        if (smallTrips) {
-            tips += Tip("🛒", "Viele Mini-Einkäufe", "Dein Durchschnittsbon liegt bei ${euro(stats.avgReceipt)}. Kleine Einkäufe sind oft Impulskäufe – bündeln spart Zeit und Geld.", 55)
+        if (stats.receiptCount > 3 && stats.avgReceipt < 12) {
+            tips += Tip("🛒", "Lots of mini shops", "Your average receipt is ${euro(stats.avgReceipt)}. Small shops are often impulse buys – bundling saves time and money.", 55)
         }
-        tips += Tip("🥫", "Eigenmarken testen", "Eigenmarken (z. B. ja!, Milbona, GUT&GÜNSTIG) sind oft 30–50 % günstiger und kommen häufig aus denselben Werken.", 5)
+        tips += Tip("🥫", "Try own brands", "Store brands (Continente, Pingo Doce, Milbona, Auchan …) are often 30–50% cheaper and frequently come from the same factories.", 5)
         return tips.sortedByDescending { it.priority }
     }
 }

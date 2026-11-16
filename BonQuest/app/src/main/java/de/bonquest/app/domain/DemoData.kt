@@ -3,37 +3,40 @@ package de.bonquest.app.domain
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-/** Sample receipts in the shape OCR returns them, to try the app without a real receipt. */
+/** Sample Portuguese receipts in the shape OCR returns them, to try the app without a real receipt. */
 object DemoData {
-    private val fmt = DateTimeFormatter.ofPattern("dd.MM.yyyy")
 
-    fun demoRows(variant: Int, today: LocalDate = LocalDate.now()): List<String> {
-        val d = today.minusDays(if (variant % 2 == 0) 0 else 4).format(fmt)
-        return when (variant % 3) {
-            0 -> listOf(
-                "REWE Markt GmbH", "Hauptstr. 12", "12345 Musterstadt", "EUR",
-                "SPAGHETTI 1,29 A", "PASSATA 0,99 A", "ZWIEBELN 1KG 1,49 A", "KNOBLAUCH 0,79 A",
-                "GEMISCHTES HACK 500G 4,99 A", "AKTION -1,00 A", "H-MILCH 3,5% 2,58 A", "2 Stk x 1,29",
-                "BIO EIER 10ER 3,49 A", "KAROTTEN 1,19 A", "PARMESAN 2,99 A", "Rabatt Coupon -0,60",
-                "CHIPS PAPRIKA 1,79 A", "COLA 1,5L 1,29 B", "PFAND 0,25 B",
-                "--------------------", "SUMME EUR 21,53", "Geg. EC-Karte EUR 21,53",
-                "Datum: $d 18:42", "Vielen Dank für Ihren Einkauf",
+    fun demoRows(variant: Int, today: LocalDate = LocalDate.now()): List<String> = when (variant % 3) {
+        0 -> {
+            val d = today.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+            listOf(
+                "Continente Modelo Continente Hipermercados S.A.", "NIF 502011475", "Rua das Flores 12, Lisboa",
+                "ESPARGUETE CONTINENTE 500G 0,69 C", "POLPA DE TOMATE 0,89 C", "CEBOLA 1KG 1,29 C", "ALHO 0,59 C",
+                "CARNE PICADA MISTA 500G 3,99 C", "Desconto Imediato -0,80", "LEITE MEIO GORDO 1L 1,70 A", "2 X 0,85",
+                "OVOS CLASSE M 12UN 2,79 C", "CENOURA 0,99 C", "QUEIJO PARMESAO RALADO 2,49 C",
+                "Poupança Cartão Continente -0,50", "BATATAS FRITAS LAYS 1,99 D", "COCA COLA 1,5L 1,79 D",
+                "TOTAL A PAGAR 17,90", "Multibanco 17,90", "IVA 6% 0,62", "Data: $d 18:42", "Obrigado pela sua visita",
             )
-            1 -> listOf(
-                "LIDL", "Lidl Vertriebs-GmbH & Co. KG", "EUR",
-                "Bananen 1,19 A", "0,850 kg x 1,39 EUR/kg", "Tomaten Rispe 1,99 A", "Mozzarella 0,79 A",
-                "Mozzarella 0,79 A", "Lidl Plus Rabatt -0,30", "Gurke 0,69 A", "Feta 1,49 A",
-                "Basmati Reis 1,99 A", "Kokosmilch 1,29 A", "Haehnchenbrust 5,49 A", "Preisvorteil -1,10",
-                "Paprika Mix 1,99 A", "Vollkornbrot 1,59 A", "Leergut -1,50 B",
-                "zu zahlen 16,39", "Bar 20,00", "Rückgeld 3,61", "$d 11:03 Kasse 3",
+        }
+        1 -> {
+            val d = today.minusDays(4).format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+            listOf(
+                "PINGO DOCE", "Pingo Doce - Distribuição Alimentar S.A.", "Contribuinte: 500829993",
+                "(C) BANANA 1,19", "0,850 kg x 1,40 €/kg", "(C) TOMATE CHERRY 1,99", "(C) QUEIJO MOZZARELLA 0,99",
+                "(C) QUEIJO MOZZARELLA 0,99", "Poupança -0,30", "(C) PEPINO 0,69", "(C) QUEIJO FETA 2,29",
+                "(C) ARROZ BASMATI 1,89", "(A) LEITE DE COCO 1,49", "(C) PEITO DE FRANGO 4,99", "Desconto Promoção -1,00",
+                "(C) PIMENTO VERMELHO 0,99", "(C) PÃO DE MISTURA 1,39",
+                "TOTAL 17,59", "Numerário 20,00", "Troco 2,41", "Total Poupança 1,30", "$d 11:03",
             )
-            else -> listOf(
-                "ALDI SÜD", "Filiale 0815", "EUR",
-                "Kartoffeln 2kg 2,49 A", "Butter 1,99 A", "Mehl 0,59 A", "Haferflocken 0,79 A",
-                "Joghurt Natur 0,59 A", "Erdbeeren 2,49 A", "Angebot Lachsfilet 4,99 A",
-                "Toilettenpapier 3,95 B", "Spülmittel 0,95 B", "Schokolade Vollmilch 1,19 A",
-                "Weißwein Riesling 3,49 B", "Brokkoli 1,49 A", "Zitronen 1,29 A",
-                "Summe 26,29", "Kartenzahlung 26,29", "$d",
+        }
+        else -> {
+            val d = today.toString() // yyyy-MM-dd
+            listOf(
+                "Lidl & Companhia", "NIF 503340855", "EUR",
+                "Batata Branca 2kg 1,99 A", "Manteiga com Sal 2,29 A", "Farinha Trigo 0,79 A", "Flocos de Aveia 0,99 A",
+                "Iogurte Natural 0,45 A", "Morangos 2,49 A", "Promo Salmão Fresco 5,49 A", "Papel Higiénico 3,99 B",
+                "Detergente Loiça 1,29 B", "Chocolate de Leite 0,99 A", "Vinho Tinto Douro 3,49 C", "Brócolos 1,49 A",
+                "Limões 1,19 A", "Total 26,93", "Cartão Multibanco 26,93", "$d 19:20",
             )
         }
     }

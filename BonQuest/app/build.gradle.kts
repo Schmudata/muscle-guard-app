@@ -13,15 +13,28 @@ android {
         applicationId = "de.bonquest.app"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0.0"
+        versionCode = 2
+        versionName = "1.1.0"
+    }
+
+    // A fixed key (checked in on purpose, personal sideloading only) so every new APK
+    // installs as an update over the previous one and keeps the app data.
+    signingConfigs {
+        create("shared") {
+            storeFile = file("bonquest.keystore")
+            storePassword = "bonquest"
+            keyAlias = "bonquest"
+            keyPassword = "bonquest"
+        }
     }
 
     buildTypes {
+        debug {
+            signingConfig = signingConfigs.getByName("shared")
+        }
         release {
             isMinifyEnabled = false
-            // Signed with the debug key so the release APK is installable without extra setup.
-            signingConfig = signingConfigs.getByName("debug")
+            signingConfig = signingConfigs.getByName("shared")
         }
     }
     compileOptions {

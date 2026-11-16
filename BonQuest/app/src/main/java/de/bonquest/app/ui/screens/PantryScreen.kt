@@ -54,18 +54,18 @@ fun PantryScreen(vm: AppViewModel, data: AppData) {
     LazyColumn(contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         item {
             Column {
-                Text("🏠 DEIN VORRAT", color = GameColors.Gold, fontWeight = FontWeight.Black, fontSize = 24.sp)
-                Text("Geschätzt aus deinen Einkäufen: Was ist wahrscheinlich noch da?", color = GameColors.TextDim)
+                Text("🏠 YOUR PANTRY", color = GameColors.Gold, fontWeight = FontWeight.Black, fontSize = 24.sp)
+                Text("Estimated from your purchases: what is probably still at home?", color = GameColors.TextDim)
                 Spacer(Modifier.height(10.dp))
-                ChunkyButton("🛒 EINKAUFSZETTEL PRÜFEN", Modifier.fillMaxWidth(), color = GameColors.Mana, shadow = GameColors.ManaDark, textColor = Color.Black) { vm.navigate(Screen.CHECK) }
+                ChunkyButton("🛒 CHECK SHOPPING LIST", Modifier.fillMaxWidth(), color = GameColors.Mana, shadow = GameColors.ManaDark, textColor = Color.Black) { vm.navigate(Screen.CHECK) }
             }
         }
         if (entries.isEmpty()) {
-            item { EmptyState("🕸️", "Die Vorratskammer ist leer", "Scanne einen Bon – die gekauften Produkte erscheinen hier mit ihrer geschätzten Haltbarkeit.") }
+            item { EmptyState("🕸️", "The pantry is empty", "Scan a receipt – your products will appear here with their estimated shelf life.") }
         } else {
             item {
                 Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-                    FilterChip(filter == null, { filter = null }, label = { Text("Alle (${entries.size})") }, colors = chipColors())
+                    FilterChip(filter == null, { filter = null }, label = { Text("All (${entries.size})") }, colors = chipColors())
                     cats.forEach { c ->
                         FilterChip(filter == c, { filter = if (filter == c) null else c }, label = { Text("${c.emoji} ${c.label}") }, colors = chipColors())
                     }
@@ -97,16 +97,16 @@ private fun PantryRow(vm: AppViewModel, e: PantryEntry) {
             Column(Modifier.weight(1f)) {
                 Text(e.item.name, fontWeight = FontWeight.Bold, maxLines = 1)
                 Text(
-                    "${if (e.daysAgo == 0) "heute" else "vor ${e.daysAgo} T"} · ${e.store}",
+                    "${if (e.daysAgo == 0) "today" else "${e.daysAgo} d ago"} · ${e.store}",
                     color = GameColors.TextDim, fontSize = 12.sp,
                 )
             }
             Pill(
                 when {
-                    e.daysLeft < 0 -> "prüfen!"
-                    e.daysLeft == 0 -> "heute"
-                    e.daysLeft > 60 -> "lange"
-                    else -> "~${e.daysLeft} T"
+                    e.daysLeft < 0 -> "check!"
+                    e.daysLeft == 0 -> "today"
+                    e.daysLeft > 60 -> "long"
+                    else -> "~${e.daysLeft} d"
                 },
                 color,
             )
@@ -115,8 +115,8 @@ private fun PantryRow(vm: AppViewModel, e: PantryEntry) {
         GameBar(e.freshness, color, height = 10.dp)
         Spacer(Modifier.height(8.dp))
         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            ChunkyButton("✔ VERBRAUCHT", Modifier.weight(1f), color = GameColors.XpDark, shadow = Color(0xFF0F4A2A), height = 38.dp) { vm.consume(e) }
-            ChunkyButton("🗑 WEG", Modifier.weight(0.6f), color = GameColors.HpDark, shadow = Color(0xFF5A1020), height = 38.dp) { vm.waste(e) }
+            ChunkyButton("✔ USED UP", Modifier.weight(1f), color = GameColors.XpDark, shadow = Color(0xFF0F4A2A), height = 38.dp) { vm.consume(e) }
+            ChunkyButton("🗑 TOSSED", Modifier.weight(0.6f), color = GameColors.HpDark, shadow = Color(0xFF5A1020), height = 38.dp) { vm.waste(e) }
         }
     }
 }
@@ -130,14 +130,14 @@ fun CheckScreen(vm: AppViewModel, data: AppData) {
     LazyColumn(contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         item {
             Column {
-                Text("🛒 EINKAUFS-CHECK", color = GameColors.Gold, fontWeight = FontWeight.Black, fontSize = 24.sp)
-                Text("Schreib deinen Einkaufszettel – ich sage dir, was du vermutlich schon zu Hause hast.", color = GameColors.TextDim)
+                Text("🛒 SHOPPING CHECK", color = GameColors.Gold, fontWeight = FontWeight.Black, fontSize = 24.sp)
+                Text("Type your shopping list – I'll tell you what you probably already have at home. Portuguese or English works.", color = GameColors.TextDim)
                 Spacer(Modifier.height(10.dp))
                 OutlinedTextField(
                     list, { list = it },
                     modifier = Modifier.fillMaxWidth().height(150.dp),
-                    placeholder = { Text("Milch\nNudeln\nTomaten\nKlopapier") },
-                    label = { Text("Ein Produkt pro Zeile oder mit Komma") },
+                    placeholder = { Text("leite\nmassa\ntomate\npapel higiénico") },
+                    label = { Text("One product per line or comma-separated") },
                 )
             }
         }
@@ -146,7 +146,7 @@ fun CheckScreen(vm: AppViewModel, data: AppData) {
             item {
                 GameCard(borderColor = GameColors.Gold) {
                     Text(
-                        if (home > 0) "🎯 $home von ${hits.size} Produkten hast du wahrscheinlich schon!" else "✅ Nichts davon ist im Vorrat – ab in den Laden!",
+                        if (home > 0) "🎯 You probably already have $home of ${hits.size} products!" else "✅ None of it is in your pantry – off to the store!",
                         fontWeight = FontWeight.Black, color = GameColors.Gold,
                     )
                 }
@@ -161,13 +161,13 @@ fun CheckScreen(vm: AppViewModel, data: AppData) {
                             Text(h.query, fontWeight = FontWeight.Bold)
                             if (first != null) {
                                 Text(
-                                    "Schon da: ${first.item.name} (gekauft ${if (first.daysAgo == 0) "heute" else "vor ${first.daysAgo} Tagen"}" +
-                                        (if (first.daysLeft <= 60) ", noch ca. ${first.daysLeft} Tage)" else ")"),
+                                    "Already there: ${first.item.name} (bought ${if (first.daysAgo == 0) "today" else "${first.daysAgo} days ago"}" +
+                                        (if (first.daysLeft <= 60) ", ~${first.daysLeft} days left)" else ")"),
                                     color = GameColors.Orange, fontSize = 13.sp,
                                 )
-                                if (h.entries.size > 1) Text("+ ${h.entries.size - 1} weitere", color = GameColors.TextDim, fontSize = 12.sp)
+                                if (h.entries.size > 1) Text("+ ${h.entries.size - 1} more", color = GameColors.TextDim, fontSize = 12.sp)
                             } else {
-                                Text("Muss gekauft werden", color = GameColors.TextDim, fontSize = 13.sp)
+                                Text("Needs to be bought", color = GameColors.TextDim, fontSize = 13.sp)
                             }
                         }
                     }
@@ -175,8 +175,8 @@ fun CheckScreen(vm: AppViewModel, data: AppData) {
             }
         }
         if (entries.isEmpty()) {
-            item { SectionTitle("Hinweis"); }
-            item { Text("Noch kein Vorrat erfasst – scanne zuerst ein paar Bons.", color = GameColors.TextDim) }
+            item { SectionTitle("Note"); }
+            item { Text("No pantry yet – scan a few receipts first.", color = GameColors.TextDim) }
         }
     }
 }

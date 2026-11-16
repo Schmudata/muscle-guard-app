@@ -1,5 +1,7 @@
 package de.bonquest.app.domain
 
+import java.text.Normalizer
+
 data class Ingredient(
     val key: String,
     val label: String,
@@ -12,102 +14,111 @@ data class Ingredient(
 data class Classification(val category: Category, val ingredient: String?)
 
 /**
- * Keyword based product classifier tuned for (abbreviated) German receipt texts.
- * Keywords are written in normalized form: lowercase, ä->ae, ö->oe, ü->ue, ß->ss.
- * The longest matching keyword wins, so "tomatenmark" beats "tomat".
+ * Keyword based product classifier for (abbreviated) receipt texts.
+ * Primary language: Portuguese (PT/BR). English and German keywords are kept as fallback.
+ *
+ * Keywords are written in normalized form (see [normalize]): lowercase, no accents
+ * (pão -> pao, açúcar -> acucar), German umlauts as ae/oe/ue, ß as ss.
+ * The longest matching keyword wins, so "polpa de tomate" beats "tomat".
+ * Keywords with a leading/trailing space only match whole words.
  */
 object Categorizer {
 
     val ingredients: List<Ingredient> = listOf(
-        // Obst & Gemüse
-        Ingredient("tomate", "Tomaten", "🍅", Category.OBST_GEMUESE, 7, listOf("tomat", "cherrytom", "rispentom", "strauchtom", "cocktailtom", "romatom")),
-        Ingredient("zwiebel", "Zwiebeln", "🧅", Category.OBST_GEMUESE, 30, listOf("zwieb", "schalotte", "gemuesezwiebel")),
-        Ingredient("knoblauch", "Knoblauch", "🧄", Category.OBST_GEMUESE, 60, listOf("knobl")),
-        Ingredient("kartoffel", "Kartoffeln", "🥔", Category.OBST_GEMUESE, 30, listOf("kartof", "drilling", "speisekart")),
-        Ingredient("karotte", "Karotten", "🥕", Category.OBST_GEMUESE, 21, listOf("karott", "moehre", "mohrrueb")),
-        Ingredient("paprika", "Paprika", "🫑", Category.OBST_GEMUESE, 10, listOf("paprika", "spitzpaprika")),
-        Ingredient("gurke", "Gurke", "🥒", Category.OBST_GEMUESE, 7, listOf("gurke", "salatgurke", "minigurke")),
-        Ingredient("zucchini", "Zucchini", "🥒", Category.OBST_GEMUESE, 7, listOf("zucchin")),
-        Ingredient("brokkoli", "Brokkoli", "🥦", Category.OBST_GEMUESE, 5, listOf("brokkoli", "broccoli", "blumenkohl")),
-        Ingredient("spinat", "Spinat", "🥬", Category.OBST_GEMUESE, 4, listOf("spinat", "blattspinat", "babyspinat")),
-        Ingredient("salat", "Salat", "🥬", Category.OBST_GEMUESE, 5, listOf("eisberg", "kopfsalat", "rucola", "feldsalat", "salatherz", "romana", "salatmix", "lollo")),
-        Ingredient("pilze", "Pilze", "🍄", Category.OBST_GEMUESE, 5, listOf("champ", "pilze", "pilz ", "kraeuterseitl")),
-        Ingredient("lauch", "Lauch", "🥬", Category.OBST_GEMUESE, 10, listOf("lauch", "porree", "fruehlingszw")),
-        Ingredient("avocado", "Avocado", "🥑", Category.OBST_GEMUESE, 5, listOf("avocado")),
-        Ingredient("zitrone", "Zitronen", "🍋", Category.OBST_GEMUESE, 21, listOf("zitrone", "limette")),
-        Ingredient("apfel", "Äpfel", "🍎", Category.OBST_GEMUESE, 21, listOf("apfel", "aepfel", "elstar", "braeburn", "pink lady", "jonagold", "gala ", "granny")),
-        Ingredient("banane", "Bananen", "🍌", Category.OBST_GEMUESE, 6, listOf("banan")),
-        Ingredient("beeren", "Beeren", "🍓", Category.OBST_GEMUESE, 4, listOf("erdbeer", "heidelb", "himbeer", "blaubeer", "beeren")),
-        Ingredient("orange", "Orangen", "🍊", Category.OBST_GEMUESE, 14, listOf("orange", "mandarin", "clementin")),
-        Ingredient("trauben", "Trauben", "🍇", Category.OBST_GEMUESE, 7, listOf("traube")),
-        Ingredient("ingwer", "Ingwer", "🫚", Category.OBST_GEMUESE, 21, listOf("ingwer")),
-        Ingredient("kraeuter", "Kräuter", "🌿", Category.OBST_GEMUESE, 5, listOf("petersil", "basilikum", "schnittlauch", "koriander", "dill ")),
-        // Milch & Eier
-        Ingredient("milch", "Milch", "🥛", Category.MILCH, 7, listOf("milch", "h milch", "vollmilch", "frischmilch", "hafer drink", "haferdrink", "barista")),
-        Ingredient("butter", "Butter", "🧈", Category.MILCH, 30, listOf("butter", "kerrygold", "margarine", "rama ")),
-        Ingredient("kaese", "Käse", "🧀", Category.MILCH, 21, listOf("kaese", "gouda", "emmentaler", "edamer", "cheddar", "leerdammer", "gratin", "scheibl", "tilsiter", "butterkaese")),
-        Ingredient("mozzarella", "Mozzarella", "🧀", Category.MILCH, 10, listOf("mozz", "burrata")),
-        Ingredient("parmesan", "Parmesan", "🧀", Category.MILCH, 60, listOf("parmes", "grana padano", "pecorino", "hartkaese")),
-        Ingredient("feta", "Feta", "🧀", Category.MILCH, 14, listOf("feta", "hirtenkaese", "schafskaese", "salatkaese")),
-        Ingredient("joghurt", "Joghurt", "🥣", Category.MILCH, 14, listOf("joghurt", "jogurt", "joghu", "skyr", "erdbeerjoghurt", "fruchtjoghurt")),
-        Ingredient("quark", "Quark", "🥣", Category.MILCH, 10, listOf("quark")),
-        Ingredient("sahne", "Sahne", "🥛", Category.MILCH, 10, listOf("sahne", "schmand", "creme fraiche", "cremefine", "kochcreme")),
-        Ingredient("frischkaese", "Frischkäse", "🧀", Category.MILCH, 14, listOf("frischkaese", "philadelphia", "exquisa", "frischk")),
-        Ingredient("eier", "Eier", "🥚", Category.MILCH, 21, listOf(" ei ", "eier", " eier", "freiland", "bodenhaltung")),
-        // Fleisch & Fisch
-        Ingredient("gefluegel", "Hähnchen/Pute", "🍗", Category.FLEISCH_FISCH, 2, listOf("haehn", "haenchen", "huhn", "chicken", "pute", "gefluegel")),
-        Ingredient("hackfleisch", "Hackfleisch", "🥩", Category.FLEISCH_FISCH, 1, listOf("hack", "gemischt hack", "hackfleisch", "rinderhack")),
-        Ingredient("rind", "Rindfleisch", "🥩", Category.FLEISCH_FISCH, 3, listOf("rind", "rindfleisch", "steak", "gulasch", "roastbeef")),
-        Ingredient("schwein", "Schweinefleisch", "🥩", Category.FLEISCH_FISCH, 3, listOf("schwein", "schweinefleisch", "schnitzel", "kotelett", "nacken", "geschnetz")),
-        Ingredient("wurst", "Wurst & Schinken", "🥓", Category.FLEISCH_FISCH, 10, listOf("wurst", "salami", "schinken", "mortadella", "wiener", "lyoner", "aufschnitt", "speck", "bacon", "wuerstch", "chorizo")),
-        Ingredient("fisch", "Fisch", "🐟", Category.FLEISCH_FISCH, 2, listOf("lachs", "fisch", "forelle", "garnele", "kabeljau", "seelachs", "shrimps")),
-        // Backwaren
-        Ingredient("brot", "Brot", "🍞", Category.BACKWAREN, 4, listOf("brot", "broetchen", "baguette", "ciabatta", "laugen", "brezel", "breze", "croissant", "semmel", "bagel", "kaiserbr")),
-        Ingredient("toast", "Toastbrot", "🍞", Category.BACKWAREN, 7, listOf("toast", "sandwich")),
-        Ingredient("wraps", "Wraps", "🌯", Category.BACKWAREN, 14, listOf("wrap", "tortilla")),
-        // Vorrat
-        Ingredient("nudeln", "Nudeln", "🍝", Category.VORRAT, 365, listOf("nudel", "spaghet", "penne", "fusilli", "farfalle", "tagliat", "makkaroni", "maccheroni", "lasagne", "pasta", "spirelli", "rigatoni", "linguine", "tortellini", "gnocchi")),
-        Ingredient("reis", "Reis", "🍚", Category.VORRAT, 365, listOf("reis ", " reis", "basmati", "jasmin", "risotto", "langkorn", "milchreis")),
-        Ingredient("mehl", "Mehl", "🌾", Category.VORRAT, 300, listOf("mehl")),
-        Ingredient("zucker", "Zucker", "🍬", Category.VORRAT, 720, listOf("zucker")),
-        Ingredient("oel", "Öl", "🫒", Category.VORRAT, 365, listOf(" oel", "olivenoel", "rapsoel", "sonnenblumenoel", "speiseoel")),
-        Ingredient("haferflocken", "Haferflocken/Müsli", "🥣", Category.VORRAT, 300, listOf("haferfl", "muesli", "porridge", "cornflakes", "granola", "flocken")),
-        Ingredient("linsen", "Linsen/Bohnen", "🫘", Category.VORRAT, 365, listOf("linsen", "kichererb", "bohnen", "kidney")),
-        Ingredient("mais", "Mais", "🌽", Category.VORRAT, 365, listOf(" mais", "gemuesemais", "zuckermais")),
-        Ingredient("tomatenkonserve", "Dosentomaten/Passata", "🥫", Category.VORRAT, 365, listOf("passata", "pizzatomat", "gehackte tomat", "tomaten stueck", "dosentomat", "tomatenmark", "tomatenpuere", "polpa")),
-        Ingredient("kokosmilch", "Kokosmilch", "🥥", Category.VORRAT, 365, listOf("kokosmilch", "kokosnussmilch")),
-        Ingredient("bruehe", "Brühe", "🍲", Category.VORRAT, 365, listOf("bruehe", "fond", "bouillon")),
-        Ingredient("thunfisch", "Thunfisch (Dose)", "🐟", Category.VORRAT, 720, listOf("thunfisch")),
-        Ingredient("honig", "Honig", "🍯", Category.VORRAT, 720, listOf("honig")),
-        Ingredient("marmelade", "Marmelade", "🍓", Category.VORRAT, 180, listOf("marmelade", "konfituere", "fruchtaufstr")),
-        Ingredient("kaffee", "Kaffee", "☕", Category.GETRAENKE, 180, listOf("kaffee", "espresso", "cappuccino", "crema", "kaffeepad")),
-        Ingredient("tee", "Tee", "🍵", Category.GETRAENKE, 365, listOf(" tee", "teebeutel", "kraeutertee", "fruechtetee")),
-        Ingredient("saft", "Saft", "🧃", Category.GETRAENKE, 10, listOf("saft", "nektar", "smoothie")),
+        // Fruit & veg
+        Ingredient("tomate", "Tomatoes", "🍅", Category.OBST_GEMUESE, 7, listOf("tomat", "cherrytom", "rispentom", "strauchtom", "cocktailtom", "romatom", "tomato")),
+        Ingredient("zwiebel", "Onions", "🧅", Category.OBST_GEMUESE, 30, listOf("cebola", "chalota", "onion", "zwieb", "schalotte")),
+        Ingredient("knoblauch", "Garlic", "🧄", Category.OBST_GEMUESE, 60, listOf("alho", "garlic", "knobl")),
+        Ingredient("kartoffel", "Potatoes", "🥔", Category.OBST_GEMUESE, 30, listOf("batata", "potato", "kartof", "drilling")),
+        Ingredient("karotte", "Carrots", "🥕", Category.OBST_GEMUESE, 21, listOf("cenoura", "carrot", "karott", "moehre")),
+        Ingredient("paprika", "Peppers", "🫑", Category.OBST_GEMUESE, 10, listOf("pimento", "pimentao", "bell pepper", "paprika")),
+        Ingredient("gurke", "Cucumber", "🥒", Category.OBST_GEMUESE, 7, listOf("pepino", "cucumber", "gurke")),
+        Ingredient("zucchini", "Zucchini", "🥒", Category.OBST_GEMUESE, 7, listOf("curgete", "courgette", "abobrinha", "zucchin")),
+        Ingredient("brokkoli", "Broccoli", "🥦", Category.OBST_GEMUESE, 5, listOf("brocol", "couve flor", "broccoli", "brokkoli", "blumenkohl")),
+        Ingredient("spinat", "Spinach", "🥬", Category.OBST_GEMUESE, 4, listOf("espinafre", "spinach", "spinat")),
+        Ingredient("salat", "Lettuce/Salad", "🥬", Category.OBST_GEMUESE, 5, listOf("alface", "rucula", "salada", "canonigos", "agriao", "mistura de folhas", "lettuce", "eisberg", "kopfsalat", "rucola", "feldsalat")),
+        Ingredient("pilze", "Mushrooms", "🍄", Category.OBST_GEMUESE, 5, listOf("cogumelo", "champignon", "mushroom", "champ", "pilze")),
+        Ingredient("lauch", "Leek", "🥬", Category.OBST_GEMUESE, 10, listOf("alho frances", "alho porro", "leek", "lauch", "porree")),
+        Ingredient("avocado", "Avocado", "🥑", Category.OBST_GEMUESE, 5, listOf("abacate", "avocado")),
+        Ingredient("zitrone", "Lemons/Limes", "🍋", Category.OBST_GEMUESE, 21, listOf("limao", "limoes", " lima ", "lemon", "zitrone", "limette")),
+        Ingredient("apfel", "Apples", "🍎", Category.OBST_GEMUESE, 21, listOf(" maca ", " macas", "maca gala", "maca fuji", "maca golden", "reineta", "royal gala", "apple", "apfel", "aepfel")),
+        Ingredient("banane", "Bananas", "🍌", Category.OBST_GEMUESE, 6, listOf("banan")),
+        Ingredient("beeren", "Berries", "🍓", Category.OBST_GEMUESE, 4, listOf("morango", "mirtilo", "framboesa", "frutos vermelhos", "amora", "berries", "strawberr", "erdbeer", "himbeer", "heidelb")),
+        Ingredient("orange", "Oranges", "🍊", Category.OBST_GEMUESE, 14, listOf("laranja", "tangerina", "clementina", "mandarina", "orange", "mandarin")),
+        Ingredient("trauben", "Grapes", "🍇", Category.OBST_GEMUESE, 7, listOf(" uva", "grape", "traube")),
+        Ingredient("ingwer", "Ginger", "🫚", Category.OBST_GEMUESE, 21, listOf("gengibre", "ginger", "ingwer")),
+        Ingredient("kraeuter", "Fresh herbs", "🌿", Category.OBST_GEMUESE, 5, listOf("coentro", "salsa fresca", " salsa ", "manjericao", "cebolinho", "hortela", "basil", "parsley", "petersil", "basilikum")),
+        // Dairy & eggs
+        Ingredient("milch", "Milk", "🥛", Category.MILCH, 7, listOf("leite", "bebida de aveia", "bebida aveia", "bebida vegetal", "bebida de soja", " milk", "milch", "haferdrink")),
+        Ingredient("butter", "Butter", "🧈", Category.MILCH, 30, listOf("manteiga", "margarina", "becel", "butter", "margarine")),
+        Ingredient("kaese", "Cheese", "🧀", Category.MILCH, 21, listOf("queijo", "flamengo", "emmental", "gouda", "edam", "cheddar", "cheese", "kaese")),
+        Ingredient("mozzarella", "Mozzarella", "🧀", Category.MILCH, 10, listOf("mozzarella", "queijo mozzarella", "burrata")),
+        Ingredient("parmesan", "Parmesan", "🧀", Category.MILCH, 60, listOf("parmesao", "queijo parmesao", "parmigiano", "grana padano", "parmesan", "pecorino")),
+        Ingredient("feta", "Feta", "🧀", Category.MILCH, 14, listOf("queijo feta", "feta")),
+        Ingredient("joghurt", "Yoghurt", "🥣", Category.MILCH, 14, listOf("iogurte", "iogurte ", "iogurte de", "iog ", "skyr", "yogurt", "yoghurt", "joghurt", "jogurt")),
+        Ingredient("quark", "Quark", "🥣", Category.MILCH, 10, listOf("quark", "queijo quark")),
+        Ingredient("sahne", "Cream", "🥛", Category.MILCH, 10, listOf("natas", " nata ", "creme culinario", "chantilly", "cream", "sahne")),
+        Ingredient("frischkaese", "Cream cheese", "🧀", Category.MILCH, 14, listOf("queijo fresco", "queijo creme", "requeijao", "philadelphia", "cream cheese", "frischkaese")),
+        Ingredient("eier", "Eggs", "🥚", Category.MILCH, 21, listOf("ovos", " ovo ", " egg", "eier", " ei ")),
+        // Meat & fish
+        Ingredient("gefluegel", "Chicken/Turkey", "🍗", Category.FLEISCH_FISCH, 2, listOf("frango", "peito de frango", " peru ", "galinha", " aves", "chicken", "turkey", "haehn", "pute")),
+        Ingredient("hackfleisch", "Minced meat", "🥩", Category.FLEISCH_FISCH, 1, listOf("carne picada", "picado", "hamburguer", "mince", "hackfleisch", "hack ")),
+        Ingredient("rind", "Beef", "🥩", Category.FLEISCH_FISCH, 3, listOf("vaca", "novilho", " bife", "vitela", " acem", "beef", "steak", "rind")),
+        Ingredient("schwein", "Pork", "🥩", Category.FLEISCH_FISCH, 3, listOf("porco", "febras", "costeleta", "lombo", "entremeada", "bifana", "pork", "schwein", "schnitzel")),
+        Ingredient("wurst", "Ham & sausages", "🥓", Category.FLEISCH_FISCH, 10, listOf("fiambre", "presunto", "chourico", "salsicha", "mortadela", "bacon", "paio", "linguica", "alheira", "salpicao", "toucinho", " ham ", "sausage", "wurst", "salami", "schinken")),
+        Ingredient("fisch", "Fish", "🐟", Category.FLEISCH_FISCH, 2, listOf("salmao", "peixe", "pescada", "bacalhau", "dourada", "robalo", "sardinha", "camarao", "polvo", "lulas", "salmon", "fish", "lachs", "fisch")),
+        // Bakery
+        Ingredient("brot", "Bread", "🍞", Category.BACKWAREN, 4, listOf(" pao", "pao ", "pao de",  "carcaca", " broa", "baguete", "croissant", "papo seco", "bread", "brot", "broetchen")),
+        Ingredient("toast", "Sliced bread", "🍞", Category.BACKWAREN, 7, listOf("pao de forma", "pao forma", "toast")),
+        Ingredient("wraps", "Wraps", "🌯", Category.BACKWAREN, 14, listOf("tortilha", "tortilla", "wrap")),
+        // Pantry staples
+        Ingredient("nudeln", "Pasta", "🍝", Category.VORRAT, 365, listOf("massa", "esparguete", "spaghet", "macarrao", "penne", "fusilli", "lasanha", "lasagn", "tagliatel", "cotovelos", "pasta", "nudel")),
+        Ingredient("reis", "Rice", "🍚", Category.VORRAT, 365, listOf("arroz", " rice", "basmati", "risotto", "reis ")),
+        Ingredient("mehl", "Flour", "🌾", Category.VORRAT, 300, listOf("farinha", "flour", "mehl")),
+        Ingredient("zucker", "Sugar", "🍬", Category.VORRAT, 720, listOf("acucar", "sugar", "zucker")),
+        Ingredient("oel", "Oil", "🫒", Category.VORRAT, 365, listOf("azeite", "oleo", "olive oil", " oil", " oel", "olivenoel")),
+        Ingredient("haferflocken", "Oats/Cereal", "🥣", Category.VORRAT, 300, listOf("flocos de aveia", "aveia", "cereais", "granola", "muesli", "oats", "cornflakes", "haferfl")),
+        Ingredient("linsen", "Lentils/Beans", "🫘", Category.VORRAT, 365, listOf("lentilha", "grao de bico", " grao", "feijao", "ervilha", "lentil", "beans", "chickpea", "linsen", "bohnen")),
+        Ingredient("mais", "Sweetcorn", "🌽", Category.VORRAT, 365, listOf(" milho", "sweetcorn", " mais")),
+        Ingredient("tomatenkonserve", "Canned tomatoes/Passata", "🥫", Category.VORRAT, 365, listOf("polpa de tomate", "polpa tomate", "tomate pelado", "tomate triturado", "concentrado de tomate", "concentrado tomate", "molho de tomate", "molho tomate", "massa de tomate", "tomate frito", "passata", "chopped tomatoes", "tomatenmark", "passierte")),
+        Ingredient("kokosmilch", "Coconut milk", "🥥", Category.VORRAT, 365, listOf("leite de coco", "leite coco", "coconut milk", "kokosmilch")),
+        Ingredient("bruehe", "Stock", "🍲", Category.VORRAT, 365, listOf("caldo", "caldo de", "caldo knorr", "stock cube", "bouillon", "bruehe")),
+        Ingredient("thunfisch", "Canned tuna", "🐟", Category.VORRAT, 720, listOf("atum", "atum em", "atum posta", "atum natural", "tuna", "thunfisch")),
+        Ingredient("honig", "Honey", "🍯", Category.VORRAT, 720, listOf(" mel ", "honey", "honig")),
+        Ingredient("marmelade", "Jam", "🍓", Category.VORRAT, 180, listOf("doce de", "compota", "geleia", "marmelada", " jam", "marmelade", "konfituere")),
+        Ingredient("kaffee", "Coffee", "☕", Category.GETRAENKE, 180, listOf(" cafe", "capsulas", "nescafe", "coffee", "espresso", "kaffee")),
+        Ingredient("tee", "Tea", "🍵", Category.GETRAENKE, 365, listOf(" cha ", "infusao", " tea ", " tee")),
+        Ingredient("saft", "Juice", "🧃", Category.GETRAENKE, 10, listOf("sumo", "sumo de", "sumo de laranja", "sumo laranja", "sumo maca", "suco de", "nectar de", "nectar", "suco", "juice", "saft")),
     )
 
     private val categoryKeywords: Map<Category, List<String>> = mapOf(
-        Category.GETRAENKE to listOf("wasser", "mineralw", "sprudel", "cola", "fanta", "sprite", "limo", "eistee", "energy", "red bull", "mate", "schorle", "spezi", "tonic", "gerolsteiner", "volvic", "vio "),
-        Category.ALKOHOL to listOf("bier", "pils", "wein", "riesling", "merlot", "sekt", "prosecco", "vodka", "wodka", "whisky", "rum ", "gin ", "radler", "weissbier", "helles", "aperol", "likoer", "lambrusco", "rose "),
-        Category.SNACKS to listOf("schoko", "schokolade", "chips", "keks", "gummi", "haribo", "bonbon", "praline", "riegel", "snickers", "twix", "kinder", "cracker", "flips", "popcorn", "kuchen", "waffel", "nutella", "milka", "ritter sport", "lindt", "erdnuss", "nuss", "mars ", "bounty", "oreo", "toffifee", "duplo", "salzstangen", "brezeln", "lakritz", "donut", "muffin", "butterkeks", "milchschnitte", "milchschoko"),
-        Category.TIEFKUEHL to listOf("tiefk", " tk ", "pizza", "fischstaeb", "pommes", "rahmspinat", "eiscreme", "speiseeis", "magnum", "ben jerry", "kroketten", "rahmgemuese", "tk "),
-        Category.HAUSHALT to listOf("spuel", "waschmittel", "toilettenp", "klopapier", "kuechenrolle", "kuechentuch", "zahnpasta", "zahncreme", "zahnbuerste", "shampoo", "duschgel", "deo", "seife", "muellbeutel", "schwamm", "tempo", "taschent", "windel", "tabs", "reiniger", "alufolie", "frischhaltef", "backpapier", "weichspueler", "spuelmaschin", "rasier", "binden", "tampon", "wattepad", "creme ", "bodylotion", "batterie", "kerze", "nivea", "colgate", "fairy", "persil", "ariel", "katzenfutter", "hundefutter", "tiernahr"),
-        Category.PFAND to listOf("pfand", "leergut", "einweg", "mehrweg"),
-        Category.VORRAT to listOf("konserve", "dose", "ketchup", "senf", "mayo", "essig", "gewuerz", "salz", "pfeffer", "sauce", "sosse", "pesto", "suppe", "backpulver", "hefe", "vanille", "kakao", "erdnussbutter", "ravioli"),
-        Category.BACKWAREN to listOf("baeck", "kuchen", "plunder", "berliner", "zwieback"),
-        Category.FLEISCH_FISCH to listOf("fleisch", "frikadelle", "leberkaese", "gyros", "doener", "burger patty"),
-        Category.MILCH to listOf("pudding", "kefir", "buttermilch", "dessert", "milchreis"),
-        Category.OBST_GEMUESE to listOf("obst", "gemuese", "bio ", "kohl", "sellerie", "kiwi", "mango", "ananas", "melone", "birne", "nektarine", "pfirsich", "radieschen", "rote bete", "aubergine", "suesskart", "kuerbis", "fenchel", "spargel"),
+        Category.GETRAENKE to listOf("agua", "coca cola", "refrigerante", "ice tea", "sumol", "pepsi", "tonica", "gaseificada", "agua das pedras", "luso", "water", "cola", "lemonade", "energy", "red bull", "wasser", "limo", "eistee", "schorle"),
+        Category.ALKOHOL to listOf("cerveja", "vinho", "super bock", "sagres", "espumante", "licor", "aguardente", "sangria", "tinto", "whisky", "vodka", " gin ", " rum ", "beer", "wine", "bier", "wein", "sekt", "prosecco"),
+        Category.SNACKS to listOf("chocolate", "bolacha", "biscoito", "batata frita", "batatas fritas", "gomas", "rebucado", " bolo", "pastel de nata", "donut", "snack", "pipocas", "amendoim", "frutos secos", "waffle", "nutella", "chips", "cookie", "candy", "schoko", "keks", "gummi", "haribo"),
+        Category.TIEFKUEHL to listOf("congelad", "gelado de", "ultracongelad", "gelado", "pizza", "douradinhos", "frozen", "ice cream", "tiefk", "pommes"),
+        Category.HAUSHALT to listOf("detergente", "papel higienico", "rolo de cozinha", "rolo cozinha", "guardanapo", "pasta de dentes", "pasta dentes", "dentifrico", "escova de dentes", "champo", "gel de banho", "gel banho", "desodorizante", "sabonete", "sabao", "sacos do lixo", "sacos lixo", "esponja", "lenco", "fraldas", "lixivia", "amaciador", "pastilhas", "papel aluminio", "pelicula aderente", "comida gato", "comida cao", "racao", "pilhas", "toilet paper", "detergent", "shampoo", "soap", "toothpaste", "klopapier", "spuelmittel", "waschmittel", "duschgel", "zahnpasta"),
+        Category.PFAND to listOf("vasilhame", " tara ", "deposit", "pfand", "leergut"),
+        Category.VORRAT to listOf("conserva", " lata", "ketchup", "mostarda", "maionese", "vinagre", " sal ", "pimenta", "molho", "especiarias", "fermento", "cacau", " sopa", "manteiga de amendoim", "pesto", "sauce", "salt", "senf", "essig", "gewuerz"),
+        Category.FLEISCH_FISCH to listOf("carne", "talho", "kebab", "meat", "fleisch"),
+        Category.MILCH to listOf("pudim", "sobremesa", "dessert", "pudding", "kefir"),
+        Category.OBST_GEMUESE to listOf("fruta", "legumes", "hortalica", "kiwi", "manga", "ananas", "melao", "melancia", " pera", "pessego", "nabo", "couve", "beringela", "abobora", "batata doce", "espargo", "aipo", "beterraba", "rabanete", " figo", "ameixa", "fruit", "veg", "obst", "gemuese"),
     )
 
     private val byKey = ingredients.associateBy { it.key }
 
     fun ingredient(key: String?): Ingredient? = key?.let { byKey[it] }
 
-    fun normalize(text: String): String = text.lowercase()
-        .replace("ä", "ae").replace("ö", "oe").replace("ü", "ue").replace("ß", "ss")
-        .replace(Regex("[^a-z0-9]+"), " ")
-        .trim()
-        .replace(Regex("\\s+"), " ")
+    private val combiningMarks = Regex("\\p{Mn}+")
+
+    fun normalize(text: String): String {
+        val german = text.lowercase()
+            .replace("ä", "ae").replace("ö", "oe").replace("ü", "ue").replace("ß", "ss")
+        return Normalizer.normalize(german, Normalizer.Form.NFD)
+            .replace(combiningMarks, "")
+            .replace(Regex("[^a-z0-9]+"), " ")
+            .trim()
+            .replace(Regex("\\s+"), " ")
+    }
 
     fun classify(name: String, learned: Map<String, Category> = emptyMap()): Classification {
         val norm = normalize(name)
@@ -130,7 +141,6 @@ object Categorizer {
             }
         }
         learned[norm]?.let { cat ->
-            // keep the ingredient only if it still fits the corrected category
             val ing = bestIngredient?.let { byKey[it] }
             return Classification(cat, if (ing?.category == cat) ing.key else null)
         }

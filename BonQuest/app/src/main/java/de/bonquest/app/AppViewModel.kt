@@ -82,12 +82,12 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 val rows = OcrScanner.scan(getApplication(), uri)
                 lastRawRows = rows
                 if (rows.isEmpty()) {
-                    scanError = "Kein Text erkannt. Achte auf gutes Licht und halte den Bon gerade."
+                    scanError = "No text found. Use good light and keep the receipt flat."
                 } else {
                     openDraft(rows)
                 }
             } catch (e: Exception) {
-                scanError = "Scan fehlgeschlagen: ${e.message ?: "unbekannter Fehler"}"
+                scanError = "Scan failed: ${e.message ?: "unknown error"}"
             } finally {
                 scanning = false
             }
@@ -101,7 +101,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun startManual() {
-        draft = Receipt(UUID.randomUUID().toString(), "Unbekannter Laden", LocalDate.now().toEpochDay(), emptyList())
+        draft = Receipt(UUID.randomUUID().toString(), ReceiptParser.UNKNOWN_STORE, LocalDate.now().toEpochDay(), emptyList())
         navigate(Screen.REVIEW)
     }
 
@@ -119,7 +119,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             scannedDay = today.toEpochDay(),
         )
         navigate(Screen.REVIEW)
-        if (parsed.items.isEmpty()) scanError = "Keine Produkte erkannt – du kannst sie manuell hinzufügen."
+        if (parsed.items.isEmpty()) scanError = "No products recognized – you can add them manually."
     }
 
     fun updateDraft(transform: (Receipt) -> Receipt) {
@@ -136,7 +136,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
     }
 
     fun addDraftItem() = updateDraft { r ->
-        r.copy(items = r.items + PurchaseItem(UUID.randomUUID().toString(), "Neues Produkt", 0.0))
+        r.copy(items = r.items + PurchaseItem(UUID.randomUUID().toString(), "New product", 0.0))
     }
 
     fun removeDraftItem(id: String) = updateDraft { r -> r.copy(items = r.items.filterNot { it.id == id }) }
@@ -160,8 +160,8 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         applyAward(xp, coins) { d ->
             d.copy(receipts = d.receipts + cleaned, learnedCategories = d.learnedCategories + learned)
         }
-        toast("+$xp XP  +$coins 🪙  Bon erfasst!")
-        if (savings > 0) toast("🏷️ ${de.bonquest.app.domain.euro(savings)} durch Aktionen gespart")
+        toast("+$xp XP  +$coins 🪙  Receipt logged!")
+        if (savings > 0) toast("🏷️ ${de.bonquest.app.domain.euro(savings)} saved through promotions")
         draft = null
         scanError = null
         navigate(Screen.HOME, asTab = true)
@@ -182,7 +182,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             val updated = setStatus(entry.receiptId, entry.item.id, ItemStatus.CONSUMED, d)
             if (rescued) updated.copy(game = updated.game.copy(rescueLog = updated.game.rescueLog + today)) else updated
         }
-        toast(if (rescued) "🛟 ${entry.label} gerettet! +10 XP" else "✔️ ${entry.label} verbraucht")
+        toast(if (rescued) "🛟 ${entry.label} rescued! +10 XP" else "✔️ ${entry.label} used up")
     }
 
     fun waste(entry: PantryEntry) {
@@ -191,7 +191,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             val updated = setStatus(entry.receiptId, entry.item.id, ItemStatus.WASTED, d)
             updated.copy(game = updated.game.copy(wasteLog = updated.game.wasteLog + today))
         }
-        toast("🗑️ ${entry.label} weggeworfen – nächstes Mal retten wir es!")
+        toast("🗑️ ${entry.label} thrown away – we'll rescue it next time!")
     }
 
     fun cook(s: RecipeSuggestion) {
@@ -206,7 +206,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
             }
             next.copy(game = next.game.copy(cookLog = next.game.cookLog + today.toEpochDay()))
         }
-        toast("${s.recipe.emoji} ${s.recipe.name} gekocht! +40 XP +10 🪙")
+        toast("${s.recipe.emoji} ${s.recipe.name} cooked! +40 XP +10 🪙")
     }
 
     // ---------- game ----------
@@ -214,7 +214,7 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
         val ws = de.bonquest.app.domain.StatsCalculator.weekStart(LocalDate.now()).toEpochDay()
         if (Quests.isClaimed(data.value, q, LocalDate.now())) return
         applyAward(q.rewardXp, q.rewardCoins) { d -> d.copy(game = d.game.copy(claimedQuests = d.game.claimedQuests + (q.id to ws))) }
-        toast("${q.emoji} Quest abgeschlossen! +${q.rewardXp} XP +${q.rewardCoins} 🪙")
+        toast("${q.emoji} Quest complete! +${q.rewardXp} XP +${q.rewardCoins} 🪙")
     }
 
     fun buyOrSelectAvatar(id: String) {
@@ -226,9 +226,9 @@ class AppViewModel(app: Application) : AndroidViewModel(app) {
                 applyAward(0, -avatar.price) { d ->
                     d.copy(game = d.game.copy(avatar = id, ownedAvatars = d.game.ownedAvatars + id))
                 }
-                toast("${avatar.emoji} ${avatar.name} freigeschaltet!")
+                toast("${avatar.emoji} ${avatar.name} unlocked!")
             }
-            else -> toast("Dir fehlen ${avatar.price - g.coins} 🪙")
+            else -> toast("You need ${avatar.price - g.coins} more 🪙")
         }
     }
 

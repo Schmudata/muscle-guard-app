@@ -4,9 +4,9 @@ import java.time.LocalDate
 
 object Levels {
     private val titles = listOf(
-        "Einkaufs-Lehrling", "Korb-Knappe", "Bon-Sammler", "Angebots-Späher", "Spar-Ritter",
-        "Rabatt-Ranger", "Vorrats-Magier", "Budget-Paladin", "Preis-Ninja", "Coupon-König",
-        "Schnäppchen-Drache", "Spar-Legende",
+        "Shopping Apprentice", "Basket Squire", "Receipt Collector", "Deal Scout", "Savings Knight",
+        "Discount Ranger", "Pantry Mage", "Budget Paladin", "Price Ninja", "Coupon King",
+        "Bargain Dragon", "Savings Legend",
     )
 
     /** Total XP needed to reach [level] (level 1 = 0 XP). */
@@ -56,24 +56,24 @@ data class Achievement(
 
 object Achievements {
     val all = listOf(
-        Achievement("first_scan", "📜", "Erste Beute", "Scanne deinen ersten Bon", 30, 10) { it.receipts >= 1 },
-        Achievement("scan_5", "📚", "Sammler", "Scanne 5 Bons", 60, 20) { it.receipts >= 5 },
-        Achievement("scan_25", "🏛️", "Archivar", "Scanne 25 Bons", 150, 60) { it.receipts >= 25 },
-        Achievement("items_100", "🛒", "Großeinkäufer", "Erfasse 100 Produkte", 100, 40) { it.items >= 100 },
-        Achievement("first_promo", "🏷️", "Schnäppchenjäger", "Kaufe dein erstes Aktionsprodukt", 30, 10) { it.promoItems >= 1 },
-        Achievement("promo_20", "🎯", "Angebots-Sniper", "Kaufe 20 Aktionsprodukte", 100, 40) { it.promoItems >= 20 },
-        Achievement("save_10", "💰", "Sparschwein", "Spare insgesamt 10 € durch Aktionen", 60, 25) { it.totalSaved >= 10 },
-        Achievement("save_50", "💎", "Schatzhüter", "Spare insgesamt 50 € durch Aktionen", 200, 80) { it.totalSaved >= 50 },
-        Achievement("first_cook", "👩‍🍳", "Küchen-Novize", "Koche dein erstes Rezept", 40, 15) { it.cooked >= 1 },
-        Achievement("cook_10", "🍲", "Meisterkoch", "Koche 10 Rezepte", 150, 60) { it.cooked >= 10 },
-        Achievement("rescue_10", "🦸", "Lebensmittelretter", "Verbrauche 10 Produkte vor Ablauf", 100, 40) { it.rescued >= 10 },
-        Achievement("streak_3", "🔥", "Dranbleiber", "Scanne 3 Wochen in Folge", 120, 50) { it.streakWeeks >= 3 },
-        Achievement("explorer", "🧭", "Entdecker", "Kaufe Produkte aus 8 Kategorien", 80, 30) { it.categoriesSeen >= 8 },
-        Achievement("pfand", "♻️", "Pfandjäger", "Gib Pfand im Wert von 5 € zurück", 60, 25) { it.pfandReturned >= 5 },
-        Achievement("stores_3", "🗺️", "Weltenbummler", "Kaufe in 3 verschiedenen Läden ein", 60, 25) { it.stores >= 3 },
-        Achievement("level_5", "⚔️", "Ritterschlag", "Erreiche Level 5", 0, 50) { it.level >= 5 },
-        Achievement("level_10", "👑", "Königswürde", "Erreiche Level 10", 0, 150) { it.level >= 10 },
-        Achievement("fashion", "🎭", "Verwandlungskünstler", "Besitze 3 Helden-Avatare", 50, 0) { it.avatars >= 3 },
+        Achievement("first_scan", "📜", "First Loot", "Scan your first receipt", 30, 10) { it.receipts >= 1 },
+        Achievement("scan_5", "📚", "Collector", "Scan 5 receipts", 60, 20) { it.receipts >= 5 },
+        Achievement("scan_25", "🏛️", "Archivist", "Scan 25 receipts", 150, 60) { it.receipts >= 25 },
+        Achievement("items_100", "🛒", "Bulk Buyer", "Log 100 products", 100, 40) { it.items >= 100 },
+        Achievement("first_promo", "🏷️", "Bargain Hunter", "Buy your first promo product", 30, 10) { it.promoItems >= 1 },
+        Achievement("promo_20", "🎯", "Deal Sniper", "Buy 20 promo products", 100, 40) { it.promoItems >= 20 },
+        Achievement("save_10", "💰", "Piggy Bank", "Save €10 in total through promotions", 60, 25) { it.totalSaved >= 10 },
+        Achievement("save_50", "💎", "Treasure Keeper", "Save €50 in total through promotions", 200, 80) { it.totalSaved >= 50 },
+        Achievement("first_cook", "👩‍🍳", "Kitchen Novice", "Cook your first recipe", 40, 15) { it.cooked >= 1 },
+        Achievement("cook_10", "🍲", "Master Chef", "Cook 10 recipes", 150, 60) { it.cooked >= 10 },
+        Achievement("rescue_10", "🦸", "Food Rescuer", "Use up 10 products before they expire", 100, 40) { it.rescued >= 10 },
+        Achievement("streak_3", "🔥", "On a Roll", "Scan receipts 3 weeks in a row", 120, 50) { it.streakWeeks >= 3 },
+        Achievement("explorer", "🧭", "Explorer", "Buy products from 8 categories", 80, 30) { it.categoriesSeen >= 8 },
+        Achievement("pfand", "♻️", "Deposit Hunter", "Return €5 worth of deposit", 60, 25) { it.pfandReturned >= 5 },
+        Achievement("stores_3", "🗺️", "Globetrotter", "Shop at 3 different stores", 60, 25) { it.stores >= 3 },
+        Achievement("level_5", "⚔️", "Knighted", "Reach level 5", 0, 50) { it.level >= 5 },
+        Achievement("level_10", "👑", "Crowned", "Reach level 10", 0, 150) { it.level >= 10 },
+        Achievement("fashion", "🎭", "Shape-shifter", "Own 3 hero avatars", 50, 0) { it.avatars >= 3 },
     )
 }
 
@@ -93,11 +93,11 @@ data class Quest(
 
 object Quests {
     val weekly = listOf(
-        Quest("w_scan", "📸", "Scanne 2 Bons", 2.0, 60, 20) { it.scans.toDouble() },
-        Quest("w_items", "🧺", "Erfasse 15 Produkte", 15.0, 50, 15) { it.items.toDouble() },
-        Quest("w_cook", "🍳", "Koche 2 Rezepte aus dem Vorrat", 2.0, 80, 30) { it.cooked.toDouble() },
-        Quest("w_rescue", "🛟", "Rette 3 Lebensmittel vor dem Ablauf", 3.0, 70, 25) { it.rescued.toDouble() },
-        Quest("w_save", "💸", "Spare 3 € durch Aktionen", 3.0, 70, 25) { it.saved },
+        Quest("w_scan", "📸", "Scan 2 receipts", 2.0, 60, 20) { it.scans.toDouble() },
+        Quest("w_items", "🧺", "Log 15 products", 15.0, 50, 15) { it.items.toDouble() },
+        Quest("w_cook", "🍳", "Cook 2 recipes from your pantry", 2.0, 80, 30) { it.cooked.toDouble() },
+        Quest("w_rescue", "🛟", "Rescue 3 items before they expire", 3.0, 70, 25) { it.rescued.toDouble() },
+        Quest("w_save", "💸", "Save €3 through promotions", 3.0, 70, 25) { it.saved },
     )
 
     fun weekContext(data: AppData, today: LocalDate): WeekContext {
@@ -120,15 +120,15 @@ data class Avatar(val id: String, val emoji: String, val name: String, val price
 
 object Avatars {
     val all = listOf(
-        Avatar("knappe", "🧑‍🌾", "Knappe", 0),
-        Avatar("ritter", "🤺", "Ritter", 60),
-        Avatar("magier", "🧙", "Magier", 120),
-        Avatar("ninja", "🥷", "Preis-Ninja", 200),
-        Avatar("elfe", "🧝", "Waldelfe", 250),
-        Avatar("held", "🦸", "Superheld", 350),
-        Avatar("robo", "🤖", "Spar-Bot", 450),
-        Avatar("drache", "🐉", "Schnäppchen-Drache", 700),
-        Avatar("koenig", "👑", "Coupon-König", 1000),
+        Avatar("knappe", "🧑‍🌾", "Squire", 0),
+        Avatar("ritter", "🤺", "Knight", 60),
+        Avatar("magier", "🧙", "Wizard", 120),
+        Avatar("ninja", "🥷", "Price Ninja", 200),
+        Avatar("elfe", "🧝", "Forest Elf", 250),
+        Avatar("held", "🦸", "Superhero", 350),
+        Avatar("robo", "🤖", "Saver Bot", 450),
+        Avatar("drache", "🐉", "Bargain Dragon", 700),
+        Avatar("koenig", "👑", "Coupon King", 1000),
     )
 
     fun byId(id: String): Avatar = all.firstOrNull { it.id == id } ?: all.first()
@@ -152,7 +152,7 @@ object GameEngine {
             categoriesSeen = goods.map { it.category }.distinct().size,
             streakWeeks = streakWeeks(data, LocalDate.now()),
             pfandReturned = -items.filter { it.category == Category.PFAND && it.price < 0 }.sumOf { it.price },
-            stores = data.receipts.map { it.store }.filter { it != "Unbekannter Laden" }.distinct().size,
+            stores = data.receipts.map { it.store }.filter { it != ReceiptParser.UNKNOWN_STORE }.distinct().size,
             avatars = data.game.ownedAvatars.size,
         )
     }

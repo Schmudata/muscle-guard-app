@@ -140,10 +140,10 @@ private data class Tab(val screen: Screen, val emoji: String, val label: String)
 @Composable
 private fun BottomBar(vm: AppViewModel) {
     val tabs = listOf(
-        Tab(Screen.HOME, "🏰", "Basis"),
-        Tab(Screen.PANTRY, "🏠", "Vorrat"),
+        Tab(Screen.HOME, "🏰", "Base"),
+        Tab(Screen.PANTRY, "🏠", "Pantry"),
         Tab(Screen.SCAN, "📸", "Scan"),
-        Tab(Screen.RECIPES, "🍳", "Rezepte"),
+        Tab(Screen.RECIPES, "🍳", "Recipes"),
         Tab(Screen.STATS, "📊", "Stats"),
     )
     Row(
@@ -219,10 +219,10 @@ private fun PopupOverlay(popup: Popup, onDismiss: () -> Unit) {
                         Spacer(Modifier.height(8.dp))
                         Pulsing { Text("⭐", fontSize = 72.sp) }
                         Text("Level ${popup.level}", fontWeight = FontWeight.Black, fontSize = 26.sp)
-                        Text("Neuer Titel: ${Levels.title(popup.level)}", color = GameColors.Xp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
+                        Text("New title: ${Levels.title(popup.level)}", color = GameColors.Xp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center)
                     }
                     is Popup.Unlocked -> {
-                        Text("ERFOLG FREIGESCHALTET", color = GameColors.Gold, fontWeight = FontWeight.Black, fontSize = 20.sp, textAlign = TextAlign.Center)
+                        Text("ACHIEVEMENT UNLOCKED", color = GameColors.Gold, fontWeight = FontWeight.Black, fontSize = 20.sp, textAlign = TextAlign.Center)
                         Spacer(Modifier.height(8.dp))
                         Pulsing { Text(popup.achievement.emoji, fontSize = 72.sp) }
                         Text(popup.achievement.name, fontWeight = FontWeight.Black, fontSize = 24.sp, textAlign = TextAlign.Center)
@@ -238,7 +238,7 @@ private fun PopupOverlay(popup: Popup, onDismiss: () -> Unit) {
                     }
                 }
                 Spacer(Modifier.height(18.dp))
-                ChunkyButton("WEITER", Modifier.fillMaxWidth(), color = GameColors.Gold, shadow = GameColors.GoldDark, textColor = Color.Black, onClick = onDismiss)
+                ChunkyButton("CONTINUE", Modifier.fillMaxWidth(), color = GameColors.Gold, shadow = GameColors.GoldDark, textColor = Color.Black, onClick = onDismiss)
             }
         }
     }

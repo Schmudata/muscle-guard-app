@@ -67,40 +67,40 @@ fun ScanScreen(vm: AppViewModel) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(14.dp),
     ) {
-        Text("BON-SCANNER", color = GameColors.Gold, fontWeight = FontWeight.Black, fontSize = 26.sp, letterSpacing = 3.sp)
+        Text("RECEIPT SCANNER", color = GameColors.Gold, fontWeight = FontWeight.Black, fontSize = 26.sp, letterSpacing = 3.sp)
         ScannerVisual(vm.scanning)
 
         if (vm.scanning) {
-            Text("🔮 Der Bon wird entschlüsselt …", color = GameColors.Mana, fontWeight = FontWeight.Bold)
+            Text("🔮 Deciphering the receipt …", color = GameColors.Mana, fontWeight = FontWeight.Bold)
         } else {
             vm.scanError?.let {
                 GameCard(borderColor = GameColors.Hp) { Text("⚠️ $it", color = GameColors.Hp) }
             }
-            ChunkyButton("📷 FOTO AUFNEHMEN", Modifier.fillMaxWidth(), color = GameColors.Xp, shadow = GameColors.XpDark, textColor = Color.Black, height = 60.dp) {
+            ChunkyButton("📷 TAKE PHOTO", Modifier.fillMaxWidth(), color = GameColors.Xp, shadow = GameColors.XpDark, textColor = Color.Black, height = 60.dp) {
                 val dir = File(context.cacheDir, "images").apply { mkdirs() }
                 val file = File(dir, "bon_${System.currentTimeMillis()}.jpg")
                 val uri = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
                 pendingUri = uri.toString()
                 camera.launch(uri)
             }
-            ChunkyButton("🖼️ AUS GALERIE WÄHLEN", Modifier.fillMaxWidth(), color = GameColors.Mana, shadow = GameColors.ManaDark, textColor = Color.Black) {
+            ChunkyButton("🖼️ PICK FROM GALLERY", Modifier.fillMaxWidth(), color = GameColors.Mana, shadow = GameColors.ManaDark, textColor = Color.Black) {
                 gallery.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
-            ChunkyButton("✍️ MANUELL ERFASSEN", Modifier.fillMaxWidth()) { vm.startManual() }
-            ChunkyButton("🧪 DEMO-BON LADEN", Modifier.fillMaxWidth(), color = GameColors.CardHi, shadow = GameColors.BgDeep) { vm.loadDemo() }
+            ChunkyButton("✍️ ENTER MANUALLY", Modifier.fillMaxWidth()) { vm.startManual() }
+            ChunkyButton("🧪 LOAD DEMO RECEIPT", Modifier.fillMaxWidth(), color = GameColors.CardHi, shadow = GameColors.BgDeep) { vm.loadDemo() }
         }
 
         GameCard {
-            Text("🎯 Tipps für perfekte Scans", fontWeight = FontWeight.Black, color = GameColors.Gold)
+            Text("🎯 Tips for perfect scans", fontWeight = FontWeight.Black, color = GameColors.Gold)
             Spacer(Modifier.height(6.dp))
             listOf(
-                "Bon flach auf einen dunklen Untergrund legen",
-                "Gutes Licht, kein Schatten vom Handy",
-                "Ganzen Bon ins Bild – lange Bons ggf. in zwei Fotos",
-                "Danach kurz prüfen: Du kannst alles korrigieren",
+                "Lay the receipt flat on a dark surface",
+                "Good light, no phone shadow",
+                "Get the whole receipt in frame – long ones in two photos",
+                "Check afterwards: you can correct everything",
             ).forEach { Text("• $it", color = GameColors.TextDim, fontSize = 14.sp) }
             Spacer(Modifier.height(6.dp))
-            Text("🔒 Die Texterkennung läuft komplett offline auf deinem Gerät.", color = GameColors.TextDim, fontSize = 12.sp)
+            Text("🔒 Text recognition runs completely offline on your device. Reads Portuguese receipts (Continente, Pingo Doce, Lidl, Auchan, Intermarché, Minipreço …).", color = GameColors.TextDim, fontSize = 12.sp)
         }
     }
 }
@@ -123,7 +123,7 @@ private fun ScannerVisual(active: Boolean) {
                 Spacer(Modifier.height(8.dp))
                 CircularProgressIndicator(color = GameColors.Xp, modifier = Modifier.size(28.dp))
             } else {
-                Text("Bereit für Beute!", color = GameColors.TextDim, textAlign = TextAlign.Center, fontSize = 13.sp)
+                Text("Ready for loot!", color = GameColors.TextDim, textAlign = TextAlign.Center, fontSize = 13.sp)
             }
         }
         Box(

@@ -44,12 +44,12 @@ fun RecipesScreen(vm: AppViewModel, data: AppData) {
     LazyColumn(contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         item {
             Column {
-                Text("🍳 REZEPT-ZAUBER", color = GameColors.Gold, fontWeight = FontWeight.Black, fontSize = 24.sp)
-                Text("Gerichte aus dem, was du gekauft hast. Bald ablaufende Zutaten zuerst!", color = GameColors.TextDim)
+                Text("🍳 RECIPE MAGIC", color = GameColors.Gold, fontWeight = FontWeight.Black, fontSize = 24.sp)
+                Text("Dishes from what you bought. Ingredients that expire soon come first!", color = GameColors.TextDim)
             }
         }
         if (suggestions.isEmpty()) {
-            item { EmptyState("🧑‍🍳", "Noch keine Zutaten", "Scanne einen Bon mit Lebensmitteln, dann zaubere ich dir passende Rezepte.") }
+            item { EmptyState("🧑‍🍳", "No ingredients yet", "Scan a grocery receipt and I'll conjure up matching recipes.") }
         }
         items(suggestions, key = { it.recipe.id }) { s -> RecipeCard(vm, s) }
     }
@@ -67,16 +67,16 @@ private fun RecipeCard(vm: AppViewModel, s: RecipeSuggestion) {
                 Text(s.recipe.name, fontWeight = FontWeight.Black)
                 Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     Text("⏱ ${s.recipe.minutes} Min", color = GameColors.TextDim, fontSize = 12.sp)
-                    if (s.expiringUsed > 0) Text("⏳ rettet ${s.expiringUsed} Zutat${if (s.expiringUsed > 1) "en" else ""}", color = GameColors.Orange, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                    if (s.expiringUsed > 0) Text("⏳ rescues ${s.expiringUsed} ingredient${if (s.expiringUsed > 1) "s" else ""}", color = GameColors.Orange, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                 }
             }
-            if (complete) Pill("ALLES DA!", GameColors.Gold) else Pill("${s.have.size}/${s.recipe.ingredients.size}", GameColors.Mana)
+            if (complete) Pill("ALL THERE!", GameColors.Gold) else Pill("${s.have.size}/${s.recipe.ingredients.size}", GameColors.Mana)
         }
         Spacer(Modifier.height(8.dp))
         GameBar(s.matchPercent / 100f, if (complete) GameColors.Gold else GameColors.Mana, height = 10.dp)
         Spacer(Modifier.height(6.dp))
         Text("✅ " + s.have.joinToString(", "), color = GameColors.Xp, fontSize = 13.sp)
-        if (s.missing.isNotEmpty()) Text("🛍️ Fehlt: " + s.missing.joinToString(", "), color = GameColors.TextDim, fontSize = 13.sp)
+        if (s.missing.isNotEmpty()) Text("🛍️ Missing: " + s.missing.joinToString(", "), color = GameColors.TextDim, fontSize = 13.sp)
         if (open) {
             Spacer(Modifier.height(10.dp))
             s.recipe.steps.forEachIndexed { i, step ->
@@ -86,11 +86,11 @@ private fun RecipeCard(vm: AppViewModel, s: RecipeSuggestion) {
                 }
                 Spacer(Modifier.height(4.dp))
             }
-            Text("Salz, Pfeffer & Gewürze setzen wir voraus.", color = GameColors.TextDim, fontSize = 12.sp)
+            Text("Salt, pepper & spices are assumed.", color = GameColors.TextDim, fontSize = 12.sp)
             Spacer(Modifier.height(10.dp))
-            ChunkyButton("🔥 GEKOCHT!  (+40 XP)", Modifier.fillMaxWidth(), color = GameColors.Orange, shadow = Color(0xFFA35A12), textColor = Color.Black) { vm.cook(s) }
+            ChunkyButton("🔥 COOKED IT!  (+40 XP)", Modifier.fillMaxWidth(), color = GameColors.Orange, shadow = Color(0xFFA35A12), textColor = Color.Black) { vm.cook(s) }
         } else {
-            Text("Tippen für Zubereitung ▾", color = GameColors.Mana, fontSize = 12.sp)
+            Text("Tap for instructions ▾", color = GameColors.Mana, fontSize = 12.sp)
         }
     }
 }

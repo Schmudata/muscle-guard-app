@@ -11,17 +11,33 @@ class DomainTest {
     private val today = LocalDate.of(2026, 11, 16)
 
     @Test
-    fun categorizerFindsIngredients() {
-        assertEquals("tomate", Categorizer.classify("BIO TOMATEN").ingredient)
-        assertEquals("tomatenkonserve", Categorizer.classify("Tomatenmark 200g").ingredient)
-        assertEquals(Category.SNACKS, Categorizer.classify("Milchschokolade").category)
-        assertEquals("milch", Categorizer.classify("H-Milch 3,5%").ingredient)
-        assertEquals("hackfleisch", Categorizer.classify("Gemischtes Hackfleisch").ingredient)
-        assertEquals("eier", Categorizer.classify("Bio Eier 10er").ingredient)
-        assertEquals(Category.HAUSHALT, Categorizer.classify("Toilettenpapier").category)
-        assertEquals(Category.ALKOHOL, Categorizer.classify("Weißwein Riesling").category)
-        assertEquals("joghurt", Categorizer.classify("Erdbeerjoghurt").ingredient)
+    fun categorizerReadsPortuguese() {
+        assertEquals("tomate", Categorizer.classify("TOMATE CHERRY").ingredient)
+        assertEquals("tomatenkonserve", Categorizer.classify("Polpa de Tomate").ingredient)
+        assertEquals("milch", Categorizer.classify("Leite Meio Gordo 1L").ingredient)
+        assertEquals("kokosmilch", Categorizer.classify("Leite de Coco").ingredient)
+        assertEquals(Category.SNACKS, Categorizer.classify("Chocolate de Leite").category)
+        assertEquals("brot", Categorizer.classify("Pão de Mistura").ingredient)
+        assertEquals("toast", Categorizer.classify("Pão de Forma").ingredient)
+        assertEquals("zucker", Categorizer.classify("Açúcar Branco").ingredient)
+        assertEquals("hackfleisch", Categorizer.classify("Carne Picada Mista").ingredient)
+        assertEquals("gefluegel", Categorizer.classify("Peito de Frango").ingredient)
+        assertEquals("eier", Categorizer.classify("Ovos Classe M").ingredient)
+        assertEquals("joghurt", Categorizer.classify("Iogurte de Morango").ingredient)
+        assertEquals("saft", Categorizer.classify("Sumo de Laranja").ingredient)
+        assertEquals("thunfisch", Categorizer.classify("Atum em Azeite").ingredient)
+        assertEquals("lauch", Categorizer.classify("Alho Francês").ingredient)
+        assertEquals("knoblauch", Categorizer.classify("Alho").ingredient)
+        assertEquals("nudeln", Categorizer.classify("Massa Espiral").ingredient)
+        assertEquals("apfel", Categorizer.classify("Maçã Gala").ingredient)
+        assertEquals(Category.HAUSHALT, Categorizer.classify("Papel Higiénico").category)
+        assertEquals(Category.ALKOHOL, Categorizer.classify("Vinho Tinto Douro").category)
+        assertEquals(Category.SNACKS, Categorizer.classify("Batatas Fritas Lays").category)
+        assertEquals(Category.GETRAENKE, Categorizer.classify("Água das Pedras").category)
         assertEquals(Category.SONSTIGES, Categorizer.classify("XYZ 123").category)
+        // German & English fallback still works
+        assertEquals("milch", Categorizer.classify("H-Milch 3,5%").ingredient)
+        assertEquals("butter", Categorizer.classify("Butter").ingredient)
     }
 
     @Test
@@ -34,59 +50,68 @@ class DomainTest {
     fun rowBuilderMergesColumns() {
         val rows = RowBuilder.buildRows(
             listOf(
-                OcrLine("BUTTER", 10, 100, 120, 130),
-                OcrLine("MILCH", 10, 140, 110, 170),
+                OcrLine("MANTEIGA", 10, 100, 120, 130),
+                OcrLine("LEITE", 10, 140, 110, 170),
                 OcrLine("1,99 A", 400, 102, 480, 131),
                 OcrLine("0,99 A", 400, 141, 480, 171),
             )
         )
-        assertEquals(listOf("BUTTER 1,99 A", "MILCH 0,99 A"), rows)
+        assertEquals(listOf("MANTEIGA 1,99 A", "LEITE 0,99 A"), rows)
     }
 
+    private fun sum(p: ParsedReceipt) = p.items.sumOf { it.effectivePrice } - p.extraDiscount
+
     @Test
-    fun parsesReweDemo() {
+    fun parsesContinente() {
         val p = ReceiptParser.parse(DemoData.demoRows(0, today), today)
-        assertEquals("REWE", p.store)
+        assertEquals("Continente", p.store)
         assertEquals(today, p.date)
-        assertEquals(21.53, p.printedTotal!!, 0.001)
-        val milk = p.items.first { it.ingredient == "milch" }
-        assertEquals(2.0, milk.quantity, 0.0)
-        val hack = p.items.first { it.ingredient == "hackfleisch" }
-        assertEquals(1.0, hack.discount, 0.001)
-        val parmesan = p.items.first { it.ingredient == "parmesan" }
-        assertEquals(0.6, parmesan.discount, 0.001)
-        assertTrue(p.items.any { it.category == Category.PFAND })
-        val sum = p.items.sumOf { it.effectivePrice } - p.extraDiscount
-        assertEquals(p.printedTotal!!, sum, 0.01)
+        assertEquals(17.90, p.printedTotal!!, 0.001)
+        assertEquals(2.0, p.items.first { it.ingredient == "milch" }.quantity, 0.0)
+        assertEquals(0.8, p.items.first { it.ingredient == "hackfleisch" }.discount, 0.001)
+        assertEquals(0.5, p.items.first { it.ingredient == "parmesan" }.discount, 0.001)
+        assertEquals(11, p.items.size)
+        assertEquals(p.printedTotal!!, sum(p), 0.01)
     }
 
     @Test
-    fun parsesLidlDemo() {
+    fun parsesPingoDoce() {
         val p = ReceiptParser.parse(DemoData.demoRows(1, today), today)
-        assertEquals("Lidl", p.store)
+        assertEquals("Pingo Doce", p.store)
         assertEquals(today.minusDays(4), p.date)
-        val banana = p.items.first { it.ingredient == "banane" }
-        assertEquals("kg", banana.unit)
-        val pfand = p.items.first { it.category == Category.PFAND }
-        assertEquals(-1.5, pfand.price, 0.001)
+        assertEquals("kg", p.items.first { it.ingredient == "banane" }.unit)
+        assertEquals("Banana", p.items.first { it.ingredient == "banane" }.name)
         assertEquals(0.3, p.items.filter { it.ingredient == "mozzarella" }.sumOf { it.discount }, 0.001)
-        val sum = p.items.sumOf { it.effectivePrice } - p.extraDiscount
-        assertEquals(p.printedTotal!!, sum, 0.01)
+        assertEquals(1.0, p.items.first { it.ingredient == "gefluegel" }.discount, 0.001)
+        assertEquals("brot", p.items.last().ingredient)
+        assertEquals(p.printedTotal!!, sum(p), 0.01)
     }
 
     @Test
-    fun parsesAldiDemo() {
+    fun parsesLidlPortugal() {
         val p = ReceiptParser.parse(DemoData.demoRows(2, today), today)
-        assertEquals("ALDI", p.store)
-        assertEquals("Aktionsartikel", p.items.first { it.ingredient == "fisch" }.promoLabel)
-        val sum = p.items.sumOf { it.effectivePrice }
-        assertEquals(p.printedTotal!!, sum, 0.01)
+        assertEquals("Lidl", p.store)
+        assertEquals(today, p.date)
+        assertEquals("On promotion", p.items.first { it.ingredient == "fisch" }.promoLabel)
         assertEquals(13, p.items.size)
+        assertEquals(p.printedTotal!!, sum(p), 0.01)
     }
 
     @Test
-    fun skipsPaymentLines() {
-        val p = ReceiptParser.parse(listOf("Butter 1,99", "MwSt 19% 0,32", "Bar 5,00", "Rückgeld 3,01"), today)
+    fun parsesGermanReceipt() {
+        val rows = listOf(
+            "REWE Markt GmbH", "EUR", "SPAGHETTI 1,29 A", "GEMISCHTES HACK 500G 4,99 A", "AKTION -1,00 A",
+            "H-MILCH 3,5% 2,58 A", "2 Stk x 1,29", "PFAND 0,25 B", "SUMME EUR 8,11", "Bar 10,00",
+        )
+        val p = ReceiptParser.parse(rows, today)
+        assertEquals("REWE", p.store)
+        assertEquals(4, p.items.size)
+        assertEquals(p.printedTotal!!, sum(p), 0.01)
+    }
+
+    @Test
+    fun skipsPaymentAndTaxLines() {
+        val p = ReceiptParser.parse(listOf("Manteiga 1,99", "IVA 23% 0,37", "Numerário 5,00", "Troco 3,01", "Total IVA 0,37"), today)
         assertEquals(1, p.items.size)
         assertNull(p.printedTotal)
     }
@@ -100,13 +125,12 @@ class DomainTest {
     fun pantryRecipesAndStats() {
         val r1 = receipt("1", today.minusDays(5), DemoData.demoRows(0, today))
         val r2 = receipt("2", today.minusDays(1), DemoData.demoRows(1, today))
-        val r3 = receipt("3", today, listOf("REWE", "Milch 1,09", "Summe 1,09"))
+        val r3 = receipt("3", today, listOf("CONTINENTE", "Leite UHT 0,85", "Total 0,85"))
         val data = AppData(receipts = listOf(r1, r2, r3))
         val entries = Pantry.entries(data.receipts, today.toEpochDay())
         assertTrue(entries.any { it.item.ingredient == "nudeln" })
-        // fresh minced meat from 5 days ago should be gone
         assertTrue(entries.none { it.item.ingredient == "hackfleisch" })
-        val check = Pantry.checkList("Nudeln\nZahnpasta", entries)
+        val check = Pantry.checkList("massa\npasta de dentes", entries)
         assertTrue(check[0].entries.isNotEmpty())
         assertTrue(check[1].entries.isEmpty())
 
@@ -116,8 +140,8 @@ class DomainTest {
 
         val stats = StatsCalculator.compute(data, today)
         assertEquals(3, stats.receiptCount)
-        assertTrue(stats.totalSaved > 2.9)
-        assertTrue(stats.doublePurchases.any { it.label == "Milch" })
+        assertTrue(stats.totalSaved > 2.5)
+        assertTrue(stats.doublePurchases.any { it.label == "Milk" })
         assertTrue(TipEngine.tips(stats, 80.0).isNotEmpty())
     }
 
@@ -133,7 +157,6 @@ class DomainTest {
         assertTrue(result.unlocked.any { it.id == "first_scan" })
         assertTrue(result.unlocked.any { it.id == "first_promo" })
         assertNotNull(result.newLevel)
-        // awarding again does not unlock twice
         assertTrue(GameEngine.award(result.data, 0, 0).unlocked.isEmpty())
     }
 }

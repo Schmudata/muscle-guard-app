@@ -1,5 +1,9 @@
 # 🧾 BonQuest – Einkaufszettel-Scanner im Spielformat (Android)
 
+**Sprache:** Die App-Oberfläche ist Englisch. Die Bon-Erkennung ist auf portugiesische Kassenbons ausgelegt (Continente, Pingo Doce, Lidl, Auchan, Intermarché, Minipreço, Mercadona, auch brasilianische), deutsche und englische Bons gehen weiterhin.
+
+**APK:** Die aktuelle Version liegt nach jedem Build unter `apk/BonQuest.apk`.
+
 Bons scannen, Produkte erkennen und kategorisieren, Aktionen finden, Vorrat im Blick behalten,
 Rezepte aus den Einkäufen bekommen – und dabei XP, Münzen und Erfolge sammeln.
 

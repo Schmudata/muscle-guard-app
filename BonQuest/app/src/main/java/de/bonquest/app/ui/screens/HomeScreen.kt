@@ -63,18 +63,18 @@ fun HomeScreen(vm: AppViewModel, data: AppData) {
             val frac = (left / budget).toFloat()
             GameCard(borderColor = if (left < 0) GameColors.Hp else GameColors.Border, onClick = { editBudget = true }) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("❤️ BUDGET-LEBEN", color = GameColors.Hp, fontWeight = FontWeight.Black, modifier = Modifier.weight(1f))
-                    Text("Woche · ${euro(budget)}", color = GameColors.TextDim, fontSize = 13.sp)
+                    Text("❤️ BUDGET HP", color = GameColors.Hp, fontWeight = FontWeight.Black, modifier = Modifier.weight(1f))
+                    Text("Week · ${euro(budget)}", color = GameColors.TextDim, fontSize = 13.sp)
                 }
                 Spacer(Modifier.height(8.dp))
                 GameBar(frac, if (frac > 0.3f) GameColors.Hp else GameColors.Orange, height = 24.dp,
-                    label = if (left >= 0) "${euro(left)} übrig" else "${euro(-left)} drüber!")
+                    label = if (left >= 0) "${euro(left)} left" else "${euro(-left)} over!")
                 Spacer(Modifier.height(6.dp))
                 Text(
                     when {
-                        left < 0 -> "💀 Budget-Boss hat zugeschlagen! Koche jetzt aus dem Vorrat."
-                        frac < 0.3f -> "⚠️ Nur noch wenig Leben – plane die restliche Woche gut."
-                        else -> "Diese Woche ausgegeben: ${euro(stats.thisWeekSpent)} · Tippen zum Ändern"
+                        left < 0 -> "💀 The Budget Boss struck! Cook from your pantry now."
+                        frac < 0.3f -> "⚠️ Low HP – plan the rest of the week carefully."
+                        else -> "Spent this week: ${euro(stats.thisWeekSpent)} · Tap to change"
                     },
                     color = GameColors.TextDim, fontSize = 13.sp,
                 )
@@ -83,12 +83,12 @@ fun HomeScreen(vm: AppViewModel, data: AppData) {
 
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                ChunkyButton("📸 BON SCANNEN", Modifier.weight(1f), color = GameColors.Xp, shadow = GameColors.XpDark, textColor = androidx.compose.ui.graphics.Color.Black) { vm.navigate(Screen.SCAN, asTab = true) }
-                ChunkyButton("🛒 EINKAUFS-CHECK", Modifier.weight(1f), color = GameColors.Mana, shadow = GameColors.ManaDark, textColor = androidx.compose.ui.graphics.Color.Black) { vm.navigate(Screen.CHECK) }
+                ChunkyButton("📸 SCAN RECEIPT", Modifier.weight(1f), color = GameColors.Xp, shadow = GameColors.XpDark, textColor = androidx.compose.ui.graphics.Color.Black) { vm.navigate(Screen.SCAN, asTab = true) }
+                ChunkyButton("🛒 SHOPPING CHECK", Modifier.weight(1f), color = GameColors.Mana, shadow = GameColors.ManaDark, textColor = androidx.compose.ui.graphics.Color.Black) { vm.navigate(Screen.CHECK) }
             }
         }
 
-        item { SectionTitle("⚔️ Wochen-Quests") }
+        item { SectionTitle("⚔️ Weekly quests") }
         Quests.weekly.forEach { q ->
             item(key = q.id) {
                 val progress = q.progress(week)
@@ -107,7 +107,7 @@ fun HomeScreen(vm: AppViewModel, data: AppData) {
                         Spacer(Modifier.width(10.dp))
                         when {
                             claimed -> Pill("✔", GameColors.XpDark, textColor = GameColors.Text)
-                            done -> ChunkyButton("HOLEN", Modifier.width(84.dp), color = GameColors.Gold, shadow = GameColors.GoldDark, textColor = androidx.compose.ui.graphics.Color.Black, height = 38.dp) { vm.claimQuest(q) }
+                            done -> ChunkyButton("CLAIM", Modifier.width(84.dp), color = GameColors.Gold, shadow = GameColors.GoldDark, textColor = androidx.compose.ui.graphics.Color.Black, height = 38.dp) { vm.claimQuest(q) }
                             else -> Column(horizontalAlignment = Alignment.End) {
                                 Text("+${q.rewardXp} XP", color = GameColors.Xp, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                                 Text("+${q.rewardCoins} 🪙", color = GameColors.Gold, fontSize = 12.sp, fontWeight = FontWeight.Bold)
@@ -121,14 +121,14 @@ fun HomeScreen(vm: AppViewModel, data: AppData) {
         val expiring = pantry.filter { it.daysLeft in 0..2 }
         if (expiring.isNotEmpty()) {
             item { Column {
-                SectionTitle("⏳ Bald verbrauchen") {
-                    TextButton(onClick = { vm.navigate(Screen.RECIPES, asTab = true) }) { Text("Rezepte →", color = GameColors.Mana) }
+                SectionTitle("⏳ Use soon") {
+                    TextButton(onClick = { vm.navigate(Screen.RECIPES, asTab = true) }) { Text("Recipes →", color = GameColors.Mana) }
                 }
                 GameCard(borderColor = GameColors.Orange) {
                     expiring.take(6).forEach { e ->
                         Row(Modifier.fillMaxWidth().padding(vertical = 3.dp), verticalAlignment = Alignment.CenterVertically) {
                             Text("${e.item.category.emoji}  ${e.item.name}", modifier = Modifier.weight(1f), maxLines = 1)
-                            Pill(if (e.daysLeft == 0) "heute" else "${e.daysLeft} T", GameColors.Orange)
+                            Pill(if (e.daysLeft == 0) "today" else "${e.daysLeft} d", GameColors.Orange)
                         }
                     }
                 }
@@ -136,8 +136,8 @@ fun HomeScreen(vm: AppViewModel, data: AppData) {
         }
 
         item { Column {
-            SectionTitle("💡 Spar-Tipp") {
-                TextButton(onClick = { vm.navigate(Screen.STATS, asTab = true) }) { Text("Alle →", color = GameColors.Mana) }
+            SectionTitle("💡 Saving tip") {
+                TextButton(onClick = { vm.navigate(Screen.STATS, asTab = true) }) { Text("All →", color = GameColors.Mana) }
             }
             GameCard(borderColor = GameColors.Gold) {
                 Text("${tip.emoji}  ${tip.title}", fontWeight = FontWeight.Black, color = GameColors.Gold)
@@ -147,18 +147,18 @@ fun HomeScreen(vm: AppViewModel, data: AppData) {
         } }
 
         item { Column {
-            SectionTitle("🏰 Mehr")
+            SectionTitle("🏰 More")
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                ChunkyButton("🏆 ERFOLGE & SHOP", Modifier.weight(1f)) { vm.navigate(Screen.TROPHIES) }
-                ChunkyButton("📜 BON-ARCHIV", Modifier.weight(1f)) { vm.navigate(Screen.HISTORY) }
+                ChunkyButton("🏆 TROPHIES & SHOP", Modifier.weight(1f)) { vm.navigate(Screen.TROPHIES) }
+                ChunkyButton("📜 RECEIPTS", Modifier.weight(1f)) { vm.navigate(Screen.HISTORY) }
             }
             Spacer(Modifier.height(10.dp))
-            TextButton(onClick = { editName = true }) { Text("✏️ Heldennamen ändern", color = GameColors.TextDim) }
+            TextButton(onClick = { editName = true }) { Text("✏️ Change hero name", color = GameColors.TextDim) }
         } }
     }
 
     if (editBudget) {
-        NumberDialog("Wochenbudget (€)", data.game.weeklyBudget, onDismiss = { editBudget = false }) {
+        NumberDialog("Weekly budget (€)", data.game.weeklyBudget, onDismiss = { editBudget = false }) {
             vm.setBudget(it); editBudget = false
         }
     }
@@ -166,17 +166,17 @@ fun HomeScreen(vm: AppViewModel, data: AppData) {
         var name by remember { mutableStateOf(data.game.heroName) }
         AlertDialog(
             onDismissRequest = { editName = false },
-            title = { Text("Dein Heldenname") },
+            title = { Text("Your hero name") },
             text = { OutlinedTextField(name, { name = it }, singleLine = true) },
-            confirmButton = { TextButton(onClick = { vm.setHeroName(name.ifBlank { "Held" }); editName = false }) { Text("OK") } },
-            dismissButton = { TextButton(onClick = { editName = false }) { Text("Abbrechen") } },
+            confirmButton = { TextButton(onClick = { vm.setHeroName(name.ifBlank { "Hero" }); editName = false }) { Text("OK") } },
+            dismissButton = { TextButton(onClick = { editName = false }) { Text("Cancel") } },
         )
     }
 }
 
 @Composable
 fun NumberDialog(title: String, initial: Double, onDismiss: () -> Unit, onConfirm: (Double) -> Unit) {
-    var text by remember { mutableStateOf(String.format(java.util.Locale.GERMANY, "%.2f", initial)) }
+    var text by remember { mutableStateOf(String.format(java.util.Locale("pt", "PT"), "%.2f", initial)) }
     val value = text.replace(',', '.').toDoubleOrNull()
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -189,6 +189,6 @@ fun NumberDialog(title: String, initial: Double, onDismiss: () -> Unit, onConfir
             )
         },
         confirmButton = { TextButton(enabled = value != null && value > 0, onClick = { onConfirm(value!!) }) { Text("OK") } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text("Abbrechen") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
     )
 }

@@ -51,8 +51,8 @@ fun TrophiesScreen(vm: AppViewModel, data: AppData) {
     LazyColumn(contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
         item {
             Column {
-                Text("🏆 TROPHÄEN-HALLE", color = GameColors.Gold, fontWeight = FontWeight.Black, fontSize = 24.sp)
-                Text("${g.unlocked.size} von ${Achievements.all.size} Erfolgen freigeschaltet", color = GameColors.TextDim)
+                Text("🏆 HALL OF TROPHIES", color = GameColors.Gold, fontWeight = FontWeight.Black, fontSize = 24.sp)
+                Text("${g.unlocked.size} of ${Achievements.all.size} achievements unlocked", color = GameColors.TextDim)
             }
         }
         items(Achievements.all.chunked(2)) { row ->
@@ -73,7 +73,7 @@ fun TrophiesScreen(vm: AppViewModel, data: AppData) {
                 if (row.size == 1) Spacer(Modifier.weight(1f))
             }
         }
-        item { SectionTitle("🛡️ Helden-Shop") }
+        item { SectionTitle("🛡️ Hero shop") }
         items(Avatars.all.chunked(3)) { row ->
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 row.forEach { av ->
@@ -85,8 +85,8 @@ fun TrophiesScreen(vm: AppViewModel, data: AppData) {
                             Spacer(Modifier.height(6.dp))
                             Text(av.name, fontWeight = FontWeight.Bold, fontSize = 13.sp, maxLines = 1)
                             when {
-                                active -> Pill("AKTIV", GameColors.Gold)
-                                owned -> Pill("WÄHLEN", GameColors.Mana)
+                                active -> Pill("ACTIVE", GameColors.Gold)
+                                owned -> Pill("SELECT", GameColors.Mana)
                                 else -> Pill("${av.price} 🪙", if (g.coins >= av.price) GameColors.Xp else GameColors.CardHi, textColor = if (g.coins >= av.price) Color.Black else GameColors.TextDim)
                             }
                         }
@@ -98,7 +98,7 @@ fun TrophiesScreen(vm: AppViewModel, data: AppData) {
     }
 }
 
-private val dateFmt = DateTimeFormatter.ofPattern("EE, dd.MM.yyyy", java.util.Locale.GERMANY)
+private val dateFmt = DateTimeFormatter.ofPattern("EEE, dd/MM/yyyy", java.util.Locale.ENGLISH)
 
 @Composable
 fun HistoryScreen(vm: AppViewModel, data: AppData) {
@@ -106,20 +106,20 @@ fun HistoryScreen(vm: AppViewModel, data: AppData) {
     var openId by remember { mutableStateOf<String?>(null) }
     val receipts = data.receipts.sortedByDescending { it.epochDay }
     LazyColumn(contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-        item { Text("📜 BON-ARCHIV", color = GameColors.Gold, fontWeight = FontWeight.Black, fontSize = 24.sp) }
-        if (receipts.isEmpty()) item { EmptyState("📭", "Noch keine Bons", "Deine gescannten Bons landen hier.") }
+        item { Text("📜 RECEIPT ARCHIVE", color = GameColors.Gold, fontWeight = FontWeight.Black, fontSize = 24.sp) }
+        if (receipts.isEmpty()) item { EmptyState("📭", "No receipts yet", "Your scanned receipts will show up here.") }
         items(receipts, key = { it.id }) { r ->
             GameCard(onClick = { openId = if (openId == r.id) null else r.id }) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
                         Text("🏪 ${r.store}", fontWeight = FontWeight.Black)
-                        Text("${LocalDate.ofEpochDay(r.epochDay).format(dateFmt)} · ${r.items.size} Posten", color = GameColors.TextDim, fontSize = 12.sp)
+                        Text("${LocalDate.ofEpochDay(r.epochDay).format(dateFmt)} · ${r.items.size} items", color = GameColors.TextDim, fontSize = 12.sp)
                     }
                     Column(horizontalAlignment = Alignment.End) {
                         Text(euro(r.total), fontWeight = FontWeight.Black)
                         if (r.savings > 0) Text("-${euro(r.savings)}", color = GameColors.Xp, fontSize = 12.sp)
                     }
-                    IconButton(onClick = { toDelete = r }) { Icon(Icons.Default.Delete, "Löschen", tint = GameColors.Hp) }
+                    IconButton(onClick = { toDelete = r }) { Icon(Icons.Default.Delete, "Delete", tint = GameColors.Hp) }
                 }
                 if (openId == r.id) {
                     Spacer(Modifier.height(6.dp))
@@ -136,10 +136,10 @@ fun HistoryScreen(vm: AppViewModel, data: AppData) {
     toDelete?.let { r ->
         AlertDialog(
             onDismissRequest = { toDelete = null },
-            title = { Text("Bon löschen?") },
-            text = { Text("${r.store} vom ${LocalDate.ofEpochDay(r.epochDay).format(dateFmt)} wird entfernt. Erhaltene XP bleiben.") },
-            confirmButton = { TextButton(onClick = { vm.deleteReceipt(r.id); toDelete = null }) { Text("Löschen", color = GameColors.Hp) } },
-            dismissButton = { TextButton(onClick = { toDelete = null }) { Text("Abbrechen") } },
+            title = { Text("Delete receipt?") },
+            text = { Text("${r.store} from ${LocalDate.ofEpochDay(r.epochDay).format(dateFmt)} will be removed. Earned XP stays.") },
+            confirmButton = { TextButton(onClick = { vm.deleteReceipt(r.id); toDelete = null }) { Text("Delete", color = GameColors.Hp) } },
+            dismissButton = { TextButton(onClick = { toDelete = null }) { Text("Cancel") } },
         )
     }
 }

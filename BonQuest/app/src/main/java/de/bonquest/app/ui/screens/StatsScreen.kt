@@ -52,23 +52,23 @@ fun StatsScreen(vm: AppViewModel, data: AppData) {
     val tips = remember(stats, data.game.weeklyBudget) { TipEngine.tips(stats, data.game.weeklyBudget) }
 
     LazyColumn(contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
-        item { Text("📊 KAMPF-STATISTIK", color = GameColors.Gold, fontWeight = FontWeight.Black, fontSize = 24.sp) }
+        item { Text("📊 BATTLE STATS", color = GameColors.Gold, fontWeight = FontWeight.Black, fontSize = 24.sp) }
         if (stats.receiptCount == 0) {
-            item { EmptyState("📉", "Noch keine Daten", "Scanne Bons, um deine Ausgaben, Ersparnisse und Spar-Tipps zu sehen.") }
+            item { EmptyState("📉", "No data yet", "Scan receipts to see your spending, savings and saving tips.") }
         } else {
             item {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    StatTile("💶", euro(stats.totalSpent), "ausgegeben", GameColors.Hp, Modifier.weight(1f))
-                    StatTile("🏷️", euro(stats.totalSaved), "gespart", GameColors.Xp, Modifier.weight(1f))
-                    StatTile("🧾", "${stats.receiptCount}", "Bons · Ø ${euro(stats.avgReceipt)}", GameColors.Mana, Modifier.weight(1f))
+                    StatTile("💶", euro(stats.totalSpent), "spent", GameColors.Hp, Modifier.weight(1f))
+                    StatTile("🏷️", euro(stats.totalSaved), "saved", GameColors.Xp, Modifier.weight(1f))
+                    StatTile("🧾", "${stats.receiptCount}", "receipts · avg ${euro(stats.avgReceipt)}", GameColors.Mana, Modifier.weight(1f))
                 }
             }
-            item { Column { SectionTitle("📅 Ausgaben pro Monat"); GameCard { MonthBars(stats) } } }
-            item { Column { SectionTitle("🧩 Kategorien"); GameCard { CategoryBreakdown(stats) } } }
+            item { Column { SectionTitle("📅 Spending per month"); GameCard { MonthBars(stats) } } }
+            item { Column { SectionTitle("🧩 Categories"); GameCard { CategoryBreakdown(stats) } } }
             if (stats.stores.isNotEmpty()) {
                 item {
                     Column {
-                        SectionTitle("🏪 Läden")
+                        SectionTitle("🏪 Stores")
                         GameCard {
                             val max = stats.stores.maxOf { it.amount }.coerceAtLeast(0.01)
                             stats.stores.forEach { s ->
@@ -84,7 +84,7 @@ fun StatsScreen(vm: AppViewModel, data: AppData) {
             }
             item {
                 Column {
-                    SectionTitle("🔁 Am häufigsten gekauft")
+                    SectionTitle("🔁 Most bought")
                     GameCard {
                         stats.topProducts.forEachIndexed { i, p ->
                             Row(Modifier.padding(vertical = 3.dp)) {
@@ -98,12 +98,12 @@ fun StatsScreen(vm: AppViewModel, data: AppData) {
             if (stats.priceIncreases.isNotEmpty()) {
                 item {
                     Column {
-                        SectionTitle("📈 Preisalarm")
+                        SectionTitle("📈 Price alerts")
                         GameCard(borderColor = GameColors.Hp) {
                             stats.priceIncreases.take(6).forEach { p ->
                                 Row(Modifier.padding(vertical = 3.dp)) {
                                     Text(p.name, Modifier.weight(1f), maxLines = 1)
-                                    Text("${euro(p.oldPrice)} → ${euro(p.newPrice)} (+${p.percent} %)", color = GameColors.Hp, fontSize = 13.sp)
+                                    Text("${euro(p.oldPrice)} → ${euro(p.newPrice)} (+${p.percent}%)", color = GameColors.Hp, fontSize = 13.sp)
                                 }
                             }
                         }
@@ -112,13 +112,13 @@ fun StatsScreen(vm: AppViewModel, data: AppData) {
             }
             item {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    StatTile("🏷️", "${if (stats.itemCount > 0) 100 * stats.promoItemCount / stats.itemCount else 0} %", "Aktionsanteil", GameColors.Xp, Modifier.weight(1f))
-                    StatTile("🛟", "${stats.rescued}", "gerettet", GameColors.Mana, Modifier.weight(1f))
-                    StatTile("🗑️", "${stats.wasted}", "weggeworfen", GameColors.Orange, Modifier.weight(1f))
+                    StatTile("🏷️", "${if (stats.itemCount > 0) 100 * stats.promoItemCount / stats.itemCount else 0}%", "promo share", GameColors.Xp, Modifier.weight(1f))
+                    StatTile("🛟", "${stats.rescued}", "rescued", GameColors.Mana, Modifier.weight(1f))
+                    StatTile("🗑️", "${stats.wasted}", "wasted", GameColors.Orange, Modifier.weight(1f))
                 }
             }
         }
-        item { SectionTitle("💡 Tipps vom Spar-Orakel") }
+        item { SectionTitle("💡 Tips from the Savings Oracle") }
         items(tips) { t ->
             GameCard(borderColor = if (t.priority >= 75) GameColors.Gold else GameColors.Border) {
                 Text("${t.emoji}  ${t.title}", fontWeight = FontWeight.Black, color = if (t.priority >= 75) GameColors.Gold else GameColors.Text)

@@ -4,18 +4,18 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 enum class Category(val label: String, val emoji: String, val color: Long, val defaultShelfDays: Int) {
-    OBST_GEMUESE("Obst & Gemüse", "🥦", 0xFF3DDC84, 7),
-    MILCH("Milch & Eier", "🧀", 0xFFFFE08A, 10),
-    FLEISCH_FISCH("Fleisch & Fisch", "🍗", 0xFFFF6B6B, 3),
-    BACKWAREN("Backwaren", "🥖", 0xFFE0A15A, 4),
-    VORRAT("Vorrat", "🥫", 0xFFB48CFF, 270),
-    TIEFKUEHL("Tiefkühl", "🧊", 0xFF6EC8FF, 120),
-    SNACKS("Süßes & Snacks", "🍫", 0xFFFF8FD8, 90),
-    GETRAENKE("Getränke", "🥤", 0xFF4FD1C5, 45),
-    ALKOHOL("Alkohol", "🍺", 0xFFFFB347, 180),
-    HAUSHALT("Haushalt & Drogerie", "🧴", 0xFF9AA5B1, 90),
-    PFAND("Pfand", "♻️", 0xFF7BD389, 0),
-    SONSTIGES("Sonstiges", "📦", 0xFFC0C0C0, 21);
+    OBST_GEMUESE("Fruit & Veg", "🥦", 0xFF3DDC84, 7),
+    MILCH("Dairy & Eggs", "🧀", 0xFFFFE08A, 10),
+    FLEISCH_FISCH("Meat & Fish", "🍗", 0xFFFF6B6B, 3),
+    BACKWAREN("Bakery", "🥖", 0xFFE0A15A, 4),
+    VORRAT("Pantry Staples", "🥫", 0xFFB48CFF, 270),
+    TIEFKUEHL("Frozen", "🧊", 0xFF6EC8FF, 120),
+    SNACKS("Sweets & Snacks", "🍫", 0xFFFF8FD8, 90),
+    GETRAENKE("Drinks", "🥤", 0xFF4FD1C5, 45),
+    ALKOHOL("Alcohol", "🍺", 0xFFFFB347, 180),
+    HAUSHALT("Household", "🧴", 0xFF9AA5B1, 90),
+    PFAND("Deposit", "♻️", 0xFF7BD389, 0),
+    SONSTIGES("Other", "📦", 0xFFC0C0C0, 21);
 }
 
 @Serializable
@@ -72,7 +72,7 @@ data class GameState(
     val weeklyBudget: Double = 80.0,
     val avatar: String = "knappe",
     val ownedAvatars: Set<String> = setOf("knappe"),
-    val heroName: String = "Held",
+    val heroName: String = "Hero",
 )
 
 @Serializable

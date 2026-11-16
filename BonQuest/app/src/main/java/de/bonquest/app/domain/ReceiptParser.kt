@@ -13,7 +13,6 @@ data class OcrLine(val text: String, val left: Int, val top: Int, val right: Int
  */
 object RowBuilder {
     fun buildRows(lines: List<OcrLine>): List<String> {
-        if (lines.isEmpty()) return emptyList()
         val sorted = lines.filter { it.text.isNotBlank() }.sortedBy { (it.top + it.bottom) / 2 }
         if (sorted.isEmpty()) return emptyList()
         val heights = sorted.map { (it.bottom - it.top).coerceAtLeast(1) }.sorted()
@@ -42,33 +41,63 @@ data class ParsedReceipt(
     val extraDiscount: Double,
 )
 
+/**
+ * Parses receipt rows. Built for Portuguese receipts (Continente, Pingo Doce, Lidl,
+ * Auchan, Intermarché, Minipreço, Mercadona …, also Brazilian ones) and still
+ * understands German and English receipts.
+ */
 object ReceiptParser {
 
-    private val priceAtEnd = Regex("""(-\s?)?(\d{1,4})\s?[.,]\s?(\d{2})\s*(-)?\s*(?:€|EUR|eur)?\s*(?:[A-Za-z]{1,2}|\*|[0-9])?\s*$""")
-    private val qtyLine = Regex("""^\s*(\d{1,3})\s*(?:stk\.?|st\.?)?\s*[xX*×]\s*(\d{1,4}[.,]\d{2})\s*(?:€|EUR)?(?:\s*/\s*stk\.?)?(?:\s+(-?\d{1,4}[.,]\d{2})\s*\S?)?\s*$""", RegexOption.IGNORE_CASE)
+    const val UNKNOWN_STORE = "Unknown store"
+
+    // price at the end of a row, optionally followed by a tax code: "1,29 A", "1.29€", "0,89 (C)", "2,49 23%"
+    private val priceAtEnd = Regex("""(-\s?)?(\d{1,4})\s?[.,]\s?(\d{2})\s*(-)?\s*(?:€|EUR|eur)?\s*(?:\(?[A-Za-z]{1,2}\)?|\*|[0-9]|\(?\d{1,2}\s?%\)?)?\s*$""")
+    private val qtyLine = Regex("""^\s*(\d{1,3})(?:[.,]0{1,3})?\s*(?:stk\.?|st\.?|un\.?|uni\.?|und\.?|unid\.?|pcs?\.?)?\s*[xX*×]\s*(\d{1,4}[.,]\d{2})\s*(?:€|EUR)?(?:\s*/\s*\w+\.?)?(?:\s+(-?\d{1,4}[.,]\d{2})\s*\S{0,4})?\s*$""", RegexOption.IGNORE_CASE)
     private val weightLine = Regex("""(\d{1,3}[.,]\d{1,3})\s*kg\s*[xX*×]\s*(\d{1,4}[.,]\d{2})""", RegexOption.IGNORE_CASE)
     private val inlineQtyA = Regex("""(\d{1,4}[.,]\d{2})\s*[xX*×]\s*(\d{1,3})\b""")
-    private val inlineQtyB = Regex("""\b(\d{1,3})\s*(?:stk\.?)?\s*[xX*×]\s*(\d{1,4}[.,]\d{2})""", RegexOption.IGNORE_CASE)
-    private val dateRegex = Regex("""\b(\d{1,2})[./-](\d{1,2})[./-](\d{2,4})\b""")
+    private val inlineQtyB = Regex("""\b(\d{1,3})\s*(?:stk\.?|un\.?|uni\.?|und\.?)?\s*[xX*×]\s*(\d{1,4}[.,]\d{2})""", RegexOption.IGNORE_CASE)
+    private val dateDmy = Regex("""\b(\d{1,2})[./-](\d{1,2})[./-](\d{2,4})\b""")
+    private val dateYmd = Regex("""\b(\d{4})[./-](\d{1,2})[./-](\d{1,2})\b""")
 
-    private val totalRegex = Regex("""\b(summe|zu zahlen|total|gesamtbetrag|endbetrag|gesamtsumme|betrag eur)\b""")
+    private val totalRegex = Regex("""\b(total|total a pagar|a pagar|valor a pagar|valor total|summe|zu zahlen|gesamtbetrag|endbetrag|amount due|grand total)\b""")
+    /** "total" lines that are NOT the amount paid */
+    private val notTotalRegex = Regex("""\b(iva|taxa|base|incidencia|poupanca|poupou|desconto\w*|artigos|itens|items|saldo|acumul\w*|mwst|steuer|netto|tax|vat|savings)\b|subtotal|zwischensumme""")
+
     private val skipRegex = Regex(
-        """\b(mwst|steuer\w*|netto|brutto|ust|bar|rueckgeld|gegeben|ec|girocard|kartenzahlung|karte|visa|mastercard|maestro|kreditkarte|kontaktlos|terminal|trace|beleg\w*|bon|kasse|kassierer\w*|tse|signatur|transaktion\w*|uhrzeit|datum|posten|artikel|payback|punkte|danke|www|tel|telefon|zahlung|bezahlt|wechselgeld|zwischensumme|steuernr|filiale|markt|seriennr|nr|uid|gmbh|ohg|str|strasse)\b"""
+        """\b(""" +
+            // Portuguese / Brazilian
+            "iva|nif|nipc|contribuinte|cnpj|cpf|multibanco|mb|troco|numerario|dinheiro|pagamento|pago|cartao|visa|mastercard|maestro|fatura|factura|simplificada|recibo|atcud|operador\\w*|caixa|obrigado\\w*|volte|sempre|base|taxa|incidencia|subtotal|saldo|acumul\\w*|talao|documento|original|processado|programa|certificado|cliente|morada|rua|avenida|av|lda|sa|telefone|tel|hora|data|artigos|itens|loja|terminal|autorizacao|aut|transacao|referencia|ref|euros|" +
+            // English
+            "tax|vat|cash|change|card|thank|thanks|receipt|store|tender|" +
+            // German
+            "mwst|steuer\\w*|netto|brutto|ust|bar|rueckgeld|gegeben|ec|girocard|kartenzahlung|karte|kreditkarte|kontaktlos|trace|beleg\\w*|bon|kasse|tse|signatur|uhrzeit|datum|posten|artikel|payback|punkte|danke|www|zahlung|wechselgeld|zwischensumme|filiale|markt|gmbh|ohg|str|strasse" +
+            """)\b"""
     )
-    private val discountRegex = Regex("""(rabatt|coupon|gutschein|preisvorteil|sie sparen|nachlass|ersparnis|lidl plus|vorteil|reduziert|sofortrabatt|preisred|sparen|abzug|bonus)""")
-    private val promoItemRegex = Regex("""\b(aktion|angebot|sonderangebot|super angebot|statt|reduz|deal|knaller)\b""")
-    private val pfandReturnRegex = Regex("""(leergut|pfandrueck|pfand rueck|pfandbon|pfand)""")
+    /** Words that always mean "this row is a reduction" (assigned to the previous product). */
+    private val strongDiscountRegex = Regex(
+        """\b(desconto\w*|desc|poupanca|poupe|promocao imediata|cupao|cupom|vale|reducao|discount|coupon|saving|savings|rabatt|preisvorteil|nachlass|ersparnis|gutschein|sofortrabatt|lidl plus)\b|rabatt|leve \d+ pague|2a unidade|2 unidade"""
+    )
+    /** Words that mark a product as being on promotion. */
+    private val promoItemRegex = Regex("""\b(promo|promocao|campanha|oferta|preco especial|desconto direto|aktion|angebot|sonderangebot|offer|deal|special)\b""")
+    private val pfandRegex = Regex("""(vasilhame|\btara\b|leergut|pfand|deposit)""")
 
     private val stores = listOf(
-        "rewe" to "REWE", "lidl" to "Lidl", "aldi" to "ALDI", "edeka" to "EDEKA", "penny" to "Penny",
-        "kaufland" to "Kaufland", "netto" to "Netto", "globus" to "Globus", "norma" to "Norma",
-        "tegut" to "tegut", "rossmann" to "Rossmann", "dm drogerie" to "dm", "dm markt" to "dm",
-        "mueller" to "Müller", "denns" to "denn's", "alnatura" to "Alnatura", "famila" to "famila",
-        "marktkauf" to "Marktkauf", "real" to "real", "spar" to "SPAR", "billa" to "BILLA",
-        "hofer" to "HOFER", "migros" to "Migros", "coop" to "Coop", "metro" to "Metro",
-        "hit" to "HIT", "nahkauf" to "nahkauf", "e center" to "E center", "combi" to "Combi",
-        "jumbo" to "Jumbo", "albert heijn" to "Albert Heijn", "carrefour" to "Carrefour",
+        // Portugal
+        "continente" to "Continente", "pingo doce" to "Pingo Doce", "lidl" to "Lidl", "auchan" to "Auchan",
+        "intermarche" to "Intermarché", "minipreco" to "Minipreço", "mercadona" to "Mercadona", "aldi" to "ALDI",
+        "el corte ingles" to "El Corte Inglés", "apolonia" to "Apolónia", "spar" to "SPAR", "froiz" to "Froiz",
+        "meu super" to "Meu Super", "recheio" to "Recheio", "makro" to "Makro", "jumbo" to "Jumbo",
+        "coviran" to "Covirán", "amanhecer" to "Amanhecer", "celeiro" to "Celeiro", "e leclerc" to "E.Leclerc",
+        "leclerc" to "E.Leclerc", "glood" to "Glood",
+        // Brazil
+        "pao de acucar" to "Pão de Açúcar", "carrefour" to "Carrefour", "assai" to "Assaí", "atacadao" to "Atacadão",
+        "zaffari" to "Zaffari", "sonda" to "Sonda", "savegnago" to "Savegnago", "guanabara" to "Guanabara",
+        // Germany & others
+        "rewe" to "REWE", "edeka" to "EDEKA", "penny" to "Penny", "kaufland" to "Kaufland", "netto" to "Netto",
+        "rossmann" to "Rossmann", "tesco" to "Tesco", "sainsbury" to "Sainsbury's", "dia" to "Dia",
     )
+    /** Short / ambiguous store names only count in the receipt header. */
+    private val headerOnlyStores = setOf("netto", "dia", "spar", "sonda", "jumbo")
 
     fun parse(
         rows: List<String>,
@@ -81,7 +110,7 @@ object ReceiptParser {
         var total: Double? = null
         var extraDiscount = 0.0
         var ended = false
-        var pendingQty: Pair<Double, Double>? = null // qty, unit price for the next item
+        var pendingQty: Pair<Double, Double>? = null
 
         rows.forEachIndexed { index, raw ->
             val line = raw.trim().replace(Regex("\\s+"), " ")
@@ -90,20 +119,23 @@ object ReceiptParser {
 
             if (date == null) date = findDate(line, today)
             if (store == null) {
-                val limit = if (index < 8) stores else stores.filter { it.first != "netto" }
-                store = limit.firstOrNull { (k, _) -> " $low ".contains(" $k ") }?.second
+                store = stores.firstOrNull { (k, _) ->
+                    (index < 8 || k !in headerOnlyStores) && " $low ".contains(" $k ")
+                }?.second
             }
             if (ended) return@forEachIndexed
 
             val priceMatch = priceAtEnd.find(line)
 
-            if (totalRegex.containsMatchIn(low) && !low.contains("zwischensumme")) {
-                if (priceMatch != null) total = abs(toPrice(priceMatch))
-                if (items.isNotEmpty()) ended = true
+            if (totalRegex.containsMatchIn(low)) {
+                if (!notTotalRegex.containsMatchIn(low)) {
+                    if (priceMatch != null) total = abs(toPrice(priceMatch))
+                    if (items.isNotEmpty()) ended = true
+                }
                 return@forEachIndexed
             }
 
-            // "0,512 kg x 2,99 EUR/kg" belongs to the previous item
+            // "0,512 kg x 2,99 €/kg" belongs to the previous item
             weightLine.find(line)?.let { w ->
                 val kg = num(w.groupValues[1])
                 val last = items.lastOrNull()
@@ -114,7 +146,7 @@ object ReceiptParser {
                 }
             }
 
-            // "2 Stk x 1,29" belongs to the previous item (REWE) or the next one (ALDI)
+            // "2 x 1,29" belongs to the previous item, or to the next one
             qtyLine.matchEntire(line)?.let { q ->
                 val qty = q.groupValues[1].toDouble()
                 val unitP = num(q.groupValues[2])
@@ -130,34 +162,35 @@ object ReceiptParser {
             }
 
             if (priceMatch == null) return@forEachIndexed
-            var price = toPrice(priceMatch)
+            val price = toPrice(priceMatch)
             var name = line.substring(0, priceMatch.range.first).trim()
             val nameNorm = Categorizer.normalize(name)
 
-            val isDiscountText = discountRegex.containsMatchIn(nameNorm)
-            val isPfand = pfandReturnRegex.containsMatchIn(nameNorm)
-
             if (!name.any { it.isLetter() }) {
-                // a bare "-0,50" line: treat as discount for the previous item
+                // a bare "-0,50" row: discount for the previous item
                 if (price < 0 && items.isNotEmpty()) {
                     val last = items.last()
-                    items[items.lastIndex] = last.copy(discount = last.discount + abs(price), promoLabel = last.promoLabel ?: "Rabatt")
+                    items[items.lastIndex] = last.copy(discount = last.discount + abs(price), promoLabel = last.promoLabel ?: "Discount")
                 }
                 return@forEachIndexed
             }
-            if (!isDiscountText && !isPfand && skipRegex.containsMatchIn(nameNorm)) return@forEachIndexed
 
-            if (isPfand) {
-                items += PurchaseItem(
-                    id = UUID.randomUUID().toString(), name = prettify(cleanName(name)), price = price,
-                    category = Category.PFAND,
-                )
+            val isStrongDiscount = strongDiscountRegex.containsMatchIn(nameNorm)
+            val isPfand = pfandRegex.containsMatchIn(nameNorm)
+            val isPromoWord = promoItemRegex.containsMatchIn(nameNorm)
+
+            if (!isStrongDiscount && !isPfand && !isPromoWord && skipRegex.containsMatchIn(nameNorm)) return@forEachIndexed
+
+            if (isPfand && !isStrongDiscount) {
+                items += PurchaseItem(id = UUID.randomUUID().toString(), name = prettify(cleanName(name)), price = price, category = Category.PFAND)
                 return@forEachIndexed
             }
 
-            if (price < 0 || isDiscountText) {
+            // A reduction row: negative price, or a "Desconto/Poupança…" row. A bare promo word
+            // ("Promo", "Oferta") with a negative price is also a reduction.
+            if (price < 0 || isStrongDiscount) {
                 val amount = abs(price)
-                val label = prettify(cleanName(name)).ifBlank { "Rabatt" }
+                val label = prettify(cleanName(name)).ifBlank { "Discount" }
                 val last = items.lastOrNull { it.category != Category.PFAND }
                 if (last != null) {
                     val idx = items.indexOf(last)
@@ -181,7 +214,6 @@ object ReceiptParser {
 
             val cleaned = prettify(cleanName(name))
             if (cleaned.length < 2) return@forEachIndexed
-            val promoLabel = if (promoItemRegex.containsMatchIn(nameNorm)) "Aktionsartikel" else null
             val cls = Categorizer.classify(cleaned, learned)
             items += PurchaseItem(
                 id = UUID.randomUUID().toString(),
@@ -190,12 +222,12 @@ object ReceiptParser {
                 quantity = quantity,
                 category = cls.category,
                 ingredient = cls.ingredient,
-                promoLabel = promoLabel,
+                promoLabel = if (isPromoWord) "On promotion" else null,
             )
         }
 
         return ParsedReceipt(
-            store = store ?: "Unbekannter Laden",
+            store = store ?: UNKNOWN_STORE,
             date = date,
             items = items,
             printedTotal = total,
@@ -212,24 +244,26 @@ object ReceiptParser {
     private fun num(s: String): Double = s.replace(',', '.').toDouble()
 
     private fun findDate(line: String, today: LocalDate): LocalDate? {
-        for (m in dateRegex.findAll(line)) {
-            val d = m.groupValues[1].toInt()
-            val mo = m.groupValues[2].toInt()
-            var y = m.groupValues[3].toInt()
+        val candidates = dateYmd.findAll(line).map { Triple(it.groupValues[3], it.groupValues[2], it.groupValues[1]) } +
+            dateDmy.findAll(line).map { Triple(it.groupValues[1], it.groupValues[2], it.groupValues[3]) }
+        for ((ds, ms, ys) in candidates) {
+            var y = ys.toInt()
             if (y < 100) y += 2000
-            val parsed = runCatching { LocalDate.of(y, mo, d) }.getOrNull() ?: continue
+            val parsed = runCatching { LocalDate.of(y, ms.toInt(), ds.toInt()) }.getOrNull() ?: continue
             if (!parsed.isAfter(today.plusDays(1)) && parsed.isAfter(today.minusYears(3))) return parsed
         }
         return null
     }
 
     private fun cleanName(name: String): String = name
-        .replace(Regex("""^\d{4,}\s+"""), "")          // article numbers
+        .replace(Regex("""^\d{4,}\s+"""), "")              // article numbers / EAN
+        .replace(Regex("""^\(\s?[A-Za-z]\s?\)\s*"""), "")  // leading tax code "(C) "
+        .replace(Regex("""\s+\(?\d{1,2}\s?%\)?$"""), "")   // trailing VAT rate "23%"
         .replace(Regex("""\s+[xX*×]\s*$"""), "")
         .replace(Regex("""\s{2,}"""), " ")
         .trim(' ', '.', '-', '*', ':')
 
-    /** "BIO TOMATEN 500G" -> "Bio Tomaten 500g" */
+    /** "LEITE MEIO GORDO 1L" -> "Leite Meio Gordo 1l" */
     fun prettify(name: String): String {
         val letters = name.filter { it.isLetter() }
         if (letters.isEmpty() || letters.any { it.isLowerCase() }) return name

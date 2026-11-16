@@ -112,11 +112,12 @@ def test_password_protection():
         server = load_server(fake=True)
         with TestClient(server.app) as client:
             assert 'name="password"' in client.get("/").text
-            try:
-                with client.websocket_connect("/ws"):
+            with client.websocket_connect("/ws") as ws:
+                try:
+                    ws.receive_json()
                     raise AssertionError("WebSocket ohne Login offen")
-            except WebSocketDisconnect as e:
-                assert e.code == 1008
+                except WebSocketDisconnect as e:
+                    assert e.code == 1008
             assert "Falsches Passwort" in client.post("/login", data={"password": "nein"}).text
             r = client.post("/login", data={"password": "geheim"}, follow_redirects=False)
             assert r.status_code == 303
